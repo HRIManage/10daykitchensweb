@@ -53,7 +53,7 @@ export default function TestimonialsSection() {
 
         {/* Big feature card */}
         <Reveal delay={100}>
-          <div className="relative overflow-hidden rounded-2xl bg-[#1B3320] px-8 py-12 md:px-16 md:py-16 shadow-xl">
+          <div className="relative overflow-hidden rounded-2xl bg-[#EEF9EA] border border-[#5DBB46]/15 px-8 py-12 md:px-16 md:py-16 shadow-sm">
             {/* Decorative green glow */}
             <div
               aria-hidden="true"
@@ -76,34 +76,34 @@ export default function TestimonialsSection() {
                 transition={{ duration: 0.45, ease }}
                 className="relative z-10"
               >
-                {/* Stars + label */}
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="flex gap-1">
-                    {Array.from({ length: r.stars }).map((_, s) => (
-                      <Star key={s} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <span className="inline-flex items-center bg-[#5DBB46]/20 text-[#7ADB5E] text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">
-                    {r.label}
-                  </span>
-                </div>
-
                 {/* Quote */}
                 <blockquote
-                  className="text-white/90 font-light leading-relaxed mb-10"
+                  className="text-[#111111] font-normal leading-relaxed mb-10"
                   style={{ fontSize: "clamp(1.2rem,2.2vw,1.5rem)", maxWidth: "56rem" }}
                 >
                   &ldquo;{r.quote}&rdquo;
                 </blockquote>
 
+                {/* Stars + label */}
+                <div className="mt-8 flex items-center gap-4 border-t border-[rgba(0,0,0,0.08)] pt-7">
+                  <div className="flex gap-1">
+                    {Array.from({ length: r.stars }).map((_, s) => (
+                      <Star key={s} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <span className="inline-flex items-center bg-[#5DBB46]/15 text-[#3a9030] text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+                    {r.label}
+                  </span>
+                </div>
+
                 {/* Author */}
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 mt-8">
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#5DBB46] text-white font-bold text-base">
                     {r.author.charAt(0)}
                   </div>
                   <div>
-                    <p className="text-white text-sm font-semibold">{r.author}</p>
-                    <p className="text-white/50 text-xs uppercase tracking-wider mt-0.5">{r.tag}</p>
+                    <p className="text-[#111111] text-sm font-semibold">{r.author}</p>
+                    <p className="text-[#777777] text-xs uppercase tracking-wider mt-0.5">{r.tag}</p>
                   </div>
                 </div>
               </motion.div>
@@ -120,11 +120,11 @@ export default function TestimonialsSection() {
                   className={`rounded-full transition-all duration-500 cursor-pointer ${
                     i === active
                       ? "w-8 h-2 bg-[#5DBB46]"
-                      : "w-2 h-2 bg-white/20 hover:bg-white/40"
+                      : "w-2 h-2 bg-[rgba(0,0,0,0.15)] hover:bg-[rgba(0,0,0,0.3)]"
                   }`}
                 />
               ))}
-              <span className="ml-2 text-white/30 text-xs font-semibold">
+              <span className="ml-2 text-[#777777] text-xs font-semibold">
                 {active + 1} / {reviews.length}
               </span>
             </div>
@@ -133,7 +133,7 @@ export default function TestimonialsSection() {
 
         {/* Bottom trust strip */}
         <Reveal delay={200} className="mt-10 text-center">
-          <p className="text-[#777777] text-sm">
+          <p className="text-[#555555] text-sm">
             <span className="font-semibold text-[#111111]">800+</span> projects completed across Pierce &amp; Thurston Counties · Average <span className="font-semibold text-[#111111]">4.9★</span> rating
           </p>
         </Reveal>
