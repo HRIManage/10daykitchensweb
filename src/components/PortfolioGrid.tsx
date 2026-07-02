@@ -70,7 +70,7 @@ export default function PortfolioGrid() {
   const [wide, ...rest] = projects;
 
   return (
-    <section id="portfolio" className="bg-white py-24 md:py-32">
+    <section id="portfolio" className="py-24 md:py-32">
       <div className="mx-auto max-w-screen-xl px-6 sm:px-10 lg:px-16">
         <div className="text-center mb-16 mx-auto">
           <Reveal>

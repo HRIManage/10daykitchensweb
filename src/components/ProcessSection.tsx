@@ -58,7 +58,7 @@ const steps = [
 
 export default function ProcessSection() {
   return (
-    <section id="process" className="bg-white py-24 md:py-32 section-pad">
+    <section id="process" className="py-24 md:py-32 section-pad">
       <div className="container grid gap-16 lg:grid-cols-12 lg:gap-16 items-start">
         
         {/* LEFT — sticky heading & description */}
@@ -95,17 +95,11 @@ export default function ProcessSection() {
               <div key={step.num} className="flex gap-6 sm:gap-8 items-start relative z-10 w-full">
                 
                 {/* Timeline node */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.7 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: i * 0.05 }}
-                  className="flex-shrink-0"
-                >
+                <div className="flex-shrink-0">
                   <span className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-[#EEF4EB] border-2 border-[#5DBB46] font-bold text-xs sm:text-sm text-[#5DBB46] shadow-sm">
                     {step.num}
                   </span>
-                </motion.div>
+                </div>
                 
                 {/* Step Content Card with 3D Tilt Scroll Reveal */}
                 <Reveal delay={i * 80} className="flex-1 w-full">
@@ -132,7 +126,7 @@ export default function ProcessSection() {
                       </ul>
                     </div>
                   </div>
-                </motion.div>
+                </Reveal>
 
               </div>
             ))}

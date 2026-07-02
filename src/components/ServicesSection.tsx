@@ -4,7 +4,7 @@ import Reveal from "@/components/motion/Reveal";
 
 export default function ServicesSection() {
   return (
-    <section id="services" className="bg-white py-24 md:py-32">
+    <section id="services" className="py-24 md:py-32">
       <div className="mx-auto max-w-screen-xl px-6 sm:px-10 lg:px-16 mb-12">
         <Reveal>
           <span className="inline-flex items-center gap-1.5 eyebrow">

@@ -121,9 +121,9 @@ const pairs = [
 
 export default function BeforeAfterSection() {
   return (
-    <section id="transformations" className="bg-gradient-to-b from-white via-[#F4F9F2] to-white py-24 md:py-32 section-pad">
+    <section id="transformations" className="py-24 md:py-32 section-pad">
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-        <div className="bg-white/70 backdrop-blur-md rounded-xl border border-white p-8 md:p-12 shadow-[0_10px_40px_rgba(93,187,70,0.03)]">
+        <div className="bg-white/80 backdrop-blur-md rounded-2xl border border-[#5DBB46]/10 p-8 md:p-12 shadow-[0_16px_60px_rgba(93,187,70,0.08)]">
           <Reveal className="mb-16 text-center">
             <span className="inline-flex items-center gap-1.5 eyebrow">
               <span className="w-1.5 h-1.5 rounded-full bg-[#5DBB46]"></span>
@@ -143,7 +143,9 @@ export default function BeforeAfterSection() {
             </h2>
             <p style={{ fontSize: '17px', color: '#777777', marginTop: '1rem', textAlign: 'center' }}>
               See what we accomplish in as little as 10 business days.
+            </p>
           </Reveal>
+
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             {pairs.map((p) => (

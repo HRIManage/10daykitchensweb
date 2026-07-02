@@ -26,7 +26,7 @@ const brands = [
 
 export default function AboutSection() {
   return (
-    <section className="bg-white py-20 sm:py-24 overflow-hidden">
+    <section className="py-20 sm:py-24 overflow-hidden">
       <div className="mx-auto max-w-screen-xl px-6 sm:px-10 lg:px-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
           

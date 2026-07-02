@@ -27,7 +27,7 @@ export default function GalleryStrip() {
   const marqueeInView = useInView(marqueeRef, { once: true, margin: "-60px" });
 
   return (
-    <section className="bg-white overflow-hidden py-12 border-b border-[rgba(17,17,17,0.06)]">
+    <section className="overflow-hidden py-12">
       <div ref={marqueeRef} className="overflow-hidden h-72">
         <motion.div
           initial={{ clipPath: "inset(0 0 100% 0)" }}
