@@ -1,26 +1,63 @@
 import type { Metadata } from "next";
-import { Manrope, Playfair_Display } from "next/font/google";
+import {
+  Manrope,
+  Barlow_Condensed,
+  Jost,
+  Cormorant_Garamond,
+} from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { site } from "@/lib/site";
 
 const manrope = Manrope({
-  variable: "--font-manrope",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-manrope",
   display: "swap",
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const barlowCondensed = Barlow_Condensed({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  variable: "--font-barlow-condensed",
+  weight: ["500", "600", "700"],
+  display: "swap",
+});
+
+const jost = Jost({
+  subsets: ["latin"],
+  variable: "--font-jost",
+  display: "swap",
+});
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  variable: "--font-cormorant",
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "10 Day Kitchens | Kitchen & Bath Remodeling in Lacey & Olympia, WA",
+  metadataBase: new URL("https://10daykitchens.com"),
+  title: {
+    default: `${site.name} — Kitchen & Bath Remodeling in ${site.serviceAreaShort}`,
+    template: `%s · ${site.name}`,
+  },
   description:
-    "Transform your home with 10 Day Kitchens. Expert kitchen and bathroom remodeling in Lacey, Olympia, Tacoma and surrounding areas — completed in just 10 business days. Get your free consultation today.",
-  keywords: "kitchen remodeling, bathroom remodeling, Lacey WA, Olympia WA, 10 day kitchens",
+    "Beautiful, functional kitchen and bath remodels installed in just 10 business days. Family owned since 2004, 35+ years of experience, 5-year warranty. Serving Pierce & Thurston Counties.",
+  keywords: [
+    "kitchen remodel",
+    "bathroom remodel",
+    "Lacey WA remodeling",
+    "Olympia kitchen remodel",
+    "Tacoma bathroom remodel",
+    "10 day kitchens",
+  ],
+  openGraph: {
+    title: `${site.name} — Dream Kitchens & Baths in 10 Days`,
+    description:
+      "Beautiful, functional kitchen and bath remodels installed in just 10 business days. Family owned since 2004.",
+  },
 };
 
 export default function RootLayout({
@@ -29,8 +66,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${manrope.variable} ${playfair.variable} h-full`}>
-      <body className="min-h-full antialiased bg-sage text-ink">{children}</body>
+    <html
+      lang="en"
+      className={`${manrope.variable} ${barlowCondensed.variable} ${jost.variable} ${cormorant.variable} h-full`}
+    >
+      <body className="min-h-full antialiased bg-[#f0efee] text-[#2b2723]">
+        <Navbar />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

@@ -1,9 +1,27 @@
+import {
+  EditorialHero,
+  TrustedPartners,
+  ServicesEditorial,
+  StatementSection,
+  RecentProjectsHover,
+  ProcessEditorial,
+  CustomerReviews,
+  TransformationSection,
+  ClosingCTA,
+} from "@/components/home";
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen items-center justify-center">
-      <p className="text-muted-foreground">
-        Clone target not yet built. Run <code className="font-mono text-foreground">/clone-website</code> to start.
-      </p>
+      <main>
+      <EditorialHero />
+      <TrustedPartners />
+      <ServicesEditorial />
+      <StatementSection />
+      <RecentProjectsHover />
+      <ProcessEditorial />
+      <CustomerReviews />
+      <TransformationSection />
+      <ClosingCTA />
     </main>
   );
 }
