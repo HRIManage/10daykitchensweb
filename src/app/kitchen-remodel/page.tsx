@@ -1,265 +1,364 @@
-import DayByDayTimeline from "@/components/DayByDayTimeline";
-import MasonryGallery from "@/components/MasonryGallery";
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import type { ReactNode } from "react";
+import { ArrowRight, Check, Ruler, ShieldCheck, Sparkles, Wrench, X } from "lucide-react";
+import { CONTAINER } from "@/components/layout";
+import { CustomerReviews } from "@/components/home";
+import PageCta from "@/components/PageCta";
+import { createServiceSchema } from "@/lib/seo";
 
-const pricingCards = [
+const SECTION = "py-14 sm:py-[4.5rem] lg:py-24";
+
+export const metadata: Metadata = {
+  title: "Custom Kitchen Remodel Lacey WA | Olympia & Tacoma",
+  description:
+    "Full custom kitchen remodels in Lacey, Olympia, Tacoma, Thurston County, and Pierce County. Layout changes, structural work, custom cabinetry, plumbing, electrical, and premium kitchen renovation planning.",
+  alternates: {
+    canonical: "https://10daykitchens.com/kitchen-remodel",
+  },
+  openGraph: {
+    title: "Custom Kitchen Remodel Lacey WA | 10 Day Kitchens",
+    description:
+      "Full custom kitchen remodels in Lacey, Olympia, Tacoma, Thurston County, and Pierce County with layout changes, premium cabinetry, and guided planning.",
+    url: "https://10daykitchens.com/kitchen-remodel",
+  },
+};
+
+const benefits = [
   {
-    tier: "Small Kitchen",
-    price: "$30,000 – $45,000+",
-    desc: "Perfect for galley kitchens and compact layouts. Full 10-Day transformation with all premium inclusions.",
-    img: "/images/gallery-quartz-backsplash.jpg",
-    featured: false,
+    icon: Ruler,
+    title: "Layout freedom",
+    body: "Rework the kitchen around how you cook, gather, store, and move through the home.",
   },
   {
-    tier: "Medium Kitchen",
-    price: "$45,000 – $65,000",
-    desc: "Our most popular package. Ideal for standard family kitchens with open-concept potential.",
-    img: "/images/kitchen-ethos-walnut.jpg",
-    featured: true,
+    icon: Wrench,
+    title: "Trade coordination",
+    body: "Plumbing, electrical, structural, cabinetry, counters, flooring, and finish work are planned together.",
   },
   {
-    tier: "Large Kitchen",
-    price: "$65,000 – $80,000+",
-    desc: "For expansive kitchens with islands, custom storage, and premium material selections.",
-    img: "/images/gallery-marble-countertop.jpg",
-    featured: false,
+    icon: Sparkles,
+    title: "Custom selections",
+    body: "Choose cabinetry, surfaces, hardware, lighting, tile, appliances, and details beyond a fixed package.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Built with confidence",
+    body: "Licensed, insured, and backed by our 5-year workmanship warranty for long-term peace of mind.",
   },
 ];
 
-const processSteps = [
-  { num: "01", title: "Vision & Consultation", desc: "In-home visit. We listen to your goals and must-haves." },
-  { num: "02", title: "3D Design & Fixed Quote", desc: "Full rendering and binding contract before anything starts." },
-  { num: "03", title: "Precision Pre-Staging", desc: "Every material ordered and inspected before Day 1." },
-  { num: "04", title: "The 10-Day Build", desc: "Our crew on site every day. Clean progress, no delays." },
-  { num: "05", title: "Final Walkthrough", desc: "We don't close until you've approved every detail." },
+const process = [
+  {
+    step: "01",
+    title: "Design consultation",
+    body: "We study your kitchen, goals, wish list, budget range, timeline, and whether your remodel needs layout, trade, or structural changes.",
+  },
+  {
+    step: "02",
+    title: "Scope and feasibility",
+    body: "We clarify what is possible, what needs engineering or permitting, and whether the project fits a full custom remodel or the 10 Day Kitchens Program.",
+  },
+  {
+    step: "03",
+    title: "Selections and planning",
+    body: "Cabinetry, counters, flooring, backsplash, fixtures, lighting, and finishes are organized before construction begins.",
+  },
+  {
+    step: "04",
+    title: "Construction schedule",
+    body: "Our team coordinates trades, deliveries, site prep, demolition, installation, and inspections around a realistic custom remodel timeline.",
+  },
+  {
+    step: "05",
+    title: "Final walkthrough",
+    body: "We review the finished kitchen with you, confirm details, and close the project only after the work is ready to enjoy.",
+  },
 ];
 
-const galleryImages = [
-  { src: "/images/gallery-whistler-frost.jpg", alt: "Whistler Frost kitchen" },
-  { src: "/images/kitchen-ethos-walnut.jpg", alt: "Ethos walnut kitchen" },
-  { src: "/images/gallery-quartz-backsplash.jpg", alt: "Quartz backsplash kitchen" },
-  { src: "/images/gallery-marble-countertop.jpg", alt: "Marble countertop kitchen" },
-  { src: "/images/gallery-butcher-block.jpg", alt: "Butcher block kitchen" },
-  { src: "/images/project-forest-kitchen.jpg", alt: "Forest kitchen project" },
+const included = [
+  "Kitchen design guidance and finish planning",
+  "Custom cabinetry and storage solutions",
+  "Countertops, backsplash, flooring, fixtures, and hardware",
+  "Plumbing and electrical coordination when required",
+  "Wall removal, layout changes, and structural coordination when approved",
+  "Project management, scheduling, installation, and final walkthrough",
 ];
+
+const notIncluded = [
+  "A guaranteed 10 business day completion timeline",
+  "Pricing based on a fixed package before scope is defined",
+  "Skipping permits, inspections, or engineering when required",
+  "Mid-project changes without schedule and cost review",
+];
+
+const faqs = [
+  {
+    question: "What makes this different from the 10 Day Kitchens Program?",
+    answer:
+      "A full custom kitchen remodel is for projects that change the layout, move plumbing or electrical, remove walls, add structural work, or require fully customized selections. The 10 Day Kitchens Program is for qualified kitchens that keep the same footprint and use approved selections.",
+  },
+  {
+    question: "Do custom kitchen remodels take longer than 10 business days?",
+    answer:
+      "Usually, yes. Custom remodels often involve trade coordination, permits, inspections, custom cabinetry, and larger construction scopes. We create a realistic schedule once the design and scope are clear.",
+  },
+  {
+    question: "Do you serve Olympia and Tacoma?",
+    answer:
+      "Yes. We provide kitchen remodeling in Lacey, Olympia, Tacoma, Thurston County, Pierce County, and nearby South Sound communities.",
+  },
+  {
+    question: "Can you help me decide which kitchen service fits?",
+    answer:
+      "Yes. During the consultation, we look at your layout, goals, budget, and timeline to determine whether you need a full custom kitchen remodel or qualify for the faster 10 Day Kitchens Program.",
+  },
+];
+
+function Eyebrow({ children }: { children: ReactNode }) {
+  return <span className="eyebrow mb-4 block text-[0.82rem] font-bold">{children}</span>;
+}
+
+function PrimaryButton({ href, children }: { href: string; children: ReactNode }) {
+  return (
+    <Link
+      href={href}
+      className="group inline-flex h-[52px] items-center justify-center gap-3 bg-brand px-7 text-[12px] font-bold uppercase tracking-[0.15em] text-white transition-all duration-300 hover:-translate-y-1 hover:bg-brand-dark hover:shadow-[0_16px_34px_rgba(93,187,70,0.3)]"
+    >
+      {children}
+      <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+    </Link>
+  );
+}
+
+function OutlineButton({ href, children }: { href: string; children: ReactNode }) {
+  return (
+    <Link
+      href={href}
+      className="inline-flex h-[52px] items-center justify-center border border-line bg-white/55 px-7 text-[12px] font-bold uppercase tracking-[0.15em] text-ink transition-all duration-300 hover:-translate-y-1 hover:border-brand hover:text-brand-dark"
+    >
+      {children}
+    </Link>
+  );
+}
 
 export default function KitchenRemodelPage() {
+  const jsonLd = createServiceSchema({
+    name: "Full Custom Kitchen Remodel",
+    description:
+      "Full custom kitchen remodeling in Lacey, Olympia, Tacoma, Thurston County, and Pierce County for projects that include layout changes, moved plumbing or electrical, structural work, and custom cabinetry.",
+    url: "https://10daykitchens.com/kitchen-remodel",
+    serviceType: [
+      "Custom Kitchen Remodel",
+      "Kitchen Renovation",
+      "Kitchen Design",
+      "Kitchen Construction",
+    ],
+  });
+
   return (
-    <main>
-      {/* Hero */}
-      <section className="relative pt-[90px] bg-[#1C1C1C] overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src="/images/kitchen-ethos-walnut.jpg"
-            alt=""
-            className="w-full h-full object-cover opacity-20"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#1C1C1C]/60 to-[#1C1C1C]" />
-        </div>
-        <div className="relative z-10 max-w-screen-xl mx-auto px-16 py-24">
-          <span className="eyebrow text-[#5DBB46]/70 mb-4 block">Kitchen Remodeling · Lacey, WA</span>
-          <h1
-            style={{
-              fontFamily: "var(--font-playfair)",
-              fontSize: "clamp(48px,5vw,80px)",
-              color: "white",
-              fontWeight: 500,
-              letterSpacing: "-0.02em",
-              lineHeight: 1.05,
-            }}
-          >
-            Kitchen
-            <br />
-            Remodel
-          </h1>
-          <p className="text-white/60 text-lg max-w-xl mt-6 leading-relaxed">
-            Transform your kitchen with our expert remodeling services. Innovative design combined with superior
-            craftsmanship — seamless from planning to final installation.
-          </p>
-          <a
-            href="/contact"
-            className="mt-8 inline-block bg-[#5DBB46] text-white rounded-full px-8 py-4 text-sm font-bold uppercase tracking-wider hover:bg-[#4aa836] transition-all"
-          >
-            Schedule Free Consultation
-          </a>
+    <main className="bg-paper text-ink">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <section className="bg-paper pt-[158px] sm:pt-[176px]">
+        <div className={`${CONTAINER} grid min-h-[610px] gap-10 pb-14 lg:grid-cols-[0.88fr_1.12fr] lg:items-center lg:pb-18`}>
+          <div className="max-w-2xl">
+            <Eyebrow>Custom Kitchen Remodel Lacey, WA</Eyebrow>
+            <h1 className="max-w-3xl text-[clamp(2.55rem,4.7vw,4.75rem)] leading-[1.02] text-ink">
+              Full custom kitchen remodels for homes ready to change.
+            </h1>
+            <p className="mt-6 max-w-xl text-[1rem] leading-8 text-ink-soft">
+              Premium kitchen remodeling in Lacey, Olympia, Tacoma, Thurston County, and Pierce County for projects
+              that need layout changes, custom cabinetry, electrical, plumbing, or structural planning.
+            </p>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <PrimaryButton href="/contact">Schedule free consultation</PrimaryButton>
+              <OutlineButton href="/10businessdaykitchenprogram">Compare 10 day program</OutlineButton>
+            </div>
+          </div>
+          <div className="relative">
+            <div className="relative aspect-[1.18/1] overflow-hidden border border-line bg-white shadow-[0_26px_80px_rgba(43,39,35,0.12)]">
+              <Image
+                src="/images/Premium White Oak Showcase Kitchen (1).png"
+                alt="Full custom kitchen remodel with white cabinetry and island"
+                fill
+                priority
+                sizes="(min-width: 1024px) 52vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+            <div className="absolute -bottom-8 left-6 right-6 bg-[#2A2A2A] p-6 text-white shadow-[0_20px_60px_rgba(43,39,35,0.18)] sm:left-10 sm:right-auto sm:w-[390px]">
+              <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-brand-light">Best fit for</p>
+              <p className="mt-3 text-[0.96rem] font-semibold leading-7 text-white/82">
+                Layout changes, moved trades, custom cabinetry, and larger kitchen renovation scopes.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Pricing Tiers */}
-      <section className="bg-white py-24 px-16">
-        <div className="text-center">
-          <span className="eyebrow block mb-4">10-Day Package</span>
-          <h2
-            style={{
-              fontFamily: "var(--font-playfair)",
-              fontSize: "clamp(36px,3.5vw,52px)",
-              letterSpacing: "-0.02em",
-              fontWeight: 500,
-              color: "#111111",
-            }}
-          >
-            Choose Your Kitchen
-          </h2>
-          <p className="text-[#777777] text-base max-w-2xl mx-auto mt-4 leading-relaxed">
-            All packages include: Packout · Demo · Semi-custom cabinetry · Quartz countertops · LVP flooring · New
-            appliances · Installation in just 10 business days!
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 max-w-5xl mx-auto">
-          {pricingCards.map((card) => (
-            <div
-              key={card.tier}
-              className={`rounded-2xl overflow-hidden border ${
-                card.featured
-                  ? "border-[#5DBB46] shadow-[0_0_0_2px_#5DBB46]"
-                  : "border-[rgba(17,17,17,0.08)]"
-              } bg-white flex flex-col`}
-            >
-              <div className="h-48 overflow-hidden">
-                <img src={card.img} alt={card.tier} className="w-full h-full object-cover" />
-              </div>
-              <div className="p-8 flex flex-col flex-1">
-                {card.featured && <span className="eyebrow text-[#5DBB46] mb-2">Most Popular</span>}
-                <h3
-                  style={{
-                    fontFamily: "var(--font-playfair)",
-                    fontSize: "1.5rem",
-                    fontWeight: 500,
-                    color: "#111111",
-                    marginBottom: "0.5rem",
-                  }}
-                >
-                  {card.tier}
-                </h3>
-                <p
-                  style={{
-                    fontFamily: "var(--font-playfair)",
-                    fontSize: "1.75rem",
-                    color: "#5DBB46",
-                    fontWeight: 500,
-                    marginBottom: "1rem",
-                  }}
-                >
-                  {card.price}
-                </p>
-                <p className="text-[#777777] text-sm leading-relaxed flex-1">{card.desc}</p>
-                <a
-                  href="/contact"
-                  className="mt-6 inline-block text-center bg-[#111111] text-white rounded-full px-6 py-3 text-xs font-semibold uppercase tracking-wider hover:bg-[#5DBB46] transition-all"
-                >
-                  Get a Quote
-                </a>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <p className="text-center text-xs text-[#777777] mt-6 italic">
-          *Not all kitchens qualify for the 10 Day Package.{" "}
-          <a href="/10businessdaykitchenprogram" className="text-[#5DBB46] hover:underline">
-            View eligibility requirements.
-          </a>
-        </p>
-
-        {/* Executive Remodel Box */}
-        <div className="mt-12 max-w-5xl mx-auto bg-[#1C1C1C] rounded-2xl p-10 flex justify-between items-center flex-wrap gap-8">
+      <section className={`${SECTION} bg-paper`}>
+        <div className={`${CONTAINER} grid gap-10 lg:grid-cols-[0.72fr_1fr] lg:items-center`}>
           <div>
-            <h3
-              style={{
-                fontFamily: "var(--font-playfair)",
-                fontSize: "28px",
-                fontWeight: 500,
-                color: "white",
-                marginBottom: "0.5rem",
-              }}
-            >
-              Executive Remodel Program
-            </h3>
-            <p className="text-white/60 text-sm max-w-lg leading-relaxed">
-              Starting at $70,000+ · For projects beyond the scope of a 10-Day Remodel: custom cabinetry, luxury
-              finishes, structural changes, layout changes, extensive electrical &amp; plumbing.
+            <Eyebrow>Premium custom service</Eyebrow>
+            <h2 className="text-[clamp(2.1rem,3.8vw,3.8rem)] leading-[1.05]">
+              When your kitchen needs more than a refresh.
+            </h2>
+          </div>
+          <div className="space-y-5 text-[1rem] leading-8 text-ink-soft">
+            <p>
+              Some kitchens can be transformed quickly by keeping the same footprint. Others need a deeper plan.
+              Our full custom kitchen remodel service is built for homeowners who want to change how the kitchen
+              lives, not just how it looks.
+            </p>
+            <p>
+              If your project includes moving plumbing, relocating electrical, removing walls, changing the layout,
+              or building a custom cabinet plan, this is the right kitchen remodel path.
             </p>
           </div>
-          <a
-            href="/contact"
-            className="bg-[#5DBB46] text-white rounded-full px-8 py-4 text-sm font-bold uppercase tracking-wider hover:bg-[#4aa836] transition-all whitespace-nowrap"
-          >
-            Learn More
-          </a>
         </div>
       </section>
 
-      {/* 10-Day Timeline */}
-      <DayByDayTimeline />
-
-      {/* Process */}
-      <section className="bg-white py-24 px-16">
-        <div className="text-center mb-12">
-          <span className="eyebrow block mb-4">Our Process</span>
-          <h2
-            style={{
-              fontFamily: "var(--font-playfair)",
-              fontSize: "clamp(36px,3.5vw,52px)",
-              letterSpacing: "-0.02em",
-              fontWeight: 500,
-              color: "#111111",
-              marginBottom: "1rem",
-            }}
-          >
-            How It Works
-          </h2>
-          <p className="text-[#777777] text-[17px] max-w-xl mx-auto leading-relaxed">
-            We respect your time. Whether you choose our 10-Day Package or an Executive Remodel, our structured
-            approach ensures a stress-free transformation.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-5 divide-y md:divide-y-0 md:divide-x divide-[rgba(17,17,17,0.08)] border-y border-[rgba(17,17,17,0.08)]">
-          {processSteps.map((step) => (
-            <div key={step.num} className="p-8 flex flex-col">
-              <span
-                style={{
-                  fontFamily: "var(--font-playfair)",
-                  fontSize: "4.5rem",
-                  lineHeight: 1,
-                  color: "rgba(93,187,70,0.15)",
-                  fontWeight: 500,
-                  display: "block",
-                  marginBottom: "1.5rem",
-                }}
-              >
-                {step.num}
-              </span>
-              <h3 className="text-sm font-bold uppercase tracking-wide text-[#111111] mb-3 leading-snug">
-                {step.title}
-              </h3>
-              <p className="text-sm text-[#777777] leading-relaxed">{step.desc}</p>
+      <section className="bg-white py-8">
+        <div className={`${CONTAINER} grid grid-cols-1 border-y border-line md:grid-cols-4`}>
+          {benefits.map((benefit) => (
+            <div key={benefit.title} className="group border-b border-line py-8 md:border-b-0 md:border-r md:px-7 md:last:border-r-0">
+              <benefit.icon className="mb-7 size-6 text-brand transition-transform duration-300 group-hover:-translate-y-1" />
+              <h3 className="text-[1.65rem] leading-tight transition-colors group-hover:text-brand-dark">{benefit.title}</h3>
+              <p className="mt-4 text-sm leading-7 text-ink-soft">{benefit.body}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Gallery */}
-      <section className="bg-[#F7FAF5] py-24 px-16">
-        <div className="text-center mb-12">
-          <span className="eyebrow block mb-4">Kitchen Gallery</span>
-          <h2
-            style={{
-              fontFamily: "var(--font-playfair)",
-              fontSize: "clamp(36px,3.5vw,52px)",
-              letterSpacing: "-0.02em",
-              fontWeight: 500,
-              color: "#111111",
-            }}
-          >
-            Our Work
-          </h2>
-        </div>
-
-        <div className="max-w-6xl mx-auto">
-          <MasonryGallery images={galleryImages} columns={3} />
+      <section className={`${SECTION} bg-paper`}>
+        <div className={`${CONTAINER} grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-center`}>
+          <div className="relative aspect-[1.45/1] overflow-hidden border border-line bg-white">
+            <Image
+              src="/images/Fluted Wood Kitchen.png"
+              alt="Completed custom kitchen remodel with island seating"
+              fill
+              sizes="(min-width: 1024px) 56vw, 100vw"
+              className="object-cover"
+            />
+          </div>
+          <div className="bg-white p-7 shadow-[0_18px_70px_rgba(43,39,35,0.08)] sm:p-10">
+            <Eyebrow>Full-service remodel</Eyebrow>
+            <h2 className="text-[clamp(2rem,3.4vw,3.4rem)] leading-[1.06]">
+              A kitchen plan built around your home, not a package.
+            </h2>
+            <p className="mt-5 text-base leading-8 text-ink-soft">
+              We use the consultation to separate design ideas from construction realities, then build a custom scope
+              that matches your layout, materials, schedule, and investment.
+            </p>
+          </div>
         </div>
       </section>
+
+      <section className={`${SECTION} bg-paper`}>
+        <div className={`${CONTAINER} grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-start`}>
+          <div className="lg:sticky lg:top-36">
+            <Eyebrow>How custom kitchen remodeling works</Eyebrow>
+            <h2 className="text-[clamp(2.1rem,3.8vw,3.8rem)] leading-[1.05]">A clear path for complex projects.</h2>
+            <p className="mt-6 max-w-md text-base leading-8 text-ink-soft">
+              Custom work needs tighter planning, not more guesswork. We define the scope early so your remodel can
+              move with confidence.
+            </p>
+          </div>
+          <div className="grid gap-0 border-y border-line">
+            {process.map((item) => (
+              <div key={item.step} className="group grid gap-5 border-b border-line py-7 last:border-b-0 sm:grid-cols-[76px_1fr]">
+                <span className="font-serif-alt text-5xl leading-none text-brand/28">{item.step}</span>
+                <div>
+                  <h3 className="text-[1.65rem] leading-tight transition-colors group-hover:text-brand-dark">{item.title}</h3>
+                  <p className="mt-3 max-w-2xl text-[0.96rem] leading-8 text-ink-soft">{item.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className={`${SECTION} bg-white`}>
+        <div className={`${CONTAINER} grid gap-12 lg:grid-cols-2`}>
+          <div>
+            <Eyebrow>What is included</Eyebrow>
+            <h2 className="text-[clamp(2.1rem,3.6vw,3.6rem)] leading-[1.05]">Designed around your actual scope.</h2>
+            <div className="mt-8 grid gap-4">
+              {included.map((item) => (
+                <div key={item} className="flex gap-3 border-t border-line pt-4 text-[0.98rem] leading-7 text-ink-soft">
+                  <Check className="mt-1 size-4 flex-none text-brand" />
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="bg-sand p-8 sm:p-10">
+            <Eyebrow>What is not included</Eyebrow>
+            <h3 className="text-[2rem] leading-tight">Not a fixed 10 day package.</h3>
+            <p className="mt-5 text-base leading-8 text-ink-soft">
+              Custom kitchen remodeling gives you more design freedom, but the timeline depends on the scope,
+              materials, permits, inspections, and trade work required.
+            </p>
+            <div className="mt-8 grid gap-4">
+              {notIncluded.map((item) => (
+                <div key={item} className="flex gap-3 border-t border-line pt-4 text-[0.95rem] leading-7 text-ink-soft">
+                  <X className="mt-1 size-4 flex-none text-brand-dark" />
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className={`${SECTION} bg-paper`}>
+        <div className={`${CONTAINER} grid gap-10 border border-line bg-white p-7 shadow-[0_24px_70px_rgba(43,39,35,0.08)] sm:p-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center`}>
+          <div>
+            <Eyebrow>Looking for a faster kitchen remodel?</Eyebrow>
+            <h2 className="text-[clamp(2.1rem,3.8vw,3.8rem)] leading-[1.05] text-ink">
+              Your kitchen may qualify for the 10 Day Kitchens Program.
+            </h2>
+          </div>
+          <div>
+            <p className="text-base leading-8 text-ink-soft">
+              If you love your current kitchen layout and do not need plumbing, electrical, appliances, walls, or
+              structural components moved, our 10 Day Kitchens Program may be the faster, more affordable path.
+            </p>
+            <div className="mt-8">
+              <PrimaryButton href="/10businessdaykitchenprogram">Explore the program</PrimaryButton>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className={`${SECTION} bg-paper`}>
+        <div className={`${CONTAINER} grid gap-12 lg:grid-cols-[0.7fr_1fr]`}>
+          <div>
+            <Eyebrow>Kitchen remodel FAQs</Eyebrow>
+            <h2 className="text-[clamp(2.1rem,3.8vw,3.8rem)] leading-[1.05]">Clear answers before you remodel.</h2>
+          </div>
+          <div className="divide-y divide-line border-y border-line">
+            {faqs.map((faq) => (
+              <details key={faq.question} className="group py-6">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-5 text-xl font-bold text-ink">
+                  {faq.question}
+                  <span className="text-brand transition-transform group-open:rotate-45">+</span>
+                </summary>
+                <p className="mt-4 max-w-3xl text-[0.96rem] leading-8 text-ink-soft">{faq.answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <CustomerReviews />
+
+      <PageCta
+        eyebrow="Ready to plan your kitchen remodel?"
+        title="Visit our Lacey showroom or book a consultation."
+        body="Tell us what you want to change, and we will help you choose the service path that fits your home, timeline, and investment."
+        watermark="Kitchen"
+      />
     </main>
   );
 }

@@ -90,10 +90,6 @@ export function CountUp({
   );
 }
 
-export function AnimatedNumber({ value }: { value: number }) {
-  return <CountUp value={value} />;
-}
-
 /**
  * Scroll-linked parallax drift for a full-bleed background image.
  * Framer-motion replacement for the GSAP ParallaxImage — disabled under

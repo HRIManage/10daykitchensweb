@@ -4,6 +4,8 @@ export const site = {
   phone: "360-557-3444",
   phoneHref: "tel:+13605573444",
   email: "office@10daykitchens.com",
+  facebookHref: "https://www.facebook.com/10daykitchens/",
+  instagramHref: "https://www.instagram.com/10day.kitchens/",
   address: "8695 Martin Way E STE 101, Lacey, WA 98516",
   license: "License #10DAYDK757O5",
   serviceAreaShort: "Pierce & Thurston Counties",

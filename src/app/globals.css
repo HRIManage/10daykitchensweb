@@ -56,7 +56,7 @@
   --color-input: var(--color-border);
 
   /* Typography */
-  --font-sans: var(--font-jost), var(--font-manrope), system-ui, sans-serif;
+  --font-sans: var(--font-manrope), system-ui, sans-serif;
   --font-display: var(--font-cormorant), "Georgia", serif;
   --font-condensed: var(--font-barlow-condensed), "Arial Narrow", sans-serif;
   --font-serif: var(--font-cormorant), "Georgia", serif;
@@ -76,6 +76,8 @@
 :root {
   --background: #fafaf8;
   --foreground: #2b2723;
+  --site-max-width: 1440px;
+  --site-gutter: clamp(24px, 5vw, 80px);
   --card: #ffffff;
   --card-foreground: #2b2723;
   --popover: #ffffff;
@@ -123,6 +125,15 @@
 
 :root {
   --font-playfair: var(--font-display);
+}
+
+@layer components {
+  .site-container {
+    width: 100%;
+    max-width: var(--site-max-width);
+    margin-inline: auto;
+    padding-inline: var(--site-gutter);
+  }
 }
 
 /* Section eyebrow label */
@@ -206,6 +217,53 @@
 /* Uniform luxury transition for interactive elements */
 .lux-transition {
   transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Sitewide scroll reveal. JS adds these classes to top-level page sections. */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(34px);
+  filter: blur(6px);
+  transition:
+    opacity 760ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 760ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 760ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform, filter;
+}
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+}
+
+/* Global image wipe — clip-path reveal on content photography, applied
+   automatically by ScrollRevealProvider (matches the /collections signature). */
+.img-wipe {
+  clip-path: inset(100% 0 0 0);
+  transform: scale(1.06);
+  transition:
+    clip-path 1100ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: clip-path, transform;
+}
+.img-wipe.is-revealed {
+  clip-path: inset(0 0 0 0);
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .img-wipe {
+    clip-path: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 /* Serif utility — Cormorant Garamond italic accents */
@@ -298,12 +356,12 @@
 
 /* Heritage CSS variable aliases → 10DK brand colors */
 :root {
-  --gold:              #5DBB46;
-  --gold-deep:         #4aa836;
+  --gold:              var(--color-brand);
+  --gold-deep:         var(--color-brand-dark);
   --gold-border:       rgba(93, 187, 70, 0.20);
   --gold-border-strong: rgba(93, 187, 70, 0.36);
   --bg:                #FAFAF8;
-  --bg-surface:        #F2F0EA;
+  --bg-surface:        #FFFFFF;
   --bg-dark:           #11130f;
   --text:              #1A1A18;
   --text-dim:          #4A4A46;
@@ -334,6 +392,7 @@
   transition: all 300ms var(--ease);
   border: 1px solid transparent;
   white-space: nowrap;
+  box-shadow: 0 14px 34px rgba(43, 39, 35, 0.12);
 }
 .btn-solid {
   background: var(--gold);
@@ -341,8 +400,8 @@
 }
 .btn-solid:hover {
   background: var(--gold-deep);
-  transform: translateY(-1px);
-  box-shadow: none;
+  transform: translateY(-3px);
+  box-shadow: 0 22px 46px rgba(43, 39, 35, 0.18);
 }
 
 /* Shimmer pulse animation on CTA button */
@@ -368,8 +427,16 @@
   border-bottom: 1px solid var(--gold-border);
   transition: border-color 300ms var(--ease), gap 300ms var(--ease);
   text-decoration: none;
+  background: #fff;
+  padding: 12px 18px;
+  box-shadow: 0 12px 30px rgba(43, 39, 35, 0.08);
 }
-.link-arrow:hover { border-color: var(--gold); gap: 16px; }
+.link-arrow:hover {
+  border-color: var(--gold);
+  gap: 16px;
+  transform: translateY(-2px);
+  box-shadow: 0 18px 42px rgba(43, 39, 35, 0.12);
+}
 .link-arrow .arrow { transition: transform 300ms var(--ease); display: inline-block; }
 .link-arrow:hover .arrow { transform: translateX(4px); }
 
@@ -389,6 +456,14 @@
   text-transform: uppercase;
   color: var(--text);
   font-weight: 400;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(43, 39, 35, 0.06);
+  transition: transform 250ms var(--ease), box-shadow 250ms var(--ease), border-color 250ms var(--ease);
+}
+.pill:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold-border-strong);
+  box-shadow: 0 16px 34px rgba(43, 39, 35, 0.10);
 }
 
 /* ---------- Page hero (inner pages) ---------- */
@@ -522,9 +597,10 @@
   background: var(--gold-border);
   border: 1px solid var(--gold-border);
   margin: 28px 0 32px;
+  box-shadow: 0 18px 48px rgba(43, 39, 35, 0.08);
 }
 .coll-spec-cell {
-  background: rgba(93, 187, 70, 0.03);
+  background: #fff;
   padding: 16px 20px;
 }
 .coll-spec-label {
@@ -557,6 +633,8 @@
   overflow: hidden;
   transition: border-color 300ms var(--ease);
   gap: 16px;
+  background: #fff;
+  box-shadow: 0 12px 34px rgba(43, 39, 35, 0.07);
 }
 .coll-brand-link::before {
   content: '';
@@ -569,7 +647,11 @@
   z-index: 0;
 }
 .coll-brand-link:hover::before { transform: scaleX(1); }
-.coll-brand-link:hover { border-color: var(--gold); }
+.coll-brand-link:hover {
+  border-color: var(--gold);
+  box-shadow: 0 20px 46px rgba(43, 39, 35, 0.14);
+  transform: translateY(-2px);
+}
 .coll-brand-link-left {
   position: relative;
   z-index: 1;
@@ -628,6 +710,9 @@
   aspect-ratio: 4 / 5;
   overflow: hidden;
   border: 1px solid var(--gold-border);
+  background: #fff;
+  box-shadow: 0 24px 70px rgba(43, 39, 35, 0.12);
+  transition: transform 400ms var(--ease), box-shadow 400ms var(--ease), border-color 400ms var(--ease);
 }
 .collection-block .coll-img img {
   position: absolute;
@@ -638,6 +723,11 @@
   transition: transform 1.2s var(--ease);
 }
 .collection-block:hover .coll-img img { transform: scale(1.04); }
+.collection-block:hover .coll-img {
+  transform: translateY(-4px);
+  border-color: var(--gold-border-strong);
+  box-shadow: 0 34px 90px rgba(43, 39, 35, 0.16);
+}
 .collection-block .coll-img::after {
   content: '';
   position: absolute;
@@ -702,8 +792,18 @@
   padding: 32px 28px;
   border: 1px solid rgba(93, 187, 70, 0.25);
   border-top: 2px solid var(--gold);
-  background: rgba(93, 187, 70, 0.04);
+  background: rgba(255, 255, 255, 0.06);
   position: relative;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.24);
+}
+
+.coll-lift-card {
+  box-shadow: 0 24px 70px rgba(43, 39, 35, 0.10);
+  transition: transform 350ms var(--ease), box-shadow 350ms var(--ease);
+}
+.coll-lift-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 34px 90px rgba(43, 39, 35, 0.14);
 }
 .page-cta-btn-card::before,
 .page-cta-btn-card::after {

@@ -1,229 +1,211 @@
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Clock, ShieldCheck, Sparkles } from "lucide-react";
+import InteriorHero from "@/components/InteriorHero";
+import PageCta from "@/components/PageCta";
+import { CONTAINER, SECTION } from "@/components/layout";
+import { FadeIn, SectionHeader } from "@/components/shared";
+import ImageReveal from "@/components/ImageReveal";
+import { createServiceSchema } from "@/lib/seo";
+
+export const metadata: Metadata = {
+  title: "Bathroom Remodel Lacey WA | Olympia & Tacoma",
+  description:
+    "Full bathroom remodels across Pierce & Thurston Counties — tile showers, vanities, flooring, and fixtures with one clear schedule and a 5-year warranty.",
+};
+
 const processSteps = [
-  {
-    num: "01",
-    title: "Initial Consultation",
-    desc: "We discuss your goals, style preferences, and must-haves — vanities, tile, fixtures, and storage.",
-  },
-  {
-    num: "02",
-    title: "Contract & Design",
-    desc: "Clear contract and detailed design plan so you know exactly what to expect. No surprises.",
-  },
-  {
-    num: "03",
-    title: "Supplies & Materials",
-    desc: "We meticulously order and inspect all materials for quality assurance before installation begins.",
-  },
-  {
-    num: "04",
-    title: "Delivery & Installation",
-    desc: "Our crew delivers materials and completes your remodel in approximately 10 business days.",
-  },
-  {
-    num: "05",
-    title: "Final Walkthrough",
-    desc: "We walk through every detail with you. We won't close out until it's exactly what you envisioned.",
-  },
+  { num: "01", title: "Consultation", desc: "Your goals, style, and must-haves — vanities, tile, fixtures, storage." },
+  { num: "02", title: "Design & Contract", desc: "A clear plan and contract, so there are no surprises." },
+  { num: "03", title: "Materials", desc: "Every item ordered and inspected before installation begins." },
+  { num: "04", title: "Installation", desc: "Completed in approximately 10 business days." },
+  { num: "05", title: "Walkthrough", desc: "We review every detail with you before close-out." },
+];
+
+const highlights = [
+  { icon: Clock, label: "≈10 business days" },
+  { icon: ShieldCheck, label: "5-year warranty" },
+  { icon: Sparkles, label: "Guided selections" },
 ];
 
 const galleryImages = [
-  { src: "/images/gallery-luxury-bath.png", alt: "Luxury bathroom" },
-  { src: "/images/gallery-essential-white-bath.jpg", alt: "Essential white bathroom" },
-  { src: "/images/gallery-bath-view2.jpg", alt: "Bathroom view 2" },
-  { src: "/images/gallery-oslo-white-bath.jpg", alt: "Oslo white bathroom" },
-  { src: "/images/gallery-metropolitan-walnut.jpg", alt: "Metropolitan walnut bathroom" },
-  { src: "/images/ba-after-bath.jpg", alt: "Before and after bathroom" },
+  { src: "/images/gallery-luxury-bath.png", alt: "Luxury bathroom with freestanding tub", caption: "Primary Bath" },
+  { src: "/images/gallery-essential-white-bath.jpg", alt: "Bright white bathroom remodel", caption: "Essential White" },
+  { src: "/images/gallery-bath-view2.jpg", alt: "Tile shower with glass enclosure", caption: "Walk-In Shower" },
+  { src: "/images/gallery-oslo-white-bath.jpg", alt: "Oslo white vanity bathroom", caption: "Oslo White" },
+  { src: "/images/gallery-metropolitan-walnut.jpg", alt: "Walnut vanity bathroom", caption: "Metropolitan Walnut" },
+  { src: "/images/ba-after-bath.jpg", alt: "Completed modern bathroom remodel", caption: "Classic Modern" },
 ];
 
 export default function BathroomRemodelPage() {
+  const jsonLd = createServiceSchema({
+    name: "Bathroom Remodel",
+    description:
+      "Full bathroom remodeling in Lacey, Olympia, Tacoma, Pierce County, and Thurston County with tile showers, vanities, flooring, fixtures, and guided selections.",
+    url: "https://10daykitchens.com/bathroom-remodel",
+    serviceType: [
+      "Bathroom Remodel",
+      "Bathroom Renovation",
+      "Shower Remodel",
+      "Vanity and Fixture Installation",
+    ],
+  });
+
   return (
     <main>
-      {/* Hero */}
-      <section className="relative pt-[90px] bg-[#1C1C1C] overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src="/images/bath-remodel.png"
-            alt=""
-            className="w-full h-full object-cover opacity-20"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#1C1C1C]/60 to-[#1C1C1C]" />
-        </div>
-        <div className="relative z-10 max-w-screen-xl mx-auto px-16 py-24">
-          <span className="eyebrow text-[#5DBB46]/70 mb-4 block">
-            Bathroom Remodeling · Pierce &amp; Thurston Counties
-          </span>
-          <h1
-            style={{
-              fontFamily: "var(--font-playfair)",
-              fontSize: "clamp(48px,5vw,80px)",
-              color: "white",
-              fontWeight: 500,
-              letterSpacing: "-0.02em",
-              lineHeight: 1.05,
-            }}
-          >
-            Bathroom
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <InteriorHero
+        image="/images/Full Master Bathroom Suite.png"
+        imageAlt="Bright remodeled bathroom with double vanity"
+        eyebrow="Bathroom Remodeling · Pierce & Thurston Counties"
+        title={
+          <>
+            A bathroom you love,
             <br />
-            Remodel
-          </h1>
-          <p className="text-white/60 text-lg max-w-xl mt-6 leading-relaxed">
-            Remodel your bathroom without the hassle. Expert craftsmanship, seamless process, and stress-free
-            renovation from initial planning to final installation.
-          </p>
-          <a
-            href="/contact"
-            className="mt-8 inline-block bg-[#5DBB46] text-white rounded-full px-8 py-4 text-sm font-bold uppercase tracking-wider hover:bg-[#4aa836] transition-all"
-          >
-            Schedule Free Consultation
-          </a>
-        </div>
-      </section>
+            <em>without the long remodel.</em>
+          </>
+        }
+        body="Tile showers, vanities, flooring, and fixtures — planned around one clear schedule from first visit to final walkthrough."
+        cta={{ label: "Schedule Free Consultation", href: "/contact" }}
+        secondaryCta={{ label: "See recent baths", href: "#gallery" }}
+      />
 
-      {/* Intro Split */}
-      <section className="bg-white py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 max-w-screen-xl mx-auto px-16 gap-16 items-center">
-          <div className="rounded-2xl overflow-hidden aspect-[4/3]">
-            <img
-              src="/images/gallery-luxury-bath.png"
-              alt="Luxury bathroom remodel"
-              className="w-full h-full object-cover"
+      {/* Intro split — photo-forward, minimal copy */}
+      <section className={`${SECTION} bg-cream`}>
+        <div className={`${CONTAINER} grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16`}>
+          <div className="relative">
+            <ImageReveal className="relative aspect-[4/3] overflow-hidden">
+              <Image
+                src="/images/Modern Spa Sanctuary.png"
+                alt="Luxury bathroom remodel with freestanding tub"
+                fill
+                sizes="(max-width: 1024px) 100vw, 46vw"
+                className="object-cover"
+              />
+            </ImageReveal>
+            <div
+              aria-hidden="true"
+              className="absolute -bottom-4 -right-4 -z-10 hidden h-full w-full border border-brand/30 lg:block"
             />
           </div>
           <div>
-            <span className="eyebrow block mb-4">Expert Bath Remodeling</span>
-            <h2
-              style={{
-                fontFamily: "var(--font-playfair)",
-                fontSize: "48px",
-                fontWeight: 500,
-                letterSpacing: "-0.02em",
-                color: "#111111",
-                lineHeight: 1.08,
-              }}
-            >
-              Your Dream Bathroom, Done Right
-            </h2>
-            <p
-              style={{
-                fontSize: "17px",
-                color: "#777777",
-                lineHeight: 1.7,
-                marginTop: "1rem",
-              }}
-            >
-              At 10 Day Kitchens, we&apos;ve built a process that respects your time, your home, and your investment.
-              From the first conversation to the final walkthrough, every bathroom project is kept on schedule, on
-              budget, and stress-free.
-            </p>
-            <a
-              href="/contact"
-              className="mt-8 inline-block bg-[#5DBB46] text-white rounded-full px-8 py-4 text-sm font-bold uppercase tracking-wider hover:bg-[#4aa836] transition-all"
-            >
-              Schedule Free Consultation
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* 5-Step Process */}
-      <section className="bg-[#EEF4EB] py-24 px-16">
-        <div className="text-center mb-12">
-          <span className="eyebrow block mb-4">Our Process</span>
-          <h2
-            style={{
-              fontFamily: "var(--font-playfair)",
-              fontSize: "clamp(36px,3.5vw,52px)",
-              letterSpacing: "-0.02em",
-              fontWeight: 500,
-              color: "#111111",
-            }}
-          >
-            From Consultation to Completion
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-5 divide-y md:divide-y-0 md:divide-x divide-[rgba(17,17,17,0.08)] border-y border-[rgba(17,17,17,0.08)]">
-          {processSteps.map((step) => (
-            <div key={step.num} className="p-8 flex flex-col bg-white md:bg-transparent">
-              <span
-                style={{
-                  fontFamily: "var(--font-playfair)",
-                  fontSize: "4.5rem",
-                  lineHeight: 1,
-                  color: "rgba(93,187,70,0.15)",
-                  fontWeight: 500,
-                  display: "block",
-                  marginBottom: "1.5rem",
-                }}
+            <SectionHeader
+              label="Expert Bath Remodeling"
+              title={
+                <>
+                  Your dream bathroom, <em className="font-medium italic text-brand-dark">done right.</em>
+                </>
+              }
+              body="A process that respects your time, your home, and your investment — on schedule, on budget, and stress-free."
+            />
+            <FadeIn delay={0.1} className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
+              {highlights.map((h) => (
+                <span key={h.label} className="flex items-center gap-2.5 text-[13px] font-bold uppercase tracking-[0.14em] text-ink">
+                  <h.icon className="size-4 text-brand" />
+                  {h.label}
+                </span>
+              ))}
+            </FadeIn>
+            <FadeIn delay={0.15} className="mt-9">
+              <Link
+                href="/contact"
+                className="btn btn-solid inline-flex h-12 items-center transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_34px_rgba(93,187,70,0.32)]"
               >
-                {step.num}
-              </span>
-              <h3 className="text-sm font-bold uppercase tracking-wide text-[#111111] mb-3 leading-snug">
-                {step.title}
-              </h3>
-              <p className="text-sm text-[#777777] leading-relaxed">{step.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Bath Gallery */}
-      <section className="bg-white py-24 px-16">
-        <div className="text-center mb-12">
-          <span className="eyebrow block mb-4">Bath Gallery</span>
-          <h2
-            style={{
-              fontFamily: "var(--font-playfair)",
-              fontSize: "clamp(36px,3.5vw,52px)",
-              letterSpacing: "-0.02em",
-              fontWeight: 500,
-              color: "#111111",
-            }}
-          >
-            Recent Bathrooms
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-6xl mx-auto">
-          {galleryImages.map((img) => (
-            <div key={img.src} className="rounded-xl overflow-hidden aspect-[4/3]">
-              <img
-                src={img.src}
-                alt={img.alt}
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-              />
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Service Area CTA */}
-      <section className="bg-[#1C1C1C] py-16 px-16">
-        <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-          <div>
-            <h3
-              style={{
-                fontFamily: "var(--font-playfair)",
-                fontSize: "32px",
-                fontWeight: 500,
-                color: "white",
-                letterSpacing: "-0.02em",
-              }}
-            >
-              Serving Pierce &amp; Thurston Counties
-            </h3>
-            <p className="text-white/60 text-sm mt-2">
-              Lacey, Olympia, Tacoma, Chehalis and communities throughout Pierce &amp; Thurston Counties.
-            </p>
+                Schedule Free Consultation
+              </Link>
+            </FadeIn>
           </div>
-          <a
-            href="/contact"
-            className="bg-[#5DBB46] text-white rounded-full px-8 py-4 text-sm font-bold uppercase tracking-wider hover:bg-[#4aa836] transition-all whitespace-nowrap"
-          >
-            Get Your Free Quote
-          </a>
         </div>
       </section>
+
+      {/* Process — compact editorial row */}
+      <section className={`${SECTION} bg-sand`}>
+        <div className={CONTAINER}>
+          <div className="mx-auto mb-12 max-w-2xl text-center [&>div]:mx-auto">
+            <SectionHeader label="Our Process" title="From consultation to completion." />
+          </div>
+          <div className="grid border-y border-line md:grid-cols-5 md:divide-x md:divide-line">
+            {processSteps.map((step, i) => (
+              <FadeIn key={step.num} delay={i * 0.06} className="flex flex-col border-b border-line p-7 last:border-b-0 md:border-b-0">
+                <span className="mb-5 block font-condensed text-6xl font-semibold leading-none text-brand/25">
+                  {step.num}
+                </span>
+                <h3 className="mb-2 text-[13px] font-bold uppercase tracking-[0.12em] text-ink">{step.title}</h3>
+                <p className="text-sm leading-relaxed text-ink-soft/80">{step.desc}</p>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Gallery — photography does the selling */}
+      <section id="gallery" className={`${SECTION} bg-cream`}>
+        <div className={CONTAINER}>
+          <div className="mx-auto mb-12 max-w-2xl text-center [&>div]:mx-auto">
+            <SectionHeader
+              label="Bath Gallery"
+              title={
+                <>
+                  Recent bathrooms, <em className="font-medium italic text-brand-dark">real homes.</em>
+                </>
+              }
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+            {galleryImages.map((img, i) => (
+              <ImageReveal key={img.src} delay={(i % 3) * 0.07} className="group relative aspect-[4/3] overflow-hidden">
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                />
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/45 to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-white">
+                    {img.caption} · 10 business days
+                  </p>
+                </div>
+              </ImageReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Fast Bath cross-sell */}
+      <section className="bg-cream pb-14 sm:pb-16 lg:pb-20">
+        <div className={CONTAINER}>
+          <FadeIn className="grid gap-8 border border-line bg-paper p-8 md:grid-cols-[1fr_auto] md:items-center md:p-10">
+            <div>
+              <p className="mb-3 text-[12px] font-bold uppercase tracking-[0.24em] text-brand">
+                Need a faster refresh?
+              </p>
+              <h2 className="font-display text-[1.9rem] font-semibold leading-[1.1] tracking-[-0.015em] text-ink sm:text-[2.3rem]">
+                Fast Bath may be the better fit.
+              </h2>
+              <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-ink-soft/80">
+                Tub-to-shower conversions, shower replacements, vanity upgrades, and targeted refreshes — without a full renovation.
+              </p>
+            </div>
+            <Link
+              href="/fast-bath"
+              className="group inline-flex h-12 items-center justify-center gap-2 border border-ink/25 px-6 text-[12px] font-bold uppercase tracking-[0.14em] text-ink transition-all duration-300 hover:-translate-y-0.5 hover:border-ink/50"
+            >
+              Explore Fast Bath
+              <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1.5" />
+            </Link>
+          </FadeIn>
+        </div>
+      </section>
+
+      <PageCta
+        eyebrow="Serving Pierce & Thurston Counties"
+        title="Plan a bathroom remodel that feels calm from day one."
+        body="Lacey, Olympia, Tacoma, Chehalis, and communities across the South Sound."
+        primaryLabel="Get Your Free Quote"
+        watermark="Bath"
+      />
     </main>
   );
 }

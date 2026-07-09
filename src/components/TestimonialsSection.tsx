@@ -29,7 +29,7 @@ export default function TestimonialsSection() {
 
   return (
     <section className="bg-[#1C1C1C] py-24 md:py-32 section-pad">
-      <div className="container grid gap-16 lg:grid-cols-12 lg:gap-20">
+      <div className="site-container grid gap-16 lg:grid-cols-12 lg:gap-20">
         {/* LEFT — eyebrow + heading + dash nav */}
         <motion.div
           initial={{ opacity: 0, y: 28 }}

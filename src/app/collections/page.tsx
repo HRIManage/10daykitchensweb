@@ -183,21 +183,34 @@ export default function CollectionsPage() {
   return (
     <main>
       {/* ── Hero ── */}
-      <section className="page-hero">
-        <div
-          className="page-hero-bg"
-          style={{ backgroundImage: "url('https://images.squarespace-cdn.com/content/v1/6982349a56e1e46c7b2e0861/b662f8dd-f7f8-490d-8cce-bbb2eefbc8b8/whitendale.webp')" }}
-        />
-        <div className="page-hero-overlay" aria-hidden="true" />
-        <div className="page-hero-inner" ref={heroRef}>
-          <span className="eyebrow h-item" style={{ opacity: 0 }}>Materials &amp; Brands</span>
-          <h1 className="h-item" style={{ opacity: 0 }}>
-            Our<br />
-            <em>Collections</em>
-          </h1>
-          <p className="page-hero-sub h-item" style={{ opacity: 0 }}>
-            Five material categories. Brands we believe in. Every sample available before you decide. This is what we carry and why we carry it.
-          </p>
+      <section className="bg-paper pt-[158px] sm:pt-[176px]">
+        <div className="site-container grid min-h-[610px] gap-10 pb-14 lg:grid-cols-[0.88fr_1.12fr] lg:items-center lg:pb-18">
+          <div className="max-w-2xl" ref={heroRef}>
+            <span className="eyebrow h-item mb-4 block text-[0.82rem] font-bold" style={{ opacity: 0 }}>
+              Materials &amp; Brands
+            </span>
+            <h1
+              className="h-item max-w-3xl text-[clamp(2.55rem,4.7vw,4.75rem)] leading-[1.02] text-ink"
+              style={{ opacity: 0 }}
+            >
+              Our
+              <br />
+              <em className="font-medium italic text-brand-dark">Collections</em>
+            </h1>
+            <p className="h-item mt-6 max-w-xl text-[1rem] leading-8 text-ink-soft" style={{ opacity: 0 }}>
+              Five material categories. Brands we believe in. Every sample available before you decide. This is what we carry and why we carry it.
+            </p>
+          </div>
+          <div className="relative">
+            <div className="relative aspect-[1.18/1] overflow-hidden border border-line bg-white shadow-[0_26px_80px_rgba(43,39,35,0.12)]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://images.squarespace-cdn.com/content/v1/6982349a56e1e46c7b2e0861/b662f8dd-f7f8-490d-8cce-bbb2eefbc8b8/whitendale.webp"
+                alt="Quartz countertop collection sample"
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -219,7 +232,7 @@ export default function CollectionsPage() {
             id={id}
             style={{
               padding: "clamp(72px, 10vw, 120px) var(--pad)",
-              background: index % 2 === 0 ? "var(--bg)" : "var(--bg-surface)",
+              background: "var(--bg)",
               borderBottom: "1px solid var(--gold-border)",
             }}
           >
@@ -297,7 +310,7 @@ export default function CollectionsPage() {
       </div>
 
       {/* ── Why we carry what we carry ── */}
-      <section style={{ background: "var(--bg-surface)", padding: "clamp(80px, 10vw, 128px) var(--pad)", borderBottom: "1px solid var(--gold-border)" }}>
+      <section style={{ background: "var(--bg)", padding: "clamp(80px, 10vw, 128px) var(--pad)", borderBottom: "1px solid var(--gold-border)" }}>
         <div
           className="coll-why-grid"
           style={{ maxWidth: "var(--max)", margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "clamp(48px, 8vw, 100px)", alignItems: "center" }}
@@ -321,7 +334,7 @@ export default function CollectionsPage() {
               Schedule Free Consultation
             </a>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "1px", background: "var(--gold-border)", border: "1px solid var(--gold-border)" }}>
+          <div className="coll-lift-card" style={{ display: "flex", flexDirection: "column", gap: "1px", background: "var(--gold-border)", border: "1px solid var(--gold-border)" }}>
             {[
               { title: "Quality verified", body: "Every product in our catalog has been tested or installed by our team before it earns a spot in the showroom." },
               { title: "Samples in person", body: "Nothing is sold sight-unseen. Every material category has physical samples available for you to see in real light." },
