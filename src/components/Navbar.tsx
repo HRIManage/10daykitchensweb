@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown, Phone } from "lucide-react";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { site } from "@/lib/site";
 
 type DropdownItem = { label: string; href: string; description?: string };
@@ -58,6 +59,7 @@ const navLinkClass =
   "hover:after:origin-left hover:after:scale-x-100";
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -75,6 +77,16 @@ export default function Navbar() {
       document.body.style.overflow = "";
     };
   }, [mobileOpen]);
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      setOpenMenu(null);
+      setMobileOpen(false);
+      document.body.style.overflow = "";
+      window.scrollTo(0, 0);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [pathname]);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
@@ -152,7 +164,11 @@ export default function Navbar() {
                 onMouseLeave={() => setOpenMenu(null)}
               >
                 {item.href ? (
-                  <Link href={item.href} className={`${navLinkClass} text-ink hover:text-brand-dark`}>
+                  <Link
+                    href={item.href}
+                    onClick={() => setOpenMenu(null)}
+                    className={`${navLinkClass} text-ink hover:text-brand-dark`}
+                  >
                     {item.label}
                   </Link>
                 ) : (
@@ -180,6 +196,7 @@ export default function Navbar() {
                         <Link
                           key={child.label}
                           href={child.href}
+                          onClick={() => setOpenMenu(null)}
                           className="group relative block border-b border-line/70 px-5 py-4 transition last:border-0 hover:bg-white/68"
                         >
                           <span className="flex items-center justify-between gap-6 text-[13px] font-bold uppercase tracking-[0.12em] text-ink transition group-hover:text-brand-dark">
@@ -203,6 +220,7 @@ export default function Navbar() {
           <div className="flex flex-none items-center gap-3">
             <Link
               href="/contact-1"
+              onClick={() => setOpenMenu(null)}
               className="hidden h-11 items-center bg-brand px-6 text-[12px] font-bold uppercase tracking-[0.14em] text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-dark hover:shadow-[0_10px_28px_rgba(93,187,70,0.35)] md:inline-flex"
             >
               Contact Us
