@@ -5,21 +5,21 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useReducedMotion } from "@/components/motion/useReducedMotion";
 
 /** Premium easing curve shared by every ported animation. */
-export const ease = [0.16, 1, 0.3, 1] as const;
+export const ease = [0.22, 1, 0.36, 1] as const;
 
 export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease } },
+  hidden: { opacity: 0, y: 28 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease } },
 };
 
 export const staggerContainer: Variants = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
+  show: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
 };
 
 export const staggerItem: Variants = {
   hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease } },
 };
 
 /**
@@ -90,59 +90,8 @@ export function CountUp({
   );
 }
 
-/** Premium Framer-style rolling digit animated number ticker. */
-export function AnimatedNumber({
-  value,
-  className = "",
-}: {
-  value: number;
-  className?: string;
-}) {
-  const valueString = value.toString();
-  const digits = valueString.split("");
-
-  return (
-    <span className={`inline-flex overflow-hidden ${className}`}>
-      {digits.map((char, index) => {
-        // If it's not a digit, render it directly
-        if (!/^\d$/.test(char)) {
-          return <span key={index}>{char}</span>;
-        }
-
-        const digitVal = parseInt(char, 10);
-
-        return (
-          <span
-            key={index}
-            className="relative inline-block overflow-hidden h-[1em] leading-none tabular-nums"
-          >
-            {/* Invisible placeholder of the digit to preserve layout width naturally */}
-            <span className="invisible select-none">{char}</span>
-            <motion.span
-              className="absolute top-0 left-0 w-full flex flex-col text-center"
-              initial={{ y: "0%" }}
-              whileInView={{ y: `${-digitVal * 10}%` }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{
-                duration: 1.8,
-                ease: [0.16, 1, 0.3, 1], // easeOutExpo
-                delay: index * 0.08,
-              }}
-            >
-              {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => (
-                <span
-                  key={n}
-                  className="block w-full h-[1em] leading-none select-none"
-                >
-                  {n}
-                </span>
-              ))}
-            </motion.span>
-          </span>
-        );
-      })}
-    </span>
-  );
+export function AnimatedNumber({ value }: { value: number }) {
+  return <CountUp value={value} />;
 }
 
 /**

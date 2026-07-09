@@ -49,7 +49,7 @@ export default function DayByDayTimeline() {
               initial={{ opacity: 0, x: -24 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px", amount: 0.6 }}
-              transition={{ duration: 0.8, ease, delay: (i % 5) * 0.1 }}
+              transition={{ duration: 0.6, ease, delay: (i % 5) * 0.06 }}
               className="relative flex gap-6 sm:gap-8 items-start pl-[0px]"
             >
               {/* Spine node */}

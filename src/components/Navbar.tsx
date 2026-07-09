@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { ChevronDown, Mail, Phone } from "lucide-react";
+import { useEffect, useState } from "react";
+import { site } from "@/lib/site";
 
 type DropdownItem = { label: string; href: string };
 type NavItem = { label: string; href?: string; children?: DropdownItem[] };
@@ -29,47 +31,36 @@ const navItems: NavItem[] = [
   },
 ];
 
+function FacebookIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" className="size-5 fill-current">
+      <path d="M14.2 8.3V6.9c0-.7.5-.9.9-.9h2.3V2.2L14.2 2c-3.6 0-4.4 2.1-4.4 4.2v2.1H7v3.9h2.8V22h4.2v-9.8h3.1l.5-3.9h-3.4Z" />
+    </svg>
+  );
+}
+
+function InstagramIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" className="size-5 fill-none stroke-current stroke-2">
+      <rect width="16" height="16" x="4" y="4" rx="4" />
+      <circle cx="12" cy="12" r="3.2" />
+      <path d="M17.4 6.8h.01" />
+    </svg>
+  );
+}
+
 export default function Navbar() {
-  const pathname = usePathname();
-  const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
-  const [heroHeight, setHeroHeight] = useState(() => typeof window !== "undefined" ? window.innerHeight * 1.55 : 1200);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const [visible, setVisible] = useState(true);
-  const lastScrollY = useRef(0);
-
   useEffect(() => {
-    const handler = () => {
-      const currentScrollY = window.scrollY;
-      setScrolled(currentScrollY > 80);
-      setScrollY(currentScrollY);
-
-      // Hide on scroll down, show on scroll up
-      if (currentScrollY > lastScrollY.current && currentScrollY > 120) {
-        setVisible(false);
-      } else {
-        setVisible(true);
-      }
-      lastScrollY.current = currentScrollY;
-    };
+    const handler = () => setScrolled(window.scrollY > 48);
+    handler();
     window.addEventListener("scroll", handler, { passive: true });
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const handleResize = () => {
-        setHeroHeight(window.innerHeight * 1.55);
-      };
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }
-  }, []);
-
-  // Lock body scroll while the mobile menu is open.
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => {
@@ -77,261 +68,162 @@ export default function Navbar() {
     };
   }, [mobileOpen]);
 
-  // The hero is now a light section (not a full-bleed dark photo), so the
-  // nav is always in its solid/dark-on-light state — only the shadow reacts
-  // to scroll now.
-  const solidNav = true;
-
-  // Compute header styling for scroll hiding on homepage
-  let headerStyle: React.CSSProperties = {};
-  if (isHome) {
-    if (scrollY > 40 && scrollY < heroHeight) {
-      headerStyle = {
-        opacity: 0,
-        transform: "translateY(-100%)",
-        pointerEvents: "none",
-      };
-    } else if (scrollY >= heroHeight) {
-      if (visible) {
-        headerStyle = {
-          opacity: 1,
-          transform: "translateY(0)",
-        };
-      } else {
-        headerStyle = {
-          opacity: 0,
-          transform: "translateY(-100%)",
-          pointerEvents: "none",
-        };
-      }
-    }
-  } else {
-    if (visible) {
-      headerStyle = {
-        opacity: 1,
-        transform: "translateY(0)",
-      };
-    } else {
-      headerStyle = {
-        opacity: 0,
-        transform: "translateY(-100%)",
-        pointerEvents: "none",
-      };
-    }
-  }
-
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out" style={headerStyle}>
-      {/* Utility bar — transparent over the hero, solidifies on scroll */}
-      <div
-        className={`h-11 flex justify-between items-center px-5 sm:px-8 transition-colors duration-300 ${
-          scrolled ? "bg-[#F7FAF5]" : "bg-transparent"
-        }`}
-      >
-        <a
-          href="tel:+13605573444"
-          className="text-[13px] sm:text-[14px] transition-colors duration-200"
-          style={{ fontFamily: "var(--font-manrope)" }}
-        >
-          <span className="text-[#5DBB46] hover:text-[#4aa836] font-extrabold">(360) 557-3444</span>
-          <span className="hidden sm:inline text-[#222222] font-semibold"> · office@10daykitchens.com</span>
-        </a>
-        <div className="flex gap-6 sm:gap-8">
-          <a
-            href="https://www.instagram.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#222222] hover:text-[#5DBB46] text-[13px] sm:text-[14px] font-bold transition-colors duration-200"
-            style={{ fontFamily: "var(--font-manrope)" }}
-          >
-            Instagram
-          </a>
-          <a
-            href="https://www.facebook.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#222222] hover:text-[#5DBB46] text-[13px] sm:text-[14px] font-bold transition-colors duration-200"
-            style={{ fontFamily: "var(--font-manrope)" }}
-          >
-            Facebook
-          </a>
+    <header className="fixed inset-x-0 top-0 z-50">
+      <div className="border-b border-brand/25 bg-[#181d16] text-brand-light">
+        <div className="mx-auto flex min-h-11 w-full max-w-[1240px] items-center justify-between gap-4 px-5 text-[14px] font-bold sm:px-8 lg:px-10">
+          <div className="flex min-w-0 items-center gap-4 text-brand-light/88">
+            <a href={site.phoneHref} className="flex items-center gap-1.5 transition hover:text-white">
+              <Phone className="size-3.5" />
+              <span>{site.phone}</span>
+            </a>
+            <a href={`mailto:${site.email}`} className="flex min-w-0 items-center gap-1.5 transition hover:text-white">
+              <Mail className="size-3.5" />
+              <span className="hidden truncate sm:inline">{site.email}</span>
+            </a>
+          </div>
+
+          <div className="flex items-center gap-3 text-brand-light/88">
+            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="transition hover:text-white">
+              <FacebookIcon />
+            </a>
+            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="transition hover:text-white">
+              <InstagramIcon />
+            </a>
+          </div>
         </div>
       </div>
 
       <nav
-        className={`flex justify-between items-center py-4 px-5 sm:px-8 transition-all duration-300 ${
-          scrolled
-            ? "bg-white/95 backdrop-blur-md shadow-[0_1px_0_rgba(0,0,0,0.08)]"
-            : "bg-transparent"
+        className={`border-b border-black/10 bg-[#fffefa]/95 backdrop-blur-md transition-shadow ${
+          scrolled ? "shadow-[0_10px_30px_rgba(0,0,0,0.06)]" : ""
         }`}
       >
-        <Link
-          href="/"
-          aria-label="10 Day Kitchens — home"
-          className="group inline-flex items-center"
-          onClick={() => setMobileOpen(false)}
-        >
-          <img
-            src="/images/logo.webp"
-            alt="10 Day Kitchens — Kitchen & Bath Remodeling"
-            width={1500}
-            height={1000}
-            className={`w-auto origin-left transition-all duration-500 ease-out group-hover:scale-[1.03] ${
-              scrolled ? "h-16 sm:h-20" : "h-20 sm:h-24"
-            }`}
-            style={{
-              filter: "none",
-            }}
-          />
-        </Link>
-
-        <ul className="hidden md:flex gap-8 list-none m-0 p-0 items-center">
-          {navItems.map((item) => (
-            <li
-              key={item.label}
-              className="relative"
-              onMouseEnter={() => item.children && setOpenMenu(item.label)}
-              onMouseLeave={() => setOpenMenu(null)}
-            >
-              {item.href ? (
-                <a
-                  href={item.href}
-                  className={`text-[14px] font-bold uppercase tracking-[0.11em] transition-colors duration-300 ${
-                    solidNav ? "text-[#111111]/80 hover:text-[#5DBB46]" : "text-white/85 hover:text-white"
-                  }`}
-                  style={{ fontFamily: "var(--font-manrope)" }}
-                >
-                  {item.label}
-                </a>
-              ) : (
-                <button
-                  className={`text-[14px] font-bold uppercase tracking-[0.11em] transition-colors duration-300 flex items-center gap-1.5 bg-transparent border-0 p-0 cursor-pointer ${
-                    solidNav ? "text-[#111111]/80 hover:text-[#5DBB46]" : "text-white/85 hover:text-white"
-                  }`}
-                  style={{ fontFamily: "var(--font-manrope)" }}
-                >
-                  {item.label}
-                  <svg
-                    className={`w-3.5 h-3.5 opacity-70 transition-transform duration-200 ${openMenu === item.label ? "rotate-180" : ""}`}
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2.5}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-              )}
-
-              {item.children && openMenu === item.label && (
-                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 min-w-[220px]">
-                  <div className="bg-white rounded-xl shadow-[0_12px_48px_rgba(0,0,0,0.12)] overflow-hidden border border-[rgba(0,0,0,0.06)]">
-                    {item.children.map((child) => (
-                      <a
-                        key={child.label}
-                        href={child.href}
-                        className="block px-6 py-3.5 text-[14px] font-bold text-[#111111]/80 hover:text-[#5DBB46] hover:bg-[#F7FAF5] transition-colors border-b border-[rgba(0,0,0,0.05)] last:border-0"
-                        style={{ fontFamily: "var(--font-manrope)" }}
-                      >
-                        {child.label}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </li>
-          ))}
-        </ul>
-
-        <div className="flex items-center gap-3">
-          <a
-            href="/contact"
-            className="hidden md:inline-block bg-[#5DBB46] text-white rounded-full px-6 py-2.5 text-xs font-semibold uppercase tracking-wider hover:bg-[#4aa836] transition-all shadow-[0_2px_12px_rgba(93,187,70,0.30)]"
-            style={{ fontFamily: "var(--font-manrope)" }}
-          >
-            Contact Us
-          </a>
-
-          {/* Mobile menu toggle */}
-          <button
-            type="button"
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
-            aria-expanded={mobileOpen}
-            onClick={() => setMobileOpen((v) => !v)}
-            className="md:hidden relative flex h-10 w-10 flex-col items-center justify-center gap-[5px] rounded-full border border-transparent"
-          >
-            <span
-              className={`block h-[2px] w-6 rounded-full transition-all duration-300 ${
-                solidNav ? "bg-[#111111]" : "bg-white"
-              } ${mobileOpen ? "translate-y-[7px] rotate-45" : ""}`}
+        <div className="mx-auto flex h-[104px] w-full max-w-[1240px] items-center justify-between px-5 sm:px-8 lg:px-10">
+          <Link href="/" aria-label={`${site.name} home`} onClick={() => setMobileOpen(false)}>
+            <Image
+              src="/images/logo.webp"
+              alt={site.name}
+              width={264}
+              height={112}
+              priority
+              className="h-[88px] w-auto object-contain"
             />
-            <span
-              className={`block h-[2px] w-6 rounded-full transition-all duration-300 ${
-                solidNav ? "bg-[#111111]" : "bg-white"
-              } ${mobileOpen ? "opacity-0" : ""}`}
-            />
-            <span
-              className={`block h-[2px] w-6 rounded-full transition-all duration-300 ${
-                solidNav ? "bg-[#111111]" : "bg-white"
-              } ${mobileOpen ? "-translate-y-[7px] -rotate-45" : ""}`}
-            />
-          </button>
-        </div>
-      </nav>
+          </Link>
 
-      {/* Mobile menu panel */}
-      <div
-        className={`md:hidden overflow-hidden bg-white border-t border-[rgba(0,0,0,0.06)] transition-[max-height,opacity] duration-400 ease-out ${
-          mobileOpen ? "max-h-[80vh] opacity-100 shadow-[0_20px_40px_rgba(0,0,0,0.12)]" : "max-h-0 opacity-0"
-        }`}
-      >
-        <nav className="px-5 py-4 overflow-y-auto max-h-[calc(80vh-1rem)]">
-          <ul className="list-none m-0 p-0 flex flex-col">
+          <ul className="hidden items-center gap-6 md:flex">
             {navItems.map((item) => (
-              <li key={item.label} className="border-b border-[rgba(0,0,0,0.06)] last:border-0">
+              <li
+                key={item.label}
+                className="relative"
+                onMouseEnter={() => item.children && setOpenMenu(item.label)}
+                onMouseLeave={() => setOpenMenu(null)}
+              >
                 {item.href ? (
-                  <a
+                  <Link
                     href={item.href}
-                    onClick={() => setMobileOpen(false)}
-                    className="block py-3.5 text-sm font-semibold uppercase tracking-[0.08em] text-[#111111]"
-                    style={{ fontFamily: "var(--font-manrope)" }}
+                    className="text-[14px] font-bold uppercase tracking-[0.11em] text-ink-soft transition hover:text-brand"
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 ) : (
-                  <div className="py-3.5">
-                    <p
-                      className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#5DBB46] mb-2"
-                      style={{ fontFamily: "var(--font-manrope)" }}
-                    >
-                      {item.label}
-                    </p>
-                    <div className="flex flex-col gap-1">
-                      {item.children?.map((child) => (
-                        <a
+                  <button
+                    type="button"
+                    className="flex items-center gap-1 text-[14px] font-bold uppercase tracking-[0.11em] text-ink-soft transition hover:text-brand"
+                  >
+                    {item.label}
+                    <ChevronDown
+                      aria-hidden="true"
+                      className={`size-3 transition-transform ${openMenu === item.label ? "rotate-180" : ""}`}
+                    />
+                  </button>
+                )}
+
+                {item.children && openMenu === item.label ? (
+                  <div className="absolute left-1/2 top-full min-w-[210px] -translate-x-1/2 pt-3">
+                    <div className="overflow-hidden border border-black/10 bg-white shadow-[0_18px_50px_rgba(0,0,0,0.12)]">
+                      {item.children.map((child) => (
+                        <Link
                           key={child.label}
                           href={child.href}
-                          onClick={() => setMobileOpen(false)}
-                          className="block py-1.5 text-sm font-medium text-[#444444]"
-                          style={{ fontFamily: "var(--font-manrope)" }}
+                          className="block border-b border-black/5 px-5 py-3 text-sm text-ink-soft transition last:border-0 hover:bg-[#f7f7f4] hover:text-ink"
                         >
                           {child.label}
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   </div>
-                )}
+                ) : null}
               </li>
             ))}
           </ul>
-          <a
+
+          <div className="flex items-center gap-3">
+            <Link
+              href="/contact"
+              className="hidden min-h-11 items-center bg-brand px-5 text-[13px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-brand-dark md:inline-flex"
+            >
+              Contact Us
+            </Link>
+            <button
+              type="button"
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileOpen}
+              onClick={() => setMobileOpen((value) => !value)}
+              className="flex h-10 w-10 flex-col items-center justify-center gap-[5px] md:hidden"
+            >
+              <span className={`h-[2px] w-6 bg-ink transition ${mobileOpen ? "translate-y-[7px] rotate-45" : ""}`} />
+              <span className={`h-[2px] w-6 bg-ink transition ${mobileOpen ? "opacity-0" : ""}`} />
+              <span className={`h-[2px] w-6 bg-ink transition ${mobileOpen ? "-translate-y-[7px] -rotate-45" : ""}`} />
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <div
+        className={`overflow-hidden border-b border-black/10 bg-[#fffefa] transition-[max-height,opacity] duration-300 md:hidden ${
+          mobileOpen ? "max-h-[82vh] opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <nav className="max-h-[80vh] overflow-y-auto px-5 py-4">
+          {navItems.map((item) => (
+            <div key={item.label} className="border-b border-black/10 py-3 last:border-0">
+              {item.href ? (
+                <Link
+                  href={item.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="block text-[14px] font-bold uppercase tracking-[0.11em] text-ink"
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <>
+                  <p className="mb-2 text-[13px] font-bold uppercase tracking-[0.12em] text-brand">
+                    {item.label}
+                  </p>
+                  <div className="grid gap-2">
+                    {item.children?.map((child) => (
+                      <Link
+                        key={child.label}
+                        href={child.href}
+                        onClick={() => setMobileOpen(false)}
+                        className="text-[14px] font-bold text-ink-soft"
+                      >
+                        {child.label}
+                      </Link>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          ))}
+          <Link
             href="/contact"
             onClick={() => setMobileOpen(false)}
-            className="mt-5 block text-center bg-[#5DBB46] text-white rounded-full px-6 py-3.5 text-xs font-semibold uppercase tracking-wider shadow-[0_2px_12px_rgba(93,187,70,0.30)]"
-            style={{ fontFamily: "var(--font-manrope)" }}
+            className="mt-5 block bg-brand px-6 py-3 text-center text-[13px] font-bold uppercase tracking-[0.12em] text-white"
           >
             Book Your Free Consultation
-          </a>
+          </Link>
         </nav>
       </div>
     </header>

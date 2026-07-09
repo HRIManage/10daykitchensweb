@@ -1,165 +1,109 @@
-"use client";
-
-import Image from "next/image";
-import { ArrowDown } from "lucide-react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
-import { MaskLine } from "@/lib/motion";
+import { Award, Home, ShieldCheck, BadgeCheck } from "lucide-react";
+import { MaskLine, CountUp } from "@/lib/motion";
 import Reveal from "@/components/motion/Reveal";
 
+const trustItems = [
+  { icon: Award, num: "35+", label: "Years Experience", count: 35, suffix: "+" },
+  { icon: Home, num: "Family", label: "Owned & Operated", count: null, suffix: "" },
+  { icon: ShieldCheck, num: "5-Year", label: "Warranty", count: 5, suffix: "-Year" },
+  { icon: BadgeCheck, num: "Licensed", label: "& Bonded", count: null, suffix: "" },
+] as const;
+
 export default function HeroSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [hideCopy, setHideCopy] = useState(false);
-
-  // Zoom-and-fade hero: the section is taller than the viewport and its inner
-  // frame is pinned (sticky). The kitchen is a full-bleed background with the
-  // copy on top. As the page scrolls, the copy fades away and the kitchen
-  // smoothly zooms in — pushing past the room to feature the marble island and
-  // cabinetry up close.
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end end"],
-  });
-
-  useEffect(() => {
-    return scrollYProgress.on("change", (latest) => {
-      setHideCopy(latest > 0.26);
-    });
-  }, [scrollYProgress]);
-
-  // Background zooms in AND slides up together across the pinned scroll —
-  // pushing closer while lifting to reveal the whole kitchen.
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.56]);
-  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]);
-  // Copy fades and lifts away, fully gone by ~a third of the scroll.
-  const copyY = useTransform(scrollYProgress, [0, 0.3], ["0vh", "-15vh"]);
-  const copyOpacity = useTransform(scrollYProgress, [0, 0.22], [1, 0]);
-  // Legibility wash fades as the copy leaves, letting the moving kitchen go
-  // full-strength and vivid.
-  const washOpacity = useTransform(scrollYProgress, [0, 0.26], [1, 0]);
-
-  // Layered parallax clip: the foreground photo layer slides up to cover the text stack
-  const clipPercent = useTransform(scrollYProgress, [0, 0.28], [100, 0]);
-  const foregroundClip = useTransform(clipPercent, (v) => `inset(${v}% 0% 0% 0%)`);
-
-
-
   return (
-    <>
-      <section
-        ref={sectionRef}
-        className="relative h-[260vh] bg-[#F7FAF5]"
-        aria-label="10 Day Kitchens — kitchen and bath remodeling done in 10 business days"
-      >
-        {/* Pinned viewport — the hero holds while the kitchen zooms in */}
-        <div className="sticky top-0 h-screen overflow-hidden bg-[#F7FAF5]">
-          {/* Background kitchen photo — z-0, zooms in as the user scrolls */}
-          <motion.div
-            aria-hidden="true"
-            className="absolute inset-x-0 top-0 z-0 h-[150%]"
-            style={{
-              scale: imageScale,
-              y: imageY,
-              transformOrigin: "center 70%",
-            }}
-          >
-            <Image
-              src="/images/98debbd8-2e4d-44d5-a9c5-184e11eb8a5e.png"
-              alt="Premium marble waterfall island kitchen with oak cabinetry, brass pendant lighting, and fresh greenery — custom remodel by 10 Day Kitchens in Lacey, WA"
-              fill
-              priority
-              quality={90}
-              sizes="100vw"
-              className="object-cover"
-              style={{ objectPosition: "center 62%" }}
-            />
-          </motion.div>
+    <section className="relative overflow-hidden bg-[#F7FAF5]">
+      {/* Soft brand glows — depth behind the hero content */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-32 top-0 h-[34rem] w-[34rem] rounded-full bg-[#5DBB46]/10 blur-3xl"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-24 bottom-0 h-80 w-80 rounded-full bg-[#5DBB46]/[0.06] blur-3xl"
+      />
 
-          {/* Legibility wash — z-2, light where the copy sits */}
-          <motion.div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 z-2"
-            style={{
-              opacity: washOpacity,
-              background:
-                "linear-gradient(to bottom, rgba(247,250,245,0.96) 0%, rgba(247,250,245,0.85) 26%, rgba(247,250,245,0.45) 50%, rgba(247,250,245,0.1) 72%, rgba(247,250,245,0) 100%)",
-            }}
-          />
+      <div className="relative z-10 section-pad pt-36 pb-16 md:pt-44 md:pb-20 max-w-screen-xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* LEFT — copy */}
+          <div>
+            <Reveal className="mb-6">
+              <span className="guarantee-badge">
+                <span className="dot" aria-hidden="true" />
+                <span className="label">
+                  Completed in <strong>10 business days</strong> — guaranteed
+                </span>
+              </span>
+            </Reveal>
 
-          {/* Headline stack — z-5, sits above background photo and hides behind foreground photo */}
-          <motion.div
-            className="relative z-5 mx-auto flex w-full max-w-5xl flex-col items-center px-6 text-center"
-            style={{
-              paddingTop: "clamp(175px, 21vh, 225px)",
-              y: copyY,
-              opacity: copyOpacity,
-              display: hideCopy ? "none" : "flex",
-            }}
-          >
-            <h1
-              className="mb-6 text-[#111111]"
-              style={{
-                fontSize: "clamp(32px, 5vw, 66px)",
-                fontWeight: 700,
-                lineHeight: 1.05,
-                letterSpacing: "-0.02em",
-              }}
-            >
-              <MaskLine delay={0.1}>
-                <span className="whitespace-nowrap">Your Dream Kitchen &amp; Bath</span>
-              </MaskLine>
-              <MaskLine delay={0.22}>
-                <span className="text-[#5DBB46]">Done in 10 Days.</span>
+            <Reveal as="span" className="eyebrow text-[#5DBB46] mb-5 block">
+              Local Kitchen &amp; Bath Remodeling · Pierce &amp; Thurston Counties
+            </Reveal>
+
+            <h1 className="display-xl" style={{ color: "#111111", marginBottom: "1.5rem" }}>
+              <MaskLine delay={0.1}>Your Dream</MaskLine>
+              <MaskLine delay={0.2}>Kitchen &amp; Bath</MaskLine>
+              <MaskLine delay={0.3}>
+                <span style={{ color: "#5DBB46" }}>Done in 10 Days.</span>
               </MaskLine>
             </h1>
 
             <Reveal
               as="p"
               delay={180}
-              className="mb-8 max-w-xl text-base leading-relaxed text-[#555555] sm:text-lg"
+              className="text-[#444444] text-lg leading-relaxed max-w-lg mb-10"
               style={{ fontFamily: "var(--font-manrope)" }}
             >
               We help homeowners create beautiful, functional kitchens and baths with high-quality
               craftsmanship — completed in just 10 business days.
             </Reveal>
 
-            <Reveal delay={270} className="flex flex-wrap items-center justify-center gap-4">
-              <a href="#contact" className="btn btn-solid pulse-shimmer-btn">
+            <Reveal delay={270}>
+              <a
+                href="#contact"
+                className="btn btn-solid"
+                style={{ boxShadow: "0 4px 24px rgba(93,187,70,0.35)" }}
+              >
                 Schedule Free Consultation
               </a>
-              <a href="#portfolio" className="btn btn-outline-dark">
-                Explore Our Work
-                <ArrowDown className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
-              </a>
             </Reveal>
-          </motion.div>
+          </div>
 
-          {/* Foreground kitchen photo — z-10, slides up to cover the text stack */}
-          <motion.div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-0 z-10 h-[150%]"
-            style={{
-              scale: imageScale,
-              y: imageY,
-              transformOrigin: "center 70%",
-              clipPath: foregroundClip,
-            }}
-          >
-            <Image
-              src="/images/98debbd8-2e4d-44d5-a9c5-184e11eb8a5e.png"
-              alt=""
-              fill
-              priority
-              quality={90}
-              sizes="100vw"
-              className="object-cover"
-              style={{ objectPosition: "center 62%" }}
-            />
-          </motion.div>
-
+          {/* RIGHT — hero photo in a rounded frame */}
+          <Reveal delay={150} className="relative">
+            <div className="relative aspect-[4/5] sm:aspect-[4/3] lg:aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
+              <img
+                src="/images/hero-bg.jpg"
+                alt="A beautifully remodeled modern kitchen by 10 Day Kitchens"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </div>
+          </Reveal>
         </div>
-      </section>
+      </div>
 
-    </>
+      {/* Trust bar */}
+      <div className="relative z-10 border-t border-[rgba(17,17,17,0.08)] bg-white">
+        <Reveal
+          delay={360}
+          className="max-w-screen-xl mx-auto section-pad py-8 grid grid-cols-2 md:grid-cols-4 gap-y-8 md:divide-x md:divide-[rgba(17,17,17,0.08)]"
+        >
+          {trustItems.map((item) => (
+            <div key={item.label} className="flex items-center gap-3 md:px-6 first:md:pl-0">
+              <span className="flex h-11 w-11 flex-none items-center justify-center rounded-full bg-[#EEF4EB] text-[#5DBB46]">
+                <item.icon className="h-5 w-5" strokeWidth={2} />
+              </span>
+              <div>
+                <p className="stat-num text-[#111111]" style={{ fontSize: "1.3rem" }}>
+                  {item.count !== null ? <CountUp value={item.count} suffix={item.suffix} /> : item.num}
+                </p>
+                <p className="text-[#777777] text-[11px] uppercase tracking-[0.12em] mt-0.5">
+                  {item.label}
+                </p>
+              </div>
+            </div>
+          ))}
+        </Reveal>
+      </div>
+    </section>
   );
 }

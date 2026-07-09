@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { Maximize2 } from "lucide-react";
-import Reveal from "@/components/motion/Reveal";
+import { ease } from "@/lib/motion";
 
 const projects = [
   { title: 'The Modern Forest-Inspired Kitchen', location: 'Olympia, WA', img: '/images/project-forest-kitchen.jpg', alt: 'Forest kitchen dark cabinetry' },
@@ -16,53 +17,45 @@ function ProjectTile({
   p,
   className,
   delay,
-  isWide = false,
 }: {
   p: (typeof projects)[number];
   className: string;
   delay: number;
-  isWide?: boolean;
 }) {
   return (
-    <Reveal
-      delay={delay}
-      className={`${className} group flex flex-col`}
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.7, ease, delay }}
+      className={className}
     >
-      <div className={`relative overflow-hidden rounded-md bg-neutral-100 ${isWide ? 'aspect-[21/9]' : 'aspect-[4/3]'} w-full`}>
+      <Link
+        href="/portfolio"
+        className="group relative block h-full w-full overflow-hidden rounded-2xl"
+      >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={p.img}
           alt={p.alt}
-          className="w-full h-full object-cover transition-all duration-[900ms] ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-105"
+          className="w-full h-full object-cover transition-all duration-[900ms] ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-110"
         />
-        
-        {/* Expand affordance */}
-        <span className="absolute right-4 bottom-4 flex h-10 w-10 translate-y-1 items-center justify-center rounded-full bg-[#5DBB46] text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 shadow-md">
-          <Maximize2 className="h-4 w-4" />
-        </span>
-      </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent transition-opacity duration-500 group-hover:from-black/90" />
 
-      {/* Caption/Details container */}
-      <div className="flex-1 flex flex-col justify-between pt-5">
-        <div>
-          <div className="flex flex-wrap gap-2 mb-3">
-            <span className="inline-flex items-center gap-1 bg-[#EEF4EB] text-[#5DBB46] text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full">
-              {p.location}
-            </span>
-            <span className="inline-flex items-center gap-1 bg-neutral-200/50 text-neutral-600 text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full">
-              10 Days
-            </span>
-          </div>
-          <h3 className="font-semibold text-lg text-[#111111] mb-3 group-hover:text-[#5DBB46] transition-colors duration-300">
-            {p.title}
-          </h3>
+        {/* Caption — always legible, lifts and sharpens on hover */}
+        <div className="absolute bottom-0 left-0 right-0 p-6 transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-translate-y-1">
+          <p className="text-white/60 text-xs uppercase tracking-widest mb-1.5 transition-colors duration-300 group-hover:text-white/85">
+            {p.location}
+          </p>
+          <h3 style={{ color: 'white', fontSize: '1.2rem' }}>{p.title}</h3>
         </div>
 
-        <Link href="/portfolio" className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#5DBB46] hover:text-[#4aa836] transition-colors duration-200 mt-1">
-          Explore Project <span className="transition-transform duration-200 group-hover:translate-x-1.5">→</span>
-        </Link>
-      </div>
-    </Reveal>
+        {/* Expand affordance — reveals on hover */}
+        <span className="absolute right-4 top-4 flex h-10 w-10 -translate-y-1 items-center justify-center rounded-full bg-[#5DBB46] text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+          <Maximize2 className="h-4 w-4" />
+        </span>
+      </Link>
+    </motion.div>
   );
 }
 
@@ -70,48 +63,43 @@ export default function PortfolioGrid() {
   const [wide, ...rest] = projects;
 
   return (
-    <section id="portfolio" className="py-24 md:py-32">
-      <div className="mx-auto max-w-screen-xl px-6 sm:px-10 lg:px-16">
-        <div className="text-center mb-16 mx-auto">
-          <Reveal>
-            <span className="inline-flex items-center gap-1.5 eyebrow">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#5DBB46]"></span>
-              Our Work
-            </span>
-          </Reveal>
-          <Reveal delay={100}>
-            <h2
-              style={{
-                fontSize: 'clamp(34px,3.5vw,52px)',
-                color: '#111111',
-                marginTop: '1rem',
-                textAlign: 'center',
-              }}
-            >
-              Recent Projects
-            </h2>
-          </Reveal>
-          <Reveal delay={150}>
-            <p style={{ fontSize: '17px', color: '#777777', marginTop: '1rem', textAlign: 'center' }}>
-              Every project is a collaboration — your vision, our expertise.
-            </p>
-          </Reveal>
-        </div>
+    <section id="portfolio" className="bg-[#EEF4EB] py-24 section-pad">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.7, ease }}
+        className="text-center mb-16 mx-auto"
+      >
+        <p className="eyebrow">Our Work</p>
+        <h2
+          style={{
+            fontSize: 'clamp(34px,3.5vw,52px)',
+            color: '#111111',
+            marginTop: '1rem',
+            textAlign: 'center',
+          }}
+        >
+          Recent Projects
+        </h2>
+        <p style={{ fontSize: '17px', color: '#777777', marginTop: '1rem', textAlign: 'center' }}>
+          Every project is a collaboration — your vision, our expertise.
+        </p>
+      </motion.div>
 
-        <div className="flex flex-col gap-6">
-          <ProjectTile p={wide} className="w-full" isWide={true} delay={0} />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {rest.map((p, i) => (
-              <ProjectTile key={p.title} p={p} className="w-full" delay={(i + 1) * 100} />
-            ))}
-          </div>
+      <div className="container flex flex-col gap-4">
+        <ProjectTile p={wide} className="aspect-[16/9] w-full" delay={0} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {rest.map((p, i) => (
+            <ProjectTile key={p.title} p={p} className="aspect-square" delay={(i + 1) * 0.1} />
+          ))}
         </div>
+      </div>
 
-        <Reveal delay={200} className="text-center mt-16">
-          <a href="/portfolio" className="link-arrow">
-            View Full Portfolio <span className="arrow">→</span>
-          </a>
-        </Reveal>
+      <div className="text-center mt-12">
+        <a href="/portfolio" className="link-arrow">
+          View Full Portfolio <span className="arrow">→</span>
+        </a>
       </div>
     </section>
   );

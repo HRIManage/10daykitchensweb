@@ -1,4 +1,5 @@
 import DayByDayTimeline from "@/components/DayByDayTimeline";
+import MasonryGallery from "@/components/MasonryGallery";
 
 const pricingCards = [
   {
@@ -255,16 +256,8 @@ export default function KitchenRemodelPage() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-6xl mx-auto">
-          {galleryImages.map((img) => (
-            <div key={img.src} className="rounded-xl overflow-hidden aspect-[4/3]">
-              <img
-                src={img.src}
-                alt={img.alt}
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-              />
-            </div>
-          ))}
+        <div className="max-w-6xl mx-auto">
+          <MasonryGallery images={galleryImages} columns={3} />
         </div>
       </section>
     </main>

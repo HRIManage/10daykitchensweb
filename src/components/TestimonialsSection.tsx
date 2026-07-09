@@ -2,141 +2,128 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Star, Quote } from "lucide-react";
+import { Star } from "lucide-react";
 import { ease } from "@/lib/motion";
-import Reveal from "@/components/motion/Reveal";
 
 const reviews = [
   {
-    quote: "Highly recommend. Very happy with the outcome of our kitchen. Everyone was professional, friendly and accommodating. Responded immediately to phone calls.",
-    author: "Cathy Sorem",
-    tag: "Kitchen Remodel · Lacey, WA",
-    stars: 5,
-    label: "Highly Recommended",
+    quote: 'Highly recommend. Very happy with the outcome of our kitchen. Everyone was professional, friendly and accommodating. Responded immediately to phone calls.',
+    author: 'Cathy Sorem',
+    tag: 'Kitchen Remodel · Lacey, WA',
+    rating: '★★★★★',
+    label: 'Highly Recommended',
   },
   {
     quote: "What we really appreciated was how much they genuinely cared. It wasn't just about the job — they checked in, made sure we were comfortable, and seemed invested in our happiness.",
-    author: "Bennett",
-    tag: "Kitchen Remodel · South Sound, WA",
-    stars: 5,
-    label: "Beyond Expectations",
-  },
-  {
-    quote: "From design to install, everything was seamless. Our bathroom looks like something out of a magazine. Completed in 10 days exactly as promised.",
-    author: "Sarah M.",
-    tag: "Bath Remodel · Olympia, WA",
-    stars: 5,
-    label: "Absolutely Stunning",
+    author: 'Bennett',
+    tag: 'Kitchen Remodel · South Sound, WA',
+    rating: '★★★★★',
+    label: 'Beyond Expectations',
   },
 ];
 
 export default function TestimonialsSection() {
   const [active, setActive] = useState(0);
   const r = reviews[active];
+  const starCount = (r.rating.match(/★/g) || []).length;
 
   return (
-    <section className="py-24 md:py-32 section-pad">
-      <div className="container">
-        {/* Header */}
-        <Reveal className="text-center mb-16">
-          <span className="inline-flex items-center gap-1.5 eyebrow">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#5DBB46]" />
+    <section className="bg-[#1C1C1C] py-24 md:py-32 section-pad">
+      <div className="container grid gap-16 lg:grid-cols-12 lg:gap-20">
+        {/* LEFT — eyebrow + heading + dash nav */}
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.8, ease }}
+          className="lg:col-span-4"
+        >
+          <p className="eyebrow" style={{ color: 'rgba(93,187,70,0.7)' }}>
             What Clients Say
-          </span>
-          <h2
-            className="mt-4 font-extrabold tracking-tight text-[#111111]"
-            style={{ fontSize: "clamp(34px,3.5vw,52px)" }}
-          >
-            Real Words from Real Clients
-          </h2>
-        </Reveal>
-
-        {/* Big feature card */}
-        <Reveal delay={100}>
-          <div className="relative overflow-hidden rounded-2xl bg-[#EEF9EA] border border-[#5DBB46]/15 px-8 py-12 md:px-16 md:py-16 shadow-sm">
-            {/* Decorative green glow */}
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute -top-24 -right-24 w-96 h-96 rounded-full opacity-20"
-              style={{ background: "radial-gradient(circle, #5DBB46 0%, transparent 70%)" }}
-            />
-            {/* Big quote icon */}
-            <Quote
-              className="absolute top-8 right-8 md:top-12 md:right-12 opacity-10 text-[#5DBB46]"
-              style={{ width: 80, height: 80 }}
-              aria-hidden="true"
-            />
-
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={active}
-                initial={{ y: 24, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -16, opacity: 0 }}
-                transition={{ duration: 0.45, ease }}
-                className="relative z-10"
-              >
-                {/* Quote */}
-                <blockquote
-                  className="text-[#111111] font-normal leading-relaxed mb-10"
-                  style={{ fontSize: "clamp(1.2rem,2.2vw,1.5rem)", maxWidth: "56rem" }}
-                >
-                  &ldquo;{r.quote}&rdquo;
-                </blockquote>
-
-                {/* Stars + label */}
-                <div className="mt-8 flex items-center gap-4 border-t border-[rgba(0,0,0,0.08)] pt-7">
-                  <div className="flex gap-1">
-                    {Array.from({ length: r.stars }).map((_, s) => (
-                      <Star key={s} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <span className="inline-flex items-center bg-[#5DBB46]/15 text-[#3a9030] text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">
-                    {r.label}
-                  </span>
-                </div>
-
-                {/* Author */}
-                <div className="flex items-center gap-4 mt-8">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#5DBB46] text-white font-bold text-base">
-                    {r.author.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="text-[#111111] text-sm font-semibold">{r.author}</p>
-                    <p className="text-[#777777] text-xs uppercase tracking-wider mt-0.5">{r.tag}</p>
-                  </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Dot navigation */}
-            <div className="relative z-10 flex items-center gap-3 mt-10">
-              {reviews.map((_, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={() => setActive(i)}
-                  aria-label={`Go to review ${i + 1}`}
-                  className={`rounded-full transition-all duration-500 cursor-pointer ${
-                    i === active
-                      ? "w-8 h-2 bg-[#5DBB46]"
-                      : "w-2 h-2 bg-[rgba(0,0,0,0.15)] hover:bg-[rgba(0,0,0,0.3)]"
-                  }`}
-                />
-              ))}
-              <span className="ml-2 text-[#777777] text-xs font-semibold">
-                {active + 1} / {reviews.length}
-              </span>
-            </div>
-          </div>
-        </Reveal>
-
-        {/* Bottom trust strip */}
-        <Reveal delay={200} className="mt-10 text-center">
-          <p className="text-[#555555] text-sm">
-            <span className="font-semibold text-[#111111]">800+</span> projects completed across Pierce &amp; Thurston Counties · Average <span className="font-semibold text-[#111111]">4.9★</span> rating
           </p>
-        </Reveal>
+          <h2
+            style={{
+              fontSize: 'clamp(34px,3.5vw,48px)',
+              color: 'white',
+              marginTop: '1rem',
+            }}
+          >
+            Customer Reviews
+          </h2>
+
+          <div className="mt-10 flex items-center gap-3">
+            {reviews.map((review, i) => (
+              <button
+                key={review.author}
+                type="button"
+                onClick={() => setActive(i)}
+                aria-label={`View testimonial from ${review.author}`}
+                className={`h-[3px] cursor-pointer rounded-full transition-all duration-500 ${
+                  i === active ? "w-12 bg-[#5DBB46]" : "w-6 bg-white/15 hover:bg-white/30"
+                }`}
+              />
+            ))}
+          </div>
+          <p className="mt-5 text-xs font-medium uppercase tracking-[0.2em] text-white/35">
+            {active + 1} / {reviews.length}
+          </p>
+        </motion.div>
+
+        {/* RIGHT — giant quote mark + rotating review */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7, ease, delay: 0.15 }}
+          className="relative lg:col-span-8 lg:border-l lg:border-white/10 lg:pl-16"
+        >
+          <div
+            aria-hidden="true"
+            className="select-none leading-none text-[#5DBB46]/[0.16] -ml-1 mb-1"
+            style={{ fontFamily: "var(--font-display)", fontStyle: "italic", fontSize: "clamp(4.5rem,9vw,7rem)" }}
+          >
+            &ldquo;
+          </div>
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={active}
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -14, opacity: 0 }}
+              transition={{ duration: 0.4, ease }}
+            >
+              <div className="flex gap-1 mb-6">
+                {Array.from({ length: starCount }).map((_, s) => (
+                  <Star key={s} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                ))}
+              </div>
+              <p className="text-white/60 text-xs uppercase tracking-widest mb-6">{r.label}</p>
+
+              <blockquote
+                style={{
+                  fontFamily: 'var(--font-sans)',
+                  color: 'white',
+                  fontSize: 'clamp(1.2rem,2vw,1.4rem)',
+                  fontWeight: 400,
+                  lineHeight: 1.65,
+                }}
+              >
+                &ldquo;{r.quote}&rdquo;
+              </blockquote>
+
+              <div className="mt-8 flex items-center gap-4 border-t border-white/10 pt-7">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#5DBB46] font-bold text-sm text-white">
+                  {r.author.charAt(0)}
+                </div>
+                <div>
+                  <p className="text-white text-sm font-semibold">{r.author}</p>
+                  <p className="text-white/40 text-xs uppercase tracking-wider mt-1">{r.tag}</p>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </motion.div>
       </div>
     </section>
   );

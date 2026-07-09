@@ -20,8 +20,9 @@ function SliderPanel({
   location: string;
 }) {
   const [pos, setPos] = useState(50);
-  const [hovering, setHovering] = useState(false);
+  const [dragging, setDragging] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const isDown = useRef(false);
 
   const setFromClientX = useCallback((clientX: number) => {
     const el = ref.current;
@@ -31,26 +32,30 @@ function SliderPanel({
     setPos(Math.min(100, Math.max(0, pct)));
   }, []);
 
-  const onPointerMove = (e: React.PointerEvent) => {
+  const onPointerDown = (e: React.PointerEvent) => {
+    isDown.current = true;
+    setDragging(true);
+    (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
     setFromClientX(e.clientX);
   };
-
-  const onPointerEnter = () => {
-    setHovering(true);
+  const onPointerMove = (e: React.PointerEvent) => {
+    if (!isDown.current) return;
+    setFromClientX(e.clientX);
   };
-
-  const onPointerLeave = () => {
-    setHovering(false);
+  const onPointerUp = () => {
+    isDown.current = false;
+    setDragging(false);
   };
 
   return (
-    <div className="flex flex-col gap-4 group">
+    <div className="flex flex-col gap-3">
       <div
         ref={ref}
-        className="relative rounded-md overflow-hidden aspect-[4/3] cursor-col-resize touch-none select-none"
+        className="group relative rounded-2xl overflow-hidden aspect-[4/3] cursor-col-resize touch-none select-none"
+        onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
-        onPointerEnter={onPointerEnter}
-        onPointerLeave={onPointerLeave}
+        onPointerUp={onPointerUp}
+        onPointerLeave={onPointerUp}
         role="slider"
         aria-label={`Before and after comparison — ${name}`}
         aria-valuenow={Math.round(pos)}
@@ -76,25 +81,25 @@ function SliderPanel({
         />
         <div
           className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-11 h-11 bg-white rounded-full shadow-xl flex items-center justify-center pointer-events-none transition-transform duration-200 ${
-            hovering ? "scale-110" : "group-hover:scale-105"
+            dragging ? "scale-110" : "group-hover:scale-105"
           }`}
           style={{ left: `${pos}%` }}
         >
           <ChevronLeft className="h-4 w-4 -mr-0.5 text-[#111111]" />
           <ChevronRight className="h-4 w-4 -ml-0.5 text-[#111111]" />
         </div>
-        <span className="absolute bottom-4 left-4 bg-white/95 text-[#111111] text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-sm">
+        <span className="absolute bottom-4 left-4 bg-white/90 text-[#111111] text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">
           Before
         </span>
-        <span className="absolute bottom-4 right-4 bg-[#5DBB46] text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-sm">
+        <span className="absolute bottom-4 right-4 bg-[#5DBB46] text-white text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">
           After
         </span>
       </div>
-      <div className="pt-2 px-1">
-        <p className="font-semibold text-lg text-[#111111] group-hover:text-[#5DBB46] transition-colors duration-300">
+      <div className="text-center">
+        <p style={{ fontFamily: "var(--font-display)", fontSize: "1rem", fontWeight: 600, color: "#111111" }}>
           {name}
         </p>
-        <p className="text-xs text-[#777777] uppercase tracking-wider mt-1.5">{location} · ← Move Mouse to Reveal →</p>
+        <p className="text-xs text-[#777777] uppercase tracking-wider mt-1">{location} · ← Drag →</p>
       </div>
     </div>
   );
@@ -121,41 +126,43 @@ const pairs = [
 
 export default function BeforeAfterSection() {
   return (
-    <section id="transformations" className="py-24 md:py-32 section-pad">
-      <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-        <div className="bg-white/80 backdrop-blur-md rounded-2xl border border-[#5DBB46]/10 p-8 md:p-12 shadow-[0_16px_60px_rgba(93,187,70,0.08)]">
-          <Reveal className="mb-16 text-center">
-            <span className="inline-flex items-center gap-1.5 eyebrow">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#5DBB46]"></span>
-              Before &amp; After
-            </span>
-            <h2
-              style={{
-                fontSize: "clamp(34px,3.5vw,52px)",
-                color: "#111111",
-                marginTop: "1rem",
-                textAlign: "center",
-                fontWeight: 800,
-                letterSpacing: "-0.02em",
-              }}
-            >
-              Real Transformations
-            </h2>
-            <p style={{ fontSize: '17px', color: '#777777', marginTop: '1rem', textAlign: 'center' }}>
-              See what we accomplish in as little as 10 business days.
-            </p>
+    <section id="transformations" className="bg-[#F7FAF5] py-24 section-pad">
+      <Reveal className="mb-16 text-center">
+        <span className="eyebrow">Before &amp; After</span>
+        <h2
+          style={{
+            fontSize: "clamp(34px,3.5vw,52px)",
+            color: "#111111",
+            marginTop: "1rem",
+            textAlign: "center",
+          }}
+        >
+          Real Transformations
+        </h2>
+        <p
+          className="max-w-xl mx-auto mt-4"
+          style={{ fontSize: "17px", color: "#777777" }}
+        >
+          Drag the slider to reveal the transformation. Every project completed in 10 business days.
+        </p>
+      </Reveal>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        {pairs.map((pair, i) => (
+          <Reveal key={pair.name} delay={i * 110}>
+            <SliderPanel
+              before={pair.before}
+              after={pair.after}
+              beforeAlt={pair.beforeAlt}
+              afterAlt={pair.afterAlt}
+              name={pair.name}
+              location={pair.location}
+            />
           </Reveal>
-
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-            {pairs.map((p) => (
-              <SliderPanel key={p.name} {...p} />
-            ))}
-          </div>
-        </div>
+        ))}
       </div>
 
-      <Reveal as="blockquote" delay={100} className="text-center max-w-2xl mx-auto mt-20">
+      <Reveal as="blockquote" delay={120} className="text-center max-w-2xl mx-auto mt-16">
         <p
           style={{
             fontFamily: "var(--font-sans)",
