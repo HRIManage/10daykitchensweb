@@ -1,12 +1,28 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { motion, useInView } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { ease } from "@/lib/motion";
 
 type GalleryImage = { src: string; alt: string };
+
+const HOVER_QUERY = "(hover: hover)";
+
+function subscribeHover(callback: () => void) {
+  const mql = window.matchMedia(HOVER_QUERY);
+  mql.addEventListener("change", callback);
+  return () => mql.removeEventListener("change", callback);
+}
+
+function useSupportsHover(): boolean {
+  return useSyncExternalStore(
+    subscribeHover,
+    () => window.matchMedia(HOVER_QUERY).matches,
+    () => false
+  );
+}
 
 /** Round-robin split so every column gets an even share and uniform gaps. */
 function distributeToColumns<T>(items: T[], n: number): T[][] {
@@ -112,11 +128,7 @@ function GalleryTile({
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [hovered, setHovered] = useState(false);
-  const [supportsHover, setSupportsHover] = useState(false);
-
-  useEffect(() => {
-    setSupportsHover(window.matchMedia("(hover: hover)").matches);
-  }, []);
+  const supportsHover = useSupportsHover();
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();

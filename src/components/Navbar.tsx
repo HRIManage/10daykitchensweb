@@ -2,11 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown, Mail, Phone } from "lucide-react";
+import { ChevronDown, Phone } from "lucide-react";
 import { useEffect, useState } from "react";
 import { site } from "@/lib/site";
 
-type DropdownItem = { label: string; href: string };
+type DropdownItem = { label: string; href: string; description?: string };
 type NavItem = { label: string; href?: string; children?: DropdownItem[] };
 
 const navItems: NavItem[] = [
@@ -14,8 +14,10 @@ const navItems: NavItem[] = [
   {
     label: "Services",
     children: [
-      { label: "Kitchen Remodel", href: "/kitchen-remodel" },
-      { label: "Bath Remodel", href: "/bathroom-remodel" },
+      { label: "Kitchen Remodel", href: "/kitchen-remodel", description: "Full custom layouts, trades, and finishes" },
+      { label: "10 Day Kitchens Program", href: "/10businessdaykitchenprogram", description: "Fast existing-layout kitchen remodels" },
+      { label: "Bath Remodel", href: "/bathroom-remodel", description: "Showers, vanities, flooring, and fixtures" },
+      { label: "Fast Bath", href: "/fast-bath", description: "Tub conversions, showers, and bath upgrades" },
     ],
   },
   { label: "About", href: "/about" },
@@ -23,10 +25,10 @@ const navItems: NavItem[] = [
   {
     label: "Resources",
     children: [
-      { label: "FAQs", href: "/faq" },
-      { label: "Financing", href: "/financing" },
-      { label: "Blog / Advice", href: "/blog" },
-      { label: "Collections", href: "/collections" },
+      { label: "FAQs", href: "/faq-1", description: "Answers before you remodel" },
+      { label: "Financing", href: "/financing", description: "Project payment options" },
+      { label: "Blog / Advice", href: "/resources/blog", description: "Planning tips and remodel guidance" },
+      { label: "Collections", href: "/resources/catalog", description: "Cabinet and surface inspiration" },
     ],
   },
 ];
@@ -49,6 +51,12 @@ function InstagramIcon() {
   );
 }
 
+/** Editorial nav link with an origin-aware underline reveal. */
+const navLinkClass =
+  "relative inline-flex h-12 items-center text-[14.5px] font-bold uppercase tracking-[0.13em] transition-colors duration-200 " +
+  "after:absolute after:inset-x-0 after:bottom-1.5 after:h-px after:origin-right after:scale-x-0 after:bg-brand after:transition-transform after:duration-300 after:ease-out " +
+  "hover:after:origin-left hover:after:scale-x-100";
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
@@ -70,48 +78,72 @@ export default function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      <div className="border-b border-brand/25 bg-[#181d16] text-brand-light">
-        <div className="mx-auto flex min-h-11 w-full max-w-[1240px] items-center justify-between gap-4 px-5 text-[14px] font-bold sm:px-8 lg:px-10">
-          <div className="flex min-w-0 items-center gap-4 text-brand-light/88">
-            <a href={site.phoneHref} className="flex items-center gap-1.5 transition hover:text-white">
-              <Phone className="size-3.5" />
+      {/* Promo bar — the promise, not just contact info */}
+      <div
+        className={`overflow-hidden border-white/10 bg-[#2A2A2A] text-cream transition-all duration-300 ${
+          scrolled ? "max-h-0 border-b-0 opacity-0" : "max-h-16 border-b opacity-100"
+        }`}
+      >
+        <div className="site-container flex min-h-12 items-center justify-between gap-4">
+          <p className="truncate text-[12.5px] font-bold tracking-[0.12em] text-cream/85">
+            <span className="uppercase text-brand-light">Coming Soon</span>
+            <span className="mx-2 text-cream/45">|</span>
+            <span>Our showroom in Lacey is opening soon.</span>
+          </p>
+          <div className="flex flex-none items-center gap-4">
+            <a
+              href={site.phoneHref}
+              className="flex items-center gap-2 text-[13.5px] font-bold tracking-[0.06em] text-brand-light transition hover:text-white"
+            >
+              <Phone className="size-4" />
               <span>{site.phone}</span>
             </a>
-            <a href={`mailto:${site.email}`} className="flex min-w-0 items-center gap-1.5 transition hover:text-white">
-              <Mail className="size-3.5" />
-              <span className="hidden truncate sm:inline">{site.email}</span>
-            </a>
-          </div>
-
-          <div className="flex items-center gap-3 text-brand-light/88">
-            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="transition hover:text-white">
-              <FacebookIcon />
-            </a>
-            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="transition hover:text-white">
-              <InstagramIcon />
-            </a>
+            <span className="hidden h-3 w-px bg-white/20 sm:block" aria-hidden="true" />
+            <div className="hidden items-center gap-4 text-brand-light sm:flex">
+              <a
+                href={site.facebookHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="transition hover:text-white"
+              >
+                <FacebookIcon />
+              </a>
+              <a
+                href={site.instagramHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="transition hover:text-white"
+              >
+                <InstagramIcon />
+              </a>
+            </div>
           </div>
         </div>
       </div>
 
+      {/* Main nav — slimmer, editorial */}
       <nav
-        className={`border-b border-black/10 bg-[#fffefa]/95 backdrop-blur-md transition-shadow ${
-          scrolled ? "shadow-[0_10px_30px_rgba(0,0,0,0.06)]" : ""
+        className={`transition-all duration-300 ${
+          scrolled
+            ? "border-b border-white/45 bg-paper/72 shadow-[0_12px_40px_rgba(43,39,35,0.08),inset_0_1px_0_rgba(255,255,255,0.72)] backdrop-blur-2xl"
+            : "border-b border-white/30 bg-white/25 backdrop-blur-md"
         }`}
       >
-        <div className="mx-auto flex h-[104px] w-full max-w-[1240px] items-center justify-between px-5 sm:px-8 lg:px-10">
-          <Link href="/" aria-label={`${site.name} home`} onClick={() => setMobileOpen(false)}>
+        <div className="site-container flex h-[108px] items-center justify-between gap-8">
+          <Link href="/" aria-label={`${site.name} home`} onClick={() => setMobileOpen(false)} className="relative flex-none">
             <Image
               src="/images/logo.webp"
               alt={site.name}
               width={264}
               height={112}
               priority
-              className="h-[88px] w-auto object-contain"
+              className="h-[100px] w-auto object-contain"
             />
           </Link>
 
-          <ul className="hidden items-center gap-6 md:flex">
+          <ul className="hidden items-center gap-9 md:flex">
             {navItems.map((item) => (
               <li
                 key={item.label}
@@ -120,35 +152,45 @@ export default function Navbar() {
                 onMouseLeave={() => setOpenMenu(null)}
               >
                 {item.href ? (
-                  <Link
-                    href={item.href}
-                    className="text-[14px] font-bold uppercase tracking-[0.11em] text-ink-soft transition hover:text-brand"
-                  >
+                  <Link href={item.href} className={`${navLinkClass} text-ink hover:text-brand-dark`}>
                     {item.label}
                   </Link>
                 ) : (
                   <button
                     type="button"
-                    className="flex items-center gap-1 text-[14px] font-bold uppercase tracking-[0.11em] text-ink-soft transition hover:text-brand"
+                    className={`${navLinkClass} gap-1.5 text-ink hover:text-brand-dark`}
                   >
                     {item.label}
                     <ChevronDown
                       aria-hidden="true"
-                      className={`size-3 transition-transform ${openMenu === item.label ? "rotate-180" : ""}`}
+                      className={`mt-px size-3.5 stroke-[2.4] transition-transform duration-200 ${
+                        openMenu === item.label ? "rotate-180 text-brand-dark" : ""
+                      }`}
                     />
                   </button>
                 )}
 
                 {item.children && openMenu === item.label ? (
-                  <div className="absolute left-1/2 top-full min-w-[210px] -translate-x-1/2 pt-3">
-                    <div className="overflow-hidden border border-black/10 bg-white shadow-[0_18px_50px_rgba(0,0,0,0.12)]">
+                  <div className="absolute left-1/2 top-full min-w-[286px] -translate-x-1/2 pt-3">
+                    <div className="relative animate-in overflow-hidden border border-white/70 bg-paper/92 shadow-[0_26px_70px_rgba(43,39,35,0.18),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-[56px] backdrop-saturate-150 fade-in slide-in-from-top-1 duration-200">
+                      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(255,255,255,0.86),transparent_36%),linear-gradient(135deg,rgba(255,255,255,0.42),rgba(255,255,255,0.16)_48%,rgba(93,187,70,0.07))]" />
+                      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/85" />
+                      <div className="relative h-1 bg-brand/80" />
                       {item.children.map((child) => (
                         <Link
                           key={child.label}
                           href={child.href}
-                          className="block border-b border-black/5 px-5 py-3 text-sm text-ink-soft transition last:border-0 hover:bg-[#f7f7f4] hover:text-ink"
+                          className="group relative block border-b border-line/70 px-5 py-4 transition last:border-0 hover:bg-white/68"
                         >
-                          {child.label}
+                          <span className="flex items-center justify-between gap-6 text-[13px] font-bold uppercase tracking-[0.12em] text-ink transition group-hover:text-brand-dark">
+                            {child.label}
+                            <span className="h-px w-6 bg-line transition group-hover:w-9 group-hover:bg-brand" />
+                          </span>
+                          {child.description ? (
+                            <span className="mt-1.5 block text-[13px] font-medium leading-5 tracking-normal text-ink-soft/82">
+                              {child.description}
+                            </span>
+                          ) : null}
                         </Link>
                       ))}
                     </div>
@@ -158,10 +200,10 @@ export default function Navbar() {
             ))}
           </ul>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-none items-center gap-3">
             <Link
-              href="/contact"
-              className="hidden min-h-11 items-center bg-brand px-5 text-[13px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-brand-dark md:inline-flex"
+              href="/contact-1"
+              className="hidden h-11 items-center bg-brand px-6 text-[12px] font-bold uppercase tracking-[0.14em] text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-dark hover:shadow-[0_10px_28px_rgba(93,187,70,0.35)] md:inline-flex"
             >
               Contact Us
             </Link>
@@ -180,14 +222,15 @@ export default function Navbar() {
         </div>
       </nav>
 
+      {/* Mobile menu */}
       <div
-        className={`overflow-hidden border-b border-black/10 bg-[#fffefa] transition-[max-height,opacity] duration-300 md:hidden ${
+        className={`overflow-hidden border-b border-line bg-paper transition-[max-height,opacity] duration-300 md:hidden ${
           mobileOpen ? "max-h-[82vh] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
         <nav className="max-h-[80vh] overflow-y-auto px-5 py-4">
           {navItems.map((item) => (
-            <div key={item.label} className="border-b border-black/10 py-3 last:border-0">
+            <div key={item.label} className="border-b border-line py-3 last:border-0">
               {item.href ? (
                 <Link
                   href={item.href}
@@ -198,7 +241,7 @@ export default function Navbar() {
                 </Link>
               ) : (
                 <>
-                  <p className="mb-2 text-[13px] font-bold uppercase tracking-[0.12em] text-brand">
+                  <p className="mb-2 text-[12px] font-bold uppercase tracking-[0.14em] text-brand-dark">
                     {item.label}
                   </p>
                   <div className="grid gap-2">
@@ -207,7 +250,7 @@ export default function Navbar() {
                         key={child.label}
                         href={child.href}
                         onClick={() => setMobileOpen(false)}
-                        className="text-[14px] font-bold text-ink-soft"
+                        className="text-[14px] font-semibold text-ink-soft"
                       >
                         {child.label}
                       </Link>
@@ -218,9 +261,9 @@ export default function Navbar() {
             </div>
           ))}
           <Link
-            href="/contact"
+            href="/contact-1"
             onClick={() => setMobileOpen(false)}
-            className="mt-5 block bg-brand px-6 py-3 text-center text-[13px] font-bold uppercase tracking-[0.12em] text-white"
+            className="mt-5 block bg-brand px-6 py-3.5 text-center text-[13px] font-bold uppercase tracking-[0.14em] text-white"
           >
             Book Your Free Consultation
           </Link>

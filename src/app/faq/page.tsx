@@ -1,6 +1,14 @@
-"use client";
+import type { Metadata } from "next";
+import { Plus } from "lucide-react";
+import InteriorHero from "@/components/InteriorHero";
+import PageCta from "@/components/PageCta";
+import { CONTAINER, SECTION } from "@/components/layout";
 
-import { useState } from "react";
+export const metadata: Metadata = {
+  title: "FAQ | Kitchen & Bath Remodeling Questions",
+  description:
+    "How long does a kitchen remodel take? What does it cost? Answers about our 10-business-day process, pricing ($30k–$80k+), permits, warranty, and more.",
+};
 
 const categories = [
   {
@@ -89,112 +97,72 @@ const categories = [
   },
 ];
 
-export default function FaqPage() {
-  const [openKey, setOpenKey] = useState<string | null>(null);
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: categories.flatMap((cat) =>
+    cat.faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.q,
+      acceptedAnswer: { "@type": "Answer", text: faq.a },
+    }))
+  ),
+};
 
+export default function FaqPage() {
   return (
     <main>
-      <section className="bg-[#1C1C1C] pt-[90px] py-24 px-16">
-        <span className="eyebrow text-[#5DBB46]/70 mb-4 block">Got Questions?</span>
-        <h1
-          style={{
-            fontFamily: "var(--font-playfair)",
-            fontSize: "72px",
-            color: "white",
-            fontWeight: 500,
-            letterSpacing: "-0.02em",
-            lineHeight: 1.05,
-          }}
-        >
-          Frequently Asked<br />Questions
-        </h1>
-        <p className="text-white/60 max-w-xl mt-6">
-          Get answers to all your questions. Don&rsquo;t see yours? Contact us today.
-        </p>
-        <a
-          href="/contact"
-          className="mt-8 inline-block bg-[#5DBB46] text-white rounded-full px-8 py-4 text-sm font-bold uppercase tracking-wider hover:bg-[#4aa836] transition-all"
-        >
-          Ask a Question
-        </a>
-      </section>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
 
-      <section className="bg-[#F7FAF5] py-24 px-16">
-        <div className="max-w-4xl mx-auto">
-          {categories.map((cat, catIdx) => (
-            <div key={cat.name} className="mb-12">
-              <h2
-                style={{
-                  fontFamily: "var(--font-playfair)",
-                  fontSize: "1.5rem",
-                  color: "#111111",
-                  fontWeight: 500,
-                  marginBottom: "1rem",
-                  paddingBottom: "0.75rem",
-                  borderBottom: "1px solid rgba(17,17,17,0.1)",
-                }}
-              >
-                {cat.name}
-              </h2>
-              <div className="flex flex-col">
-                {cat.faqs.map((faq, i) => {
-                  const key = `${catIdx}-${i}`;
-                  const isOpen = openKey === key;
-                  return (
-                    <div key={key} className="border-b border-[rgba(17,17,17,0.08)]">
-                      <button
-                        onClick={() => setOpenKey(isOpen ? null : key)}
-                        className="w-full text-left py-5 flex justify-between items-start gap-4"
-                      >
-                        <span
-                          style={{
-                            fontFamily: "var(--font-manrope)",
-                            fontSize: "1rem",
-                            fontWeight: 600,
-                            color: "#111111",
-                          }}
-                        >
-                          {faq.q}
-                        </span>
-                        <span
-                          className={`text-[#5DBB46] text-xl flex-none transition-transform duration-200 ${isOpen ? "rotate-45" : ""}`}
-                        >
-                          +
-                        </span>
-                      </button>
-                      {isOpen && (
-                        <p className="text-[#777777] text-sm leading-relaxed pb-5">{faq.a}</p>
-                      )}
-                    </div>
-                  );
-                })}
+      <InteriorHero
+        image="/images/Inspection and Punch List.png"
+        imageAlt="Bright two-tone kitchen remodel"
+        eyebrow="Got Questions?"
+        title={
+          <>
+            Answers, <em>before you remodel.</em>
+          </>
+        }
+        body="The questions every homeowner asks — timelines, pricing, permits, and process. Don't see yours? Ask us directly."
+        cta={{ label: "Ask a Question", href: "/contact" }}
+      />
+
+      <section className={`${SECTION} bg-cream`}>
+        <div className={`${CONTAINER} mx-auto max-w-4xl`}>
+          {categories.map((cat) => (
+            <div key={cat.name} className="mb-14 last:mb-0">
+              <div className="mb-2 flex items-baseline justify-between gap-6 border-b border-line pb-4">
+                <h2 className="font-display text-[1.7rem] font-semibold tracking-[-0.01em] text-ink">{cat.name}</h2>
+                <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-ink-muted">
+                  {cat.faqs.length} questions
+                </span>
               </div>
+              {cat.faqs.map((faq) => (
+                <details key={faq.q} className="group border-b border-line">
+                  <summary className="flex cursor-pointer list-none items-start justify-between gap-4 py-5 [&::-webkit-details-marker]:hidden">
+                    <span className="text-[15.5px] font-semibold text-ink transition-colors group-hover:text-brand-dark">
+                      {faq.q}
+                    </span>
+                    <Plus className="mt-0.5 size-5 flex-none text-brand transition-transform duration-200 group-open:rotate-45" />
+                  </summary>
+                  <p className="max-w-3xl pb-6 text-[15px] leading-relaxed text-ink-soft/85">{faq.a}</p>
+                </details>
+              ))}
             </div>
           ))}
         </div>
       </section>
 
-      <section className="bg-[#5DBB46] py-16 px-16 text-center">
-        <h2
-          style={{
-            fontFamily: "var(--font-playfair)",
-            fontSize: "36px",
-            color: "white",
-            fontWeight: 500,
-          }}
-        >
-          Still Have Questions?
-        </h2>
-        <p className="text-white/80 text-lg mt-4">
-          Our team is here to help. Schedule a free consultation and we&rsquo;ll walk you through every detail.
-        </p>
-        <a
-          href="/contact"
-          className="mt-8 inline-block bg-white text-[#111111] rounded-full px-8 py-4 text-sm font-bold uppercase tracking-wider hover:bg-[#EEF4EB] transition-all"
-        >
-          Contact Us
-        </a>
-      </section>
+      <PageCta
+        eyebrow="Still have questions?"
+        title="Let us walk you through every detail."
+        body="Schedule a free consultation and we will help you understand scope, timeline, pricing, and next steps."
+        primaryLabel="Contact Us"
+        watermark="FAQ"
+      />
     </main>
   );
 }

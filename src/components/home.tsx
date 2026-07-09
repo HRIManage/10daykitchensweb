@@ -8,47 +8,60 @@ import {
   ChevronLeft,
   ChevronRight,
   Check,
-  MapPinned,
   Phone,
   Star,
 } from "lucide-react";
-import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useMotionValueEvent, useScroll, useTransform } from "framer-motion";
 import { processPhases, site, testimonials } from "@/lib/site";
-
-const ease = [0.22, 1, 0.36, 1] as const;
-const heroSlideEase = [0.87, 0, 0.13, 1] as const;
-const CONTAINER = "mx-auto w-full max-w-[1220px] px-5 sm:px-8 lg:px-10";
-const SECTION = "py-12 sm:py-16 lg:py-20";
+import { CountUp } from "@/lib/motion";
+import { CONTAINER, SECTION } from "@/components/layout";
+import { ease, FadeIn, SectionHeader } from "@/components/shared";
+import { useReducedMotion } from "@/components/motion/useReducedMotion";
+import HeadingReveal from "@/components/motion/HeadingReveal";
 
 const heroImages = [
-  "/images/project-forest-kitchen.jpg",
-  "/images/modern master bathroom with nice shower and double vanity.jpg",
+  {
+    src: "/images/hero-kitchen-custom.png",
+    caption: "Forest Kitchen — Olympia, WA · Installed in 10 business days",
+  },
+  {
+    src: "/images/hero-bathroom-custom.png",
+    caption: "Marble Counter Kitchen — South Sound, WA · Installed in 10 business days",
+  },
+] as const;
+
+const heroTrustItems = [
+  "35+ Years Experience",
+  "Family Owned",
+  "5-Year Warranty",
+  "Licensed & Bonded",
 ] as const;
 
 const categories = [
   {
     title: "Kitchen Remodeling",
     note: "Innovative design and superior craftsmanship to create the kitchen of your dreams.",
-    image: "/images/project-forest-kitchen.jpg",
+    image: "/images/Completed Modern Kitchen.png",
     href: "/kitchen-remodel",
   },
   {
     title: "10 Day Kitchen Program",
     note: "Our signature pre-planned kitchen remodel, installed in just 10 business days.",
-    image: "/images/Kitchen - Industry Chalk High Gloss with Metropolitan Walnu 1t.jpg",
+    image: "/images/welcome-kitchen-subway-tile.jpg",
     href: "/10businessdaykitchenprogram",
   },
   {
     title: "Bathroom Remodeling",
     note: "Spa-like bathrooms designed around how you actually live, built to last.",
-    image: "/images/modern master bathroom with nice shower and double vanity.jpg",
+    image: "/images/white-oak-spa-bathroom-service.png",
     href: "/bathroom-remodel",
   },
   {
-    title: "Bathroom Upgrade",
-    note: "Focused bathroom improvements for a fresher, more functional space without a full remodel.",
-    image: "/images/gallery-luxury-bath.png",
-    href: "/bathroom-remodel",
+    title: "Fast Bath",
+    note: "A simpler bathroom upgrade for showers, tubs, vanities, and cleaner everyday function without a full remodel.",
+    image: "/images/fast-bath-simple-service.png",
+    href: "/fast-bath",
   },
 ] as const;
 
@@ -76,15 +89,6 @@ const projects = [
   },
 ] as const;
 
-const brandNames = [
-  "KCD Cabinetry",
-  "Merit Cabinetry",
-  "Showplace",
-  "MSI Surfaces",
-  "Cambria",
-  "Caesarstone",
-] as const;
-
 const partnerLogos = [
   { name: "KCD Cabinetry", src: "/images/kcd.png" },
   { name: "Merit Kitchens", src: "/images/Merit logo.png" },
@@ -96,70 +100,6 @@ const partnerLogos = [
   { name: "Caesarstone", src: "/images/CAESARSTONE logo.png" },
   { name: "Vicostone", src: "/images/VICOSTONE logo.png" },
 ] as const;
-
-function FadeIn({
-  children,
-  className = "",
-  delay = 0,
-}: {
-  children: ReactNode;
-  className?: string;
-  delay?: number;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-64px" }}
-      transition={{ duration: 0.55, ease, delay }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-function Label({ children, dark = false }: { children: ReactNode; dark?: boolean }) {
-  return (
-    <p
-      className={`mb-4 text-[11px] font-semibold uppercase tracking-[0.18em] ${
-        dark ? "text-brand-light" : "text-brand"
-      }`}
-    >
-      {children}
-    </p>
-  );
-}
-
-function SectionHeader({
-  label,
-  title,
-  body,
-  dark = false,
-}: {
-  label: string;
-  title: ReactNode;
-  body?: string;
-  dark?: boolean;
-}) {
-  return (
-    <FadeIn className="max-w-2xl">
-      <Label dark={dark}>{label}</Label>
-      <h2
-        className={`font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em] ${
-          dark ? "text-white" : "text-ink"
-        }`}
-      >
-        {title}
-      </h2>
-      {body ? (
-        <p className={`mt-5 text-[16px] leading-relaxed ${dark ? "text-cream/68" : "text-ink-soft/70"}`}>
-          {body}
-        </p>
-      ) : null}
-    </FadeIn>
-  );
-}
 
 function BeforeAfterSlider() {
   const [position, setPosition] = useState(52);
@@ -236,88 +176,236 @@ function BeforeAfterSlider() {
   );
 }
 
+/* Homepage-only entrance choreography — deliberately distinct from the
+   site-wide FadeIn/img-wipe: the glass card materializes (blur → focus,
+   scale settle) while its contents cascade, then a light sheen sweeps the
+   glass once; the trust band springs up from the bottom edge with its
+   items rising in sequence. */
+const heroCardV = {
+  hidden: { opacity: 0, y: 36, scale: 0.95, filter: "blur(14px)" },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    filter: "blur(0px)",
+    transition: { duration: 0.9, ease, when: "beforeChildren", delayChildren: 0.4, staggerChildren: 0.13 },
+  },
+} as const;
+
+const heroItemV = {
+  hidden: { opacity: 0, y: 18 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease } },
+} as const;
+
+const trustBandV = {
+  hidden: { opacity: 0, y: 56 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 90, damping: 16, delay: 1.0, when: "beforeChildren", staggerChildren: 0.09 },
+  },
+} as const;
+
 export function EditorialHero() {
   const [active, setActive] = useState(0);
-  const [snapToStart, setSnapToStart] = useState(false);
-  const heroSlides = [...heroImages, heroImages[0]];
+  const reducedMotion = useReducedMotion();
+
+  // The card fades out first (0–420px of scroll), the photo stands alone and
+  // cross-fades to the second image, and only then does the next section ride
+  // up over the pinned hero.
+  const { scrollY } = useScroll();
+  const contentOpacity = useTransform(scrollY, [0, 420], [1, 0]);
+  const contentScale = useTransform(scrollY, [0, 420], [1, 0.96]);
+  const contentY = useTransform(scrollY, [0, 420], [0, 30]);
+
+  // Past the card fade, scroll (not the timer) owns the slideshow, so the
+  // second photo is always seen before the panel covers it.
+  const [pastFold, setPastFold] = useState(false);
+  useMotionValueEvent(scrollY, "change", (value) => setPastFold(value > 440));
+  const shown = pastFold && !reducedMotion ? 1 : active;
 
   useEffect(() => {
+    if (reducedMotion || pastFold) return;
     const timer = window.setInterval(() => {
-      setSnapToStart(false);
-      setActive((current) => current + 1);
-    }, 14800);
+      setActive((current) => (current + 1) % heroImages.length);
+    }, 9000);
     return () => window.clearInterval(timer);
-  }, []);
-
-  useEffect(() => {
-    if (active !== heroImages.length) return;
-    const reset = window.setTimeout(() => {
-      setSnapToStart(true);
-      setActive(0);
-    }, 7000);
-    return () => window.clearTimeout(reset);
-  }, [active]);
+  }, [reducedMotion, pastFold]);
 
   return (
-    <section className="relative isolate min-h-[94dvh] overflow-hidden bg-forest pt-32 text-white">
-      <motion.div
-        aria-hidden
-        className="absolute inset-0 flex"
-        initial={false}
-        animate={{ x: `-${active * 100}%` }}
-        transition={snapToStart ? { duration: 0 } : { duration: 6.85, ease: heroSlideEase }}
-      >
-        {heroSlides.map((image, index) => (
-          <div key={`${image}-${index}`} className="relative h-full w-full shrink-0">
+    <div className="relative z-0 h-[195svh]">
+    <section className="sticky top-0 h-[100svh] overflow-hidden bg-cream pt-[8.5rem] lg:pt-40">
+      {/* Full-bleed rotating photography — cross-fade + slow Ken Burns drift */}
+      <div className="absolute inset-0" aria-hidden="true">
+        {heroImages.map((image, index) => (
+          <motion.div
+            key={image.src}
+            className="absolute inset-0"
+            initial={false}
+            animate={
+              reducedMotion
+                ? { opacity: index === 0 ? 1 : 0 }
+                : { opacity: index === shown ? 1 : 0, scale: index === shown ? 1.07 : 1 }
+            }
+            transition={{
+              opacity: { duration: 1.6, ease: "easeInOut" },
+              scale: { duration: 10, ease: "linear" },
+            }}
+          >
             <Image
-              src={image}
+              src={image.src}
               alt=""
               fill
               priority={index === 0}
               sizes="100vw"
-              className="object-cover brightness-[0.68] saturate-[0.95] contrast-[1.04]"
+              className="object-cover"
             />
-          </div>
+          </motion.div>
         ))}
-      </motion.div>
-      <div className="absolute inset-0 bg-[rgba(12,16,10,0.48)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.08),rgba(0,0,0,0.38)_74%)]" />
+        {/* Airy white veil — soft behind the copy, photo opens up quickly to the right */}
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(250,250,248,0.58)_0%,rgba(250,250,248,0.32)_22%,rgba(250,250,248,0.08)_38%,transparent_50%)]" />
+        <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-white/55 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-cream to-transparent" />
+      </div>
 
-      <div className={`${CONTAINER} relative z-10 flex min-h-[calc(94dvh-8rem)] items-center justify-center pb-8 pt-14 lg:pt-16`}>
-        <div className="mx-auto max-w-5xl translate-y-8 text-center lg:translate-y-10">
-          <p className="mb-5 text-[10px] font-bold uppercase tracking-[0.32em] text-brand-light sm:text-[12px]">
-            Local Kitchen & Bath Remodeling
-          </p>
-          <h1 className="font-display text-[clamp(2.45rem,5vw,5.5rem)] font-medium leading-[0.98] tracking-[-0.022em] text-white drop-shadow-[0_10px_40px_rgba(0,0,0,0.42)]">
-            Your dream kitchen and bath,
-            <br />
-            done in 10 business days.
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-[15px] font-medium leading-relaxed text-white/86 sm:text-[17px]">
-            High-quality craftsmanship, guided selections, and a streamlined process for homeowners across Pierce and Thurston Counties.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Link href="/contact" className="btn btn-solid">
+      <motion.div
+        style={reducedMotion ? undefined : { opacity: contentOpacity, scale: contentScale, y: contentY }}
+        className={`${CONTAINER} relative z-10 flex h-[calc(100svh-8.5rem)] origin-top flex-col justify-center pb-24 pt-6 lg:h-[calc(100svh-10rem)]`}
+      >
+        {/* Liquid-glass card — materializes from blur, contents cascade */}
+        <motion.div
+          variants={heroCardV}
+          initial={reducedMotion ? "show" : "hidden"}
+          animate="show"
+          className="relative w-full max-w-[680px] rounded-3xl border border-white/55 bg-white/30 p-8 shadow-[0_24px_80px_rgba(43,39,35,0.1)] backdrop-blur-md sm:p-9 lg:-ml-10 lg:p-11"
+        >
+          {/* Soft white light source behind the card */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -inset-12 -z-10 rounded-[3.5rem] bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.6),rgba(255,255,255,0.28)_55%,transparent_78%)] blur-2xl"
+          />
+          {/* Glass top-edge highlight */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent"
+          />
+          {/* One-time light sheen sweeping across the glass after it settles */}
+          {!reducedMotion ? (
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl"
+            >
+              <motion.span
+                className="absolute inset-y-0 w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/50 to-transparent"
+                initial={{ x: "-180%" }}
+                animate={{ x: "460%" }}
+                transition={{ duration: 1.2, ease: "easeInOut", delay: 1.5 }}
+              />
+            </span>
+          ) : null}
+
+          <motion.p variants={heroItemV} className="mb-6 text-[11.5px] font-bold uppercase tracking-[0.28em] text-brand-dark">
+            Kitchen &amp; Bath Remodeling · Lacey, WA
+          </motion.p>
+
+          <motion.div variants={heroItemV}>
+            <HeadingReveal
+              as="h1"
+              className="text-balance font-display text-[2.4rem] font-bold leading-[1.06] tracking-[-0.022em] text-ink sm:text-[2.9rem] lg:text-[3.25rem]"
+            >
+              Your dream kitchen &amp; bath,
+              <br />
+              <em className="font-semibold italic text-brand-dark">
+                installed in 10 business days.
+              </em>
+            </HeadingReveal>
+          </motion.div>
+
+          <motion.p variants={heroItemV} className="mt-6 max-w-md text-[15.5px] font-medium leading-relaxed text-ink-soft">
+            Lacey kitchen and bath remodeling with guided design, quality craftsmanship, and a pre-planned process across Pierce and Thurston Counties.
+          </motion.p>
+
+          <motion.div variants={heroItemV} className="mt-8 flex flex-wrap items-center gap-4">
+            <Link
+              href="/contact"
+              className="btn btn-solid inline-flex h-12 items-center justify-center transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_34px_rgba(93,187,70,0.32)]"
+            >
               Schedule Free Consultation
             </Link>
-            <Link href="/portfolio" className="btn btn-ghost">
-              View Our Work
-              <ArrowRight className="size-4" />
+            <Link
+              href="/portfolio"
+              className="group inline-flex h-12 items-center justify-center gap-2 border border-ink/25 px-5 text-[12.5px] font-bold uppercase tracking-[0.16em] text-ink transition-all duration-300 hover:-translate-y-0.5 hover:border-ink/50 hover:bg-white/50"
+            >
+              View our work
+              <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1.5" />
             </Link>
+          </motion.div>
+
+          {/* Day 1 → Day 10 rule, filling in on load */}
+          <div className="hidden" aria-hidden="true">
+            <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-white/72 [text-shadow:0_3px_12px_rgba(0,0,0,0.24)]">
+              Day 1
+            </span>
+            <span className="relative h-px flex-1 overflow-hidden bg-white/20">
+              <motion.span
+                className="absolute inset-y-0 left-0 w-full origin-left bg-brand-light"
+                initial={reducedMotion ? false : { scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 1.8, ease, delay: 0.8 }}
+              />
+            </span>
+            <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-brand-light [text-shadow:0_3px_12px_rgba(0,0,0,0.24)]">
+              Day 10
+            </span>
           </div>
-          <div className="mt-7 flex justify-center gap-2" aria-hidden="true">
+
+          <div className="hidden">
+            <span>35+ Years Experience</span>
+            <span className="text-white/25" aria-hidden="true">·</span>
+            <span>Family Owned</span>
+            <span className="text-white/25" aria-hidden="true">·</span>
+            <span>5-Year Warranty</span>
+            <span className="text-white/25" aria-hidden="true">·</span>
+            <span>Licensed &amp; Bonded</span>
+          </div>
+        </motion.div>
+
+        <div className="absolute bottom-32 right-5 z-10 flex flex-col items-end gap-2.5 sm:right-8 lg:right-10">
+          <div className="flex gap-1.5" aria-hidden="true">
             {heroImages.map((image, index) => (
               <span
-                key={image}
-                className={`h-px w-10 transition-colors duration-500 ${
-                  active % heroImages.length === index ? "bg-brand-light" : "bg-white/35"
+                key={image.src}
+                className={`h-[2px] w-9 transition-colors duration-500 ${
+                  index === shown ? "bg-brand-dark" : "bg-ink/20"
                 }`}
               />
             ))}
           </div>
         </div>
-      </div>
+
+        {/* Glass trust band — springs up from the bottom edge, items cascade */}
+        <div className="absolute inset-x-5 bottom-8 sm:inset-x-8 lg:inset-x-10">
+          <motion.div
+            variants={trustBandV}
+            initial={reducedMotion ? "show" : "hidden"}
+            animate="show"
+            className="grid grid-cols-2 divide-x divide-white/40 overflow-hidden rounded-2xl border border-white/50 bg-white/25 shadow-[0_18px_60px_rgba(43,39,35,0.12)] backdrop-blur-md lg:grid-cols-4"
+          >
+            {heroTrustItems.map((item) => (
+              <div
+                key={item}
+                className="overflow-hidden px-4 py-4.5 text-center text-[11px] font-bold uppercase tracking-[0.18em] text-ink transition duration-300 hover:scale-[1.04] hover:bg-white/14 hover:text-brand sm:px-6 sm:text-[12px]"
+              >
+                <motion.span variants={heroItemV} className="block">
+                  {item}
+                </motion.span>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </motion.div>
     </section>
+    </div>
   );
 }
 
@@ -328,7 +416,7 @@ export function TrustedPartners() {
     <section className="partner-track overflow-hidden border-b border-line bg-[#fffefa]">
       <div className={`${CONTAINER} py-6`}>
         <div className="mb-4 flex items-center justify-between gap-6">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-ink-soft/50">
+          <p className="text-[13px] font-bold uppercase tracking-[0.24em] text-brand">
             Trusted Partners
           </p>
           <div className="h-px flex-1 bg-line" />
@@ -368,26 +456,38 @@ export function ServicesEditorial() {
             title="Kitchen and bath remodeling in Lacey, Olympia, and the South Sound."
             body="10 Day Kitchens helps homeowners remodel kitchens and bathrooms with thoughtful design guidance, quality cabinetry, countertops, tile, and finishes, plus a streamlined 10 business day kitchen remodeling process built around your home and schedule."
           />
-          <div className="mt-8 space-y-3 text-sm text-ink-soft/70">
-            <p className="flex gap-3">
-              <Check className="mt-0.5 size-4 shrink-0 text-brand" />
-              Family owned kitchen and bath remodeler serving Lacey, Olympia, Tacoma, Pierce County, and Thurston County.
-            </p>
-            <p className="flex gap-3">
-              <Check className="mt-0.5 size-4 shrink-0 text-brand" />
-              Over 35+ years of remodeling experience with kitchens, bathrooms, cabinetry, counters, and finish selections.
-            </p>
-            <p className="flex gap-3">
-              <Check className="mt-0.5 size-4 shrink-0 text-brand" />
-              Licensed, insured, and backed by a 5-year workmanship warranty.
-            </p>
+          <div className="mt-10 grid gap-8 border-t border-line pt-8 sm:grid-cols-3 sm:gap-10">
+            <div className="min-w-0">
+              <p className="font-display text-[clamp(2.55rem,4.8vw,3.95rem)] font-medium leading-none text-ink">
+                <CountUp value={35} suffix="+" />
+              </p>
+              <p className="mt-4 text-[16px] leading-relaxed text-ink-soft/78">
+                Years experience
+              </p>
+            </div>
+            <div className="min-w-0">
+              <p className="font-display text-[clamp(2.55rem,4.8vw,3.95rem)] font-medium leading-none text-ink">
+                <CountUp value={800} suffix="+" />
+              </p>
+              <p className="mt-4 text-[16px] leading-relaxed text-ink-soft/78">
+                Projects completed
+              </p>
+            </div>
+            <div className="min-w-0">
+              <p className="font-display text-[clamp(2.55rem,4.8vw,3.95rem)] font-medium leading-none text-ink">
+                <CountUp value={5} /> <span className="text-[0.46em] font-medium">year</span>
+              </p>
+              <p className="mt-4 text-[16px] leading-relaxed text-ink-soft/78">
+                Warranty
+              </p>
+            </div>
           </div>
         </div>
 
         <div className="relative min-h-[420px]">
           <div className="absolute right-0 top-0 h-[78%] w-[82%] overflow-hidden bg-line">
           <Image
-            src="/images/Kitchen - Prairie School Flat in Custom Grey Colour with Custom Plate Rack (1).jpg"
+            src="/images/welcome-kitchen-subway-tile.jpg"
             alt="Finished kitchen cabinetry"
             fill
             sizes="(max-width: 1024px) 100vw, 55vw"
@@ -414,7 +514,7 @@ export function StatementSection() {
     <section className="bg-[#fafaf8]">
       <div className={`${CONTAINER} py-12 sm:py-14`}>
         <div className="mb-8 max-w-2xl">
-          <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-brand">
+          <p className="mb-4 text-[13px] font-bold uppercase tracking-[0.24em] text-brand">
             Services We Offer
           </p>
           <h2 className="font-display text-[clamp(1.9rem,3.2vw,3.1rem)] font-medium leading-[1.06] text-ink">
@@ -438,7 +538,7 @@ export function StatementSection() {
                 />
               </div>
               <div className="pt-5 transition-transform duration-500 group-hover:translate-x-1">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand transition-colors group-hover:text-brand-dark">
+                <p className="text-[13px] font-bold uppercase tracking-[0.22em] text-brand transition-colors group-hover:text-brand-dark">
                   Explore
                 </p>
                 <h3 className="mt-2 font-display text-2xl font-medium text-ink transition-colors group-hover:text-brand-dark">
@@ -461,10 +561,10 @@ export function RecentProjectsHover() {
     <section id="portfolio" className="bg-[#fffefa] py-12 text-ink sm:py-16 lg:py-20">
       <div className={CONTAINER}>
         <div className="mb-8 max-w-2xl lg:mb-12">
-          <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.22em] text-brand">
+          <p className="mb-4 text-[13px] font-bold uppercase tracking-[0.24em] text-brand">
             Our Projects
           </p>
-          <h2 className="max-w-xl font-display text-[clamp(1.85rem,3vw,3.6rem)] font-medium leading-[1.04] text-ink">
+          <h2 className="max-w-xl font-display text-[clamp(1.85rem,3vw,3.6rem)] font-medium italic leading-[1.04] text-ink">
             A quieter approach
             <br />
             to remodeling.
@@ -505,7 +605,7 @@ export function RecentProjectsHover() {
 
         <Link
           href="/portfolio"
-          className="mt-10 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink transition hover:text-brand lg:mt-16"
+          className="mt-10 inline-flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.22em] text-brand transition hover:text-brand-dark lg:mt-16"
         >
           View All Projects
           <ArrowRight className="size-4" />
@@ -517,7 +617,7 @@ export function RecentProjectsHover() {
 
 export function ProcessEditorial() {
   return (
-    <section id="process" className="bg-[#1b2318] py-12 text-cream sm:py-16 lg:py-20">
+    <section id="process" className="bg-[#2A2A2A] py-12 text-cream sm:py-16 lg:py-20">
       <div className={`${CONTAINER} grid gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-16`}>
         <div className="lg:sticky lg:top-40 lg:self-start">
           <SectionHeader
@@ -559,13 +659,16 @@ export function CustomerReviews() {
   const nextReview = () => setReviewIndex((value) => (value + 1) % testimonials.length);
 
   return (
-    <section className={`${SECTION} bg-cream`}>
+    <section className="bg-[#fffefa] pb-16 pt-4 sm:pb-20 sm:pt-6 lg:pb-24 lg:pt-8">
       <div className={`${CONTAINER} grid gap-10 lg:grid-cols-[0.7fr_1.3fr] lg:items-start`}>
-        <SectionHeader
-          label="Word of mouth"
-          title="Trusted by homeowners across the South Sound."
-          body="Clear communication, professional crews, and thoughtful follow-through are part of the work."
-        />
+        <FadeIn className="max-w-2xl">
+          <h2 className="font-display text-[clamp(1.95rem,3vw,3rem)] font-medium leading-[1.06] tracking-[-0.02em] text-ink">
+            Trusted by homeowners across the South Sound.
+          </h2>
+          <p className="mt-5 text-[16px] leading-relaxed text-ink-soft/72">
+            Clear communication, professional crews, and thoughtful follow-through are part of the work.
+          </p>
+        </FadeIn>
 
         <FadeIn className="relative bg-[#fffefa] p-5 shadow-[0_24px_70px_rgba(43,39,35,0.08)] sm:p-7">
           <div className="mb-4 flex items-center justify-between gap-4">
@@ -606,17 +709,68 @@ export function CustomerReviews() {
 
 export function TransformationSection() {
   return (
-    <section className={`${SECTION} bg-[#fffefa]`}>
-      <div className={`${CONTAINER} max-w-[1120px]`}>
+    <section className="bg-[#fffefa] pb-8 pt-12 sm:pb-10 sm:pt-16 lg:pb-12 lg:pt-20">
+      <div className={CONTAINER}>
         <FadeIn className="mx-auto max-w-3xl text-center">
-          <h2 className="font-display text-[clamp(2.15rem,3.8vw,3.7rem)] font-medium leading-[1.02] tracking-[-0.028em] text-ink">
+          <h2 className="font-display text-[clamp(2.15rem,3.8vw,3.7rem)] font-medium italic leading-[1.02] tracking-[-0.028em] text-ink">
             See what 10 days can do.
           </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-[16px] leading-relaxed text-ink-soft/72">
+            Thoughtful design, transparent communication, and proven craftsmanship behind every kitchen and bath remodel.
+          </p>
         </FadeIn>
 
-        <FadeIn className="mt-10">
-          <div className="mx-auto grid max-w-4xl gap-8">
-            <BeforeAfterSlider />
+        <FadeIn className="mt-12">
+          <div className="grid gap-5 lg:grid-cols-[0.9fr_1.3fr_0.9fr] lg:items-stretch">
+            <motion.div
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.35 }}
+              transition={{ duration: 0.7, ease }}
+              whileHover={{ y: -6 }}
+              className="border border-line bg-white p-6 transition-shadow duration-300 hover:shadow-[0_24px_60px_rgba(43,39,35,0.08)] sm:p-7"
+            >
+              <p className="font-display text-[clamp(2.4rem,4.2vw,4rem)] font-medium leading-none text-brand">
+                <CountUp value={800} suffix="+" />
+              </p>
+              <p className="mt-8 text-[13px] font-bold uppercase tracking-[0.14em] text-brand">
+                Projects completed
+              </p>
+              <p className="mt-3 max-w-xs text-[15px] leading-relaxed text-ink-soft/72">
+                From focused upgrades to full kitchen and bath transformations across the South Sound.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.08, ease }}
+              className="flex items-center justify-center"
+            >
+              <div className="w-full max-w-[520px] transition-transform duration-500 hover:-translate-y-1">
+                <BeforeAfterSlider />
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.35 }}
+              transition={{ duration: 0.7, delay: 0.14, ease }}
+              whileHover={{ y: -6 }}
+              className="border border-line bg-white p-6 transition-shadow duration-300 hover:shadow-[0_24px_60px_rgba(43,39,35,0.08)] sm:p-7"
+            >
+              <p className="font-display text-[clamp(2.4rem,4.2vw,4rem)] font-medium leading-none text-brand">
+                <CountUp value={35} suffix="+" />
+              </p>
+              <p className="mt-8 text-[13px] font-bold uppercase tracking-[0.14em] text-brand">
+                Years experience
+              </p>
+              <p className="mt-3 max-w-xs text-[15px] leading-relaxed text-ink-soft/72">
+                Decades of remodeling experience, refined into a process built for speed, clarity, and quality.
+              </p>
+            </motion.div>
           </div>
         </FadeIn>
       </div>
@@ -627,62 +781,100 @@ export function TransformationSection() {
 export function ClosingCTA() {
   return (
     <section id="contact" className="bg-[#fffefa] text-ink">
-      <div className={`${CONTAINER} py-14 sm:py-18 lg:py-20`}>
+      <div className={`${CONTAINER} py-16 sm:py-20 lg:py-24`}>
         <FadeIn>
-          <div className="relative overflow-hidden border border-white/12 bg-[#1b2318] px-10 py-11 shadow-[0_18px_50px_rgba(43,39,35,0.16)] sm:px-12 sm:py-12 lg:px-14 lg:py-14">
-            <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(93,187,70,0.35),transparent)]" />
-            <div className="grid gap-14 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
-              <div>
-                <Label dark>Want to experience the process?</Label>
-                <h2 className="max-w-3xl font-display text-[clamp(2.05rem,3.3vw,3.45rem)] font-medium leading-[1.02] tracking-[-0.03em] text-white">
-                  Start with a conversation at the Lacey showroom.
-                </h2>
-                <p className="mt-4 max-w-xl text-[16px] leading-relaxed text-cream/76">
-                  Bring your goals, measurements, or inspiration. We will walk through your options, timeline, and next practical step.
+          <div className="grid gap-10 lg:grid-cols-[1.16fr_0.84fr] lg:items-start lg:gap-12">
+            <div className="min-w-0">
+              <p className="text-[13px] font-bold uppercase tracking-[0.32em] text-brand">
+                READY TO START PLANNING?
+              </p>
+              <h2 className="mt-5 max-w-[11ch] font-display text-[clamp(2.5rem,6.2vw,4.6rem)] font-medium leading-[0.97] tracking-[-0.045em] text-ink">
+                VISIT OUR
+                <br />
+                <span className="italic text-brand-dark">SHOWROOM</span>
+              </h2>
+              <p className="mt-7 max-w-[640px] text-[17px] leading-[1.85] text-ink-soft/86">
+                Book a free consultation to talk through your kitchen or bath remodel, visit our
+                Lacey showroom, and get clear guidance on options, budget, and timing. We respond
+                quickly and keep the next step simple.
+              </p>
+
+              <div className="mt-14 grid gap-10 border-t border-line pt-10 sm:grid-cols-[minmax(0,0.95fr)_minmax(0,1.1fr)] sm:gap-14 lg:gap-20">
+                <div className="min-w-0">
+                  <p className="text-[13px] font-bold uppercase tracking-[0.24em] text-brand">
+                    Address
+                  </p>
+                  <a
+                    href={site.mapsHref}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-4 block max-w-[260px] text-[17px] leading-[1.9] text-ink transition-colors duration-200 hover:text-brand-dark"
+                  >
+                    8695 Martin Way E #101
+                    <br />
+                    Lacey, WA 98516
+                  </a>
+                </div>
+
+                <div className="min-w-0">
+                  <p className="text-[13px] font-bold uppercase tracking-[0.24em] text-brand">
+                    Hours
+                  </p>
+                  <div className="mt-4 space-y-3 text-[17px] leading-[1.9] text-ink-soft/84">
+                    <p>Mon - Fri: 9:00 AM - 5:30 PM</p>
+                    <p>Sat: By appointment only</p>
+                    <p>Sun: Closed</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative overflow-hidden border border-white/12 bg-[#2A2A2A] px-8 py-9 text-white shadow-[0_28px_70px_rgba(43,39,35,0.18)] sm:px-10 sm:py-10 lg:mt-4 lg:px-11 lg:py-11">
+              <div className="absolute inset-x-0 top-0 h-1 bg-brand" />
+              <div className="relative">
+                <h3 className="mt-7 font-display text-[clamp(2rem,3vw,2.55rem)] font-medium leading-[1.04] tracking-[-0.03em] text-white">
+                  Book a consultation
+                </h3>
+                <p className="mt-5 max-w-md text-[17px] leading-[1.85] text-white/76">
+                  Meet with our team in the showroom or by phone. We&apos;ll review your project,
+                  answer questions, and help map out the best next step.
                 </p>
-                <div className="mt-8 flex flex-wrap gap-3">
-                  <Link href="/contact" className="btn btn-solid">
-                    Schedule Free Consultation
+
+                <div className="mt-8 space-y-0 border-y border-white/10 py-6">
+                  <div>
+                    <div className="flex items-start gap-3 py-3 text-[16px] leading-relaxed text-white/82">
+                      <Check className="mt-1 size-4 shrink-0 text-brand-light" />
+                      <span>Free consultation with no commitment</span>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex items-start gap-3 py-3 text-[16px] leading-relaxed text-white/82">
+                      <Check className="mt-1 size-4 shrink-0 text-brand-light" />
+                      <span>In-person showroom visit or phone call</span>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex items-start gap-3 py-3 text-[16px] leading-relaxed text-white/82">
+                      <Check className="mt-1 size-4 shrink-0 text-brand-light" />
+                      <span>Free estimates and fast follow-up from our local team</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-8 space-y-3">
+                  <Link
+                    href="/contact"
+                    className="inline-flex w-full items-center justify-center bg-brand px-6 py-4 text-[13px] font-semibold uppercase tracking-[0.22em] text-ink transition duration-200 hover:bg-brand-dark hover:text-white"
+                  >
+                    Schedule Now
                   </Link>
-                  <a href={site.phoneHref} className="btn btn-ghost">
+                  <a
+                    href={site.phoneHref}
+                    className="inline-flex w-full items-center justify-center gap-2 border border-white/20 px-6 py-4 text-[13px] font-semibold uppercase tracking-[0.22em] text-white transition duration-200 hover:border-brand-light hover:text-brand-light"
+                  >
                     <Phone className="size-4" />
                     {site.phone}
                   </a>
-                </div>
-              </div>
-
-              <div className="border-l border-white/12 pl-0 lg:pl-12">
-                <div className="space-y-8 text-sm text-cream/72">
-                  <div>
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-light">Showroom</p>
-                    <a
-                      href={site.mapsHref}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="mt-2 inline-block max-w-xs text-base leading-relaxed text-white transition-colors duration-200 hover:text-brand-light"
-                    >
-                      {site.address}
-                    </a>
-                  </div>
-
-                  <div>
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-light">Hours</p>
-                    <div className="mt-3 space-y-2.5">
-                      {site.showroomHours.map((item) => (
-                        <div key={item.day} className="flex items-baseline justify-between gap-4">
-                          <span className="text-white/90">{item.day}</span>
-                          <span className="whitespace-nowrap text-white/62">{item.time}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-light">Service Area</p>
-                    <p className="mt-2 max-w-sm leading-relaxed text-white/66">
-                      Lacey, Olympia, Tacoma, Chehalis, Pierce County, and Thurston County.
-                    </p>
-                  </div>
                 </div>
               </div>
             </div>

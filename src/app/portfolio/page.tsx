@@ -1,201 +1,170 @@
-const stats = [
-  { num: '35+', label: 'Years of Experience' },
-  { num: '10', label: 'Business Day Install' },
-  { num: '5yr', label: 'Warranty on Every Project' },
-  { num: '100%', label: 'Satisfaction Guarantee' },
-];
+import type { Metadata } from "next";
+import Image from "next/image";
+import InteriorHero from "@/components/InteriorHero";
+import PageCta from "@/components/PageCta";
+import { CONTAINER, SECTION } from "@/components/layout";
+import { FadeIn, SectionHeader } from "@/components/shared";
+import ImageReveal from "@/components/ImageReveal";
+
+export const metadata: Metadata = {
+  title: "Our Projects | Kitchen & Bath Remodels",
+  description:
+    "Real kitchen and bathroom transformations across Pierce, Thurston, and Lewis Counties — most completed in 10 business days. Browse the portfolio.",
+};
 
 const projects = [
   {
-    title: 'Coastal Calm Kitchen in Steilacoom',
-    location: 'Steilacoom, WA',
-    type: 'Kitchen Remodel',
-    img: '/images/project-coastal-calm.jpg',
-    alt: 'Light blue coastal kitchen',
-    desc: 'Soft coastal blues and crisp whites transform a dated kitchen into a serene, light-filled space.',
+    title: "Coastal Calm Kitchen",
+    location: "Steilacoom, WA",
+    type: "Kitchen Remodel",
+    img: "/images/project-coastal-calm.jpg",
+    alt: "Light blue coastal kitchen remodel in Steilacoom",
+    desc: "Soft coastal blues and crisp whites transform a dated kitchen into a serene, light-filled space.",
+    featured: true,
   },
   {
-    title: 'The Modern Forest-Inspired Kitchen',
-    location: 'Olympia, WA',
-    type: 'Kitchen Remodel',
-    img: '/images/project-forest-kitchen.jpg',
-    alt: 'Forest-inspired dark kitchen',
-    desc: 'Deep, nature-inspired tones with custom cabinetry bring drama and warmth to this Olympia home.',
+    title: "Modern Forest Kitchen",
+    location: "Olympia, WA",
+    type: "Kitchen Remodel",
+    img: "/images/project-forest-kitchen.jpg",
+    alt: "Forest-inspired kitchen remodel in Olympia",
+    desc: "Deep, nature-inspired tones with custom cabinetry bring drama and warmth to this Olympia home.",
+    featured: false,
   },
   {
-    title: 'Midnight Blue Kitchen',
-    location: 'South Sound, WA',
-    type: 'Kitchen Remodel',
-    img: '/images/project-midnight-blue.jpg',
-    alt: 'Midnight blue navy kitchen',
-    desc: 'Bold midnight blue cabinetry with gold hardware creates a striking, high-end aesthetic.',
+    title: "Midnight Blue Kitchen",
+    location: "South Sound, WA",
+    type: "Custom Kitchen",
+    img: "/images/project-midnight-blue.jpg",
+    alt: "Midnight blue kitchen with gold hardware",
+    desc: "Bold midnight blue cabinetry with gold hardware creates a striking, high-end aesthetic.",
+    featured: false,
   },
   {
-    title: 'University Place Kitchen & Baths',
-    location: 'University Place, WA',
-    type: 'Kitchen & Bath',
-    img: '/images/project-university-place.png',
-    alt: 'White shaker kitchen',
-    desc: 'A full home transformation — bright white shaker cabinets and quartz countertops throughout.',
+    title: "University Place Kitchen & Baths",
+    location: "University Place, WA",
+    type: "Kitchen & Bath",
+    img: "/images/project-university-place.png",
+    alt: "White shaker kitchen in University Place",
+    desc: "A full home transformation — bright white shaker cabinets and quartz countertops throughout.",
+    featured: false,
   },
   {
-    title: 'Heritage Woods Kitchen',
-    location: 'DuPont, WA',
-    type: 'Kitchen Remodel',
-    img: '/images/project-heritage-woods.png',
-    alt: 'Wood tone heritage kitchen',
-    desc: 'Warm wood tones and natural finishes celebrate the heritage of this DuPont family home.',
+    title: "Heritage Woods Kitchen",
+    location: "DuPont, WA",
+    type: "Kitchen Remodel",
+    img: "/images/project-heritage-woods.png",
+    alt: "Warm wood tone kitchen remodel in DuPont",
+    desc: "Warm wood tones and natural finishes celebrate the heritage of this DuPont family home.",
+    featured: false,
   },
   {
-    title: 'The 10-Day Black & White Kitchen',
-    location: 'Chehalis, WA',
-    type: 'Kitchen Remodel',
-    img: '/images/ba-after-chehalis.jpg',
-    alt: 'Black and white kitchen transformation',
-    desc: 'A dramatic before-and-after: from dated to stunning in exactly 10 business days.',
+    title: "Black & White Kitchen",
+    location: "Chehalis, WA",
+    type: "Kitchen Remodel",
+    img: "/images/ba-after-chehalis.jpg",
+    alt: "Black and white kitchen transformation in Chehalis",
+    desc: "A dramatic before-and-after: from dated to stunning in exactly 10 business days.",
+    featured: false,
   },
   {
-    title: 'The Classic Modern Bath',
-    location: 'University Place, WA',
-    type: 'Bath Remodel',
-    img: '/images/ba-after-bath.jpg',
-    alt: 'Modern bathroom remodel',
-    desc: 'Clean lines, bright tile work, and a frameless shower create a spa-worthy retreat.',
+    title: "Classic Modern Bath",
+    location: "University Place, WA",
+    type: "Bath Remodel",
+    img: "/images/ba-after-bath.jpg",
+    alt: "Modern bathroom remodel with frameless shower",
+    desc: "Clean lines, bright tile work, and a frameless shower create a spa-worthy retreat.",
+    featured: false,
   },
 ];
 
 export default function PortfolioPage() {
+  const [featured, ...rest] = projects;
+
   return (
     <main>
-      {/* Hero */}
-      <section className="relative pt-[90px] bg-[#1C1C1C] overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src="/images/project-midnight-blue.jpg"
-            alt=""
-            className="w-full h-full object-cover opacity-20"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#1C1C1C]/60 to-[#1C1C1C]" />
-        </div>
-        <div className="relative z-10 max-w-screen-xl mx-auto px-16 py-24">
-          <span className="eyebrow text-[#5DBB46]/70 mb-4 block">Our Work</span>
-          <h1
-            style={{
-              fontFamily: 'var(--font-playfair)',
-              fontSize: 'clamp(48px,5vw,80px)',
-              color: 'white',
-              fontWeight: 500,
-              letterSpacing: '-0.02em',
-              lineHeight: 1.05,
-            }}
-          >
-            Real Kitchens.<br />Real Results.
-          </h1>
-          <p className="text-white/60 text-lg max-w-xl mt-6 leading-relaxed">
-            Most projects completed in 10 business days. Browse our kitchen and bath transformations
-            from Pierce, Thurston, and Lewis Counties.
-          </p>
-        </div>
-      </section>
+      <InteriorHero
+        image="/images/Completed Modern Kitchen.png"
+        imageAlt="Midnight blue custom kitchen"
+        eyebrow="Our Work · Pierce, Thurston & Lewis Counties"
+        title={
+          <>
+            Real kitchens.
+            <br />
+            <em>Real results, in 10 days.</em>
+          </>
+        }
+        body="Browse recent kitchen and bath transformations from homes across the South Sound."
+        cta={{ label: "Schedule Free Consultation", href: "/contact" }}
+      />
 
-      {/* Stats bar */}
-      <section className="bg-[#5DBB46] py-8">
-        <div className="flex justify-center gap-16 flex-wrap max-w-4xl mx-auto">
-          {stats.map((s) => (
-            <div key={s.label} className="text-center px-8">
-              <p
-                style={{
-                  fontFamily: 'var(--font-playfair)',
-                  fontSize: '3rem',
-                  color: 'white',
-                  fontWeight: 500,
-                }}
-              >
-                {s.num}
-              </p>
-              <p className="text-white/80 text-xs uppercase tracking-widest mt-1">{s.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Projects grid */}
-      <section className="bg-[#F7FAF5] py-24 px-16">
-        <div className="text-center mb-12">
-          <span className="eyebrow mb-4 block">Browse All Projects</span>
-          <h2
-            style={{
-              fontFamily: 'var(--font-playfair)',
-              fontSize: '48px',
-              fontWeight: 500,
-              color: '#111111',
-            }}
-          >
-            Our Portfolio
-          </h2>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-          {projects.map((p) => (
-            <div
-              key={p.title}
-              className="group rounded-2xl overflow-hidden bg-white border border-[rgba(17,17,17,0.07)] hover:shadow-lg transition-shadow duration-300"
-            >
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <img
-                  src={p.img}
-                  alt={p.alt}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <span className="absolute top-4 right-4 bg-white/90 text-[#111111] text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full">
-                  {p.type}
+      {/* Featured project — full-width editorial plate */}
+      <section className={`${SECTION} bg-cream`}>
+        <div className={CONTAINER}>
+          <ImageReveal className="group relative overflow-hidden">
+            <div className="relative aspect-[16/9] lg:aspect-[21/9]">
+              <Image
+                src={featured.img}
+                alt={featured.alt}
+                fill
+                sizes="(max-width: 1024px) 100vw, 1220px"
+                className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 flex flex-col items-start gap-2 p-7 sm:p-10">
+                <span className="bg-paper px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-ink">
+                  {featured.type} · {featured.location}
                 </span>
-              </div>
-              <div className="p-6">
-                <p className="text-[#777777] text-xs uppercase tracking-wider mb-2">
-                  {p.location}
-                </p>
-                <h3
-                  style={{
-                    fontFamily: 'var(--font-playfair)',
-                    fontSize: '1.15rem',
-                    fontWeight: 500,
-                    color: '#111111',
-                    marginBottom: '0.5rem',
-                  }}
-                >
-                  {p.title}
-                </h3>
-                <p className="text-[#777777] text-sm leading-relaxed">{p.desc}</p>
+                <h2 className="font-display text-[2rem] font-semibold leading-[1.05] text-white sm:text-[2.6rem]">
+                  {featured.title}
+                </h2>
+                <p className="max-w-xl text-[14.5px] leading-relaxed text-white/80">{featured.desc}</p>
               </div>
             </div>
-          ))}
+          </ImageReveal>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-[#1C1C1C] py-20 px-16 text-center">
-        <span className="eyebrow text-white/50 mb-4 block">Ready to Start?</span>
-        <h2
-          style={{
-            fontFamily: 'var(--font-playfair)',
-            fontSize: '48px',
-            fontWeight: 500,
-            color: 'white',
-          }}
-        >
-          Your Transformation<br />Awaits
-        </h2>
-        <p className="text-white/60 text-lg max-w-xl mx-auto mt-4">
-          Join hundreds of South Sound homeowners who&apos;ve trusted 10 Day Kitchens with their
-          most important space.
-        </p>
-        <a
-          href="/contact"
-          className="mt-8 inline-block bg-[#5DBB46] text-white rounded-full px-10 py-5 text-sm font-bold uppercase tracking-wider hover:bg-[#4aa836] transition-all"
-        >
-          Schedule Free Consultation
-        </a>
+      {/* Project grid */}
+      <section className="bg-cream pb-14 sm:pb-16 lg:pb-20">
+        <div className={CONTAINER}>
+          <div className="mb-10">
+            <SectionHeader label="Browse All Projects" title="The portfolio." />
+          </div>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {rest.map((p, i) => (
+              <FadeIn key={p.title} delay={(i % 3) * 0.07} className="group card-hover overflow-hidden border border-line bg-paper">
+                <ImageReveal delay={0.05} className="relative aspect-[4/3] overflow-hidden">
+                  <Image
+                    src={p.img}
+                    alt={p.alt}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                  />
+                  <span className="absolute right-4 top-4 bg-paper/95 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-ink">
+                    {p.type}
+                  </span>
+                </ImageReveal>
+                <div className="p-6">
+                  <p className="mb-2 text-[10.5px] font-bold uppercase tracking-[0.18em] text-brand-dark">
+                    {p.location} · 10 business days
+                  </p>
+                  <h3 className="font-display text-[1.35rem] font-semibold leading-tight text-ink">{p.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-ink-soft/80">{p.desc}</p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
       </section>
+
+      <PageCta
+        eyebrow="Ready to Start?"
+        title="Your transformation awaits."
+        body="Join hundreds of South Sound homeowners who have trusted us with their most important space."
+        watermark="Projects"
+      />
     </main>
   );
 }
