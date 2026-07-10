@@ -128,8 +128,12 @@ const faqs = [
   },
 ];
 
-function Eyebrow({ children }: { children: ReactNode }) {
-  return <span className="eyebrow mb-4 block text-[0.82rem] font-bold">{children}</span>;
+function Eyebrow({ children, className = "" }: { children: ReactNode; className?: string }) {
+  return (
+    <span className={`mb-4 block text-[13px] font-bold uppercase tracking-[0.24em] text-brand ${className}`}>
+      {children}
+    </span>
+  );
 }
 
 function PrimaryButton({ href, children }: { href: string; children: ReactNode }) {
@@ -226,7 +230,7 @@ export default function TenDayProgramPage() {
         <div className={`${CONTAINER} grid gap-10 lg:grid-cols-[0.86fr_1.14fr] lg:items-end`}>
           <div>
             <Eyebrow>Built for the right kitchen</Eyebrow>
-            <h2 className="max-w-3xl text-[clamp(2.2rem,4vw,4.2rem)] leading-[1.04]">
+            <h2 className="max-w-3xl font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em]">
               Keep the layout. Upgrade the experience.
             </h2>
             <p className="mt-6 max-w-xl text-[1.04rem] leading-8 text-ink-soft">
@@ -257,7 +261,7 @@ export default function TenDayProgramPage() {
         <div className={`${CONTAINER} grid gap-10 lg:grid-cols-[0.78fr_1fr] lg:items-start`}>
           <div className="lg:sticky lg:top-32">
             <Eyebrow>Quick qualification check</Eyebrow>
-            <h2 className="max-w-xl text-[clamp(2rem,3.5vw,3.45rem)] leading-[1.06]">
+            <h2 className="max-w-xl font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em]">
               This works when the room&apos;s bones stay in place.
             </h2>
             <p className="mt-5 max-w-md text-base leading-8 text-ink-soft">
@@ -300,7 +304,7 @@ export default function TenDayProgramPage() {
         <div className={`${CONTAINER} grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-start`}>
           <div className="lg:sticky lg:top-36">
             <Eyebrow>How it works</Eyebrow>
-            <h2 className="text-[clamp(2.1rem,3.8vw,3.8rem)] leading-[1.05]">
+            <h2 className="font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em]">
               Planned before day one.
             </h2>
             <p className="mt-6 max-w-md text-base leading-8 text-ink-soft">
@@ -361,7 +365,7 @@ export default function TenDayProgramPage() {
         <div className={`${CONTAINER} grid gap-10 border border-line bg-white p-7 shadow-[0_24px_70px_rgba(43,39,35,0.08)] sm:p-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center`}>
           <div>
             <Eyebrow>Need a fully customized kitchen instead?</Eyebrow>
-            <h2 className="text-[clamp(2.1rem,3.8vw,3.8rem)] leading-[1.05] text-ink">
+            <h2 className="font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em] text-ink">
               Choose the custom remodel path when the layout needs to change.
             </h2>
           </div>
@@ -383,7 +387,7 @@ export default function TenDayProgramPage() {
         <div className={`${CONTAINER} grid gap-12 lg:grid-cols-[0.72fr_1fr] lg:items-start`}>
           <div className="lg:sticky lg:top-32">
             <Eyebrow>Program FAQs</Eyebrow>
-            <h2 className="max-w-xl text-[clamp(2.1rem,3.8vw,3.8rem)] leading-[1.05]">Questions homeowners ask before they commit.</h2>
+            <h2 className="max-w-xl font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em]">Questions homeowners ask before they commit.</h2>
             <p className="mt-6 max-w-md text-base leading-8 text-ink-soft">
               The program is intentionally specific. These answers help you understand whether the 10 day path is
               the right fit before we ever start ordering materials.

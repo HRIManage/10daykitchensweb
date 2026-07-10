@@ -92,12 +92,12 @@ export default function Navbar() {
     <header className="fixed inset-x-0 top-0 z-50">
       {/* Promo bar — the promise, not just contact info */}
       <div
-        className={`overflow-hidden border-white/10 bg-[#2A2A2A] text-cream transition-all duration-300 ${
+        className={`hidden overflow-hidden border-white/10 bg-[#2A2A2A] text-cream transition-all duration-300 sm:block ${
           scrolled ? "max-h-0 border-b-0 opacity-0" : "max-h-16 border-b opacity-100"
         }`}
       >
-        <div className="site-container flex min-h-12 items-center justify-between gap-4">
-          <p className="truncate text-[12.5px] font-bold tracking-[0.12em] text-cream/85">
+        <div className="site-container flex min-h-12 items-center justify-between gap-3">
+          <p className="min-w-0 truncate text-[11px] font-bold tracking-[0.08em] text-cream/85 sm:text-[12.5px] sm:tracking-[0.12em]">
             <span className="uppercase text-brand-light">Coming Soon</span>
             <span className="mx-2 text-cream/45">|</span>
             <span>Our showroom in Lacey is opening soon.</span>
@@ -105,10 +105,10 @@ export default function Navbar() {
           <div className="flex flex-none items-center gap-4">
             <a
               href={site.phoneHref}
-              className="flex items-center gap-2 text-[13.5px] font-bold tracking-[0.06em] text-brand-light transition hover:text-white"
+              className="flex flex-none items-center gap-2 text-[13px] font-bold tracking-[0.04em] text-brand-light transition hover:text-white sm:text-[13.5px] sm:tracking-[0.06em]"
             >
               <Phone className="size-4" />
-              <span>{site.phone}</span>
+              <span className="hidden min-[390px]:inline">{site.phone}</span>
             </a>
             <span className="hidden h-3 w-px bg-white/20 sm:block" aria-hidden="true" />
             <div className="hidden items-center gap-4 text-brand-light sm:flex">
@@ -143,7 +143,7 @@ export default function Navbar() {
             : "border-b border-white/30 bg-white/25 backdrop-blur-md"
         }`}
       >
-        <div className="site-container flex h-[108px] items-center justify-between gap-8">
+        <div className="site-container flex h-[76px] items-center justify-between gap-4 xl:h-[108px] xl:gap-6">
           <Link href="/" aria-label={`${site.name} home`} onClick={() => setMobileOpen(false)} className="relative flex-none">
             <Image
               src="/images/logo.webp"
@@ -151,11 +151,11 @@ export default function Navbar() {
               width={264}
               height={112}
               priority
-              className="h-[100px] w-auto object-contain"
+              className="h-[68px] w-auto object-contain xl:h-[100px]"
             />
           </Link>
 
-          <ul className="hidden items-center gap-9 md:flex">
+          <ul className="hidden items-center gap-6 xl:flex">
             {navItems.map((item) => (
               <li
                 key={item.label}
@@ -174,6 +174,9 @@ export default function Navbar() {
                 ) : (
                   <button
                     type="button"
+                    aria-expanded={openMenu === item.label}
+                    aria-haspopup="menu"
+                    onClick={() => setOpenMenu(item.label)}
                     className={`${navLinkClass} gap-1.5 text-ink hover:text-brand-dark`}
                   >
                     {item.label}
@@ -196,7 +199,13 @@ export default function Navbar() {
                         <Link
                           key={child.label}
                           href={child.href}
-                          onClick={() => setOpenMenu(null)}
+                          onClick={(event) => {
+                            setOpenMenu(null);
+                            if (child.href === "/kitchen-remodel") {
+                              event.preventDefault();
+                              window.location.assign(child.href);
+                            }
+                          }}
                           className="group relative block border-b border-line/70 px-5 py-4 transition last:border-0 hover:bg-white/68"
                         >
                           <span className="flex items-center justify-between gap-6 text-[13px] font-bold uppercase tracking-[0.12em] text-ink transition group-hover:text-brand-dark">
@@ -221,7 +230,7 @@ export default function Navbar() {
             <Link
               href="/contact-1"
               onClick={() => setOpenMenu(null)}
-              className="hidden h-11 items-center bg-brand px-6 text-[12px] font-bold uppercase tracking-[0.14em] text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-dark hover:shadow-[0_10px_28px_rgba(93,187,70,0.35)] md:inline-flex"
+              className="hidden h-11 items-center bg-brand px-5 text-[12px] font-bold uppercase tracking-[0.14em] text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-dark hover:shadow-[0_10px_28px_rgba(93,187,70,0.35)] xl:inline-flex"
             >
               Contact Us
             </Link>
@@ -230,7 +239,7 @@ export default function Navbar() {
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen((value) => !value)}
-              className="flex h-10 w-10 flex-col items-center justify-center gap-[5px] md:hidden"
+              className="flex h-11 w-11 flex-col items-center justify-center gap-[5px] xl:hidden"
             >
               <span className={`h-[2px] w-6 bg-ink transition ${mobileOpen ? "translate-y-[7px] rotate-45" : ""}`} />
               <span className={`h-[2px] w-6 bg-ink transition ${mobileOpen ? "opacity-0" : ""}`} />
@@ -242,11 +251,11 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       <div
-        className={`overflow-hidden border-b border-line bg-paper transition-[max-height,opacity] duration-300 md:hidden ${
+        className={`overflow-hidden border-b border-line bg-paper transition-[max-height,opacity] duration-300 xl:hidden ${
           mobileOpen ? "max-h-[82vh] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <nav className="max-h-[80vh] overflow-y-auto px-5 py-4">
+        <nav className="max-h-[calc(100dvh-124px)] overflow-y-auto px-5 py-4">
           {navItems.map((item) => (
             <div key={item.label} className="border-b border-line py-3 last:border-0">
               {item.href ? (
@@ -267,7 +276,13 @@ export default function Navbar() {
                       <Link
                         key={child.label}
                         href={child.href}
-                        onClick={() => setMobileOpen(false)}
+                        onClick={(event) => {
+                          setMobileOpen(false);
+                          if (child.href === "/kitchen-remodel") {
+                            event.preventDefault();
+                            window.location.assign(child.href);
+                          }
+                        }}
                         className="text-[14px] font-semibold text-ink-soft"
                       >
                         {child.label}

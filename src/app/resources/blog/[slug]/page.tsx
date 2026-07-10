@@ -14,7 +14,7 @@ export async function generateMetadata({
   if (!post) return {};
 
   return {
-    title: post.seoTitle,
+    title: { absolute: post.seoTitle },
     description: post.seoDescription,
     alternates: { canonical: `${BASE_URL}/resources/blog/${post.slug}` },
     openGraph: {

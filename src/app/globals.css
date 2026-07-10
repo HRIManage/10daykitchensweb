@@ -107,13 +107,28 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    max-width: 100%;
+    overflow-x: clip;
   }
 
   body {
     font-family: var(--font-sans);
     background-color: var(--bg);
     color: var(--color-ink);
-    overflow-x: hidden;
+    /* Use `clip`, not `hidden`: `overflow-x: hidden` forces the computed
+       `overflow-y` to `auto`, turning <body> into a scroll container that
+       hijacks `position: sticky` (breaking the day-by-day timeline pin and
+       leaving an empty gap). `clip` contains horizontal overflow without
+       creating a scroll container, so sticky resolves to the viewport. */
+    overflow-x: clip;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  img,
+  video,
+  iframe {
+    max-width: 100%;
   }
 
   h1, h2, h3, h4 {
@@ -266,6 +281,43 @@
   }
 }
 
+/* Wide-but-short laptop screens need a compact hero so the card and trust
+   strip retain clear separation beneath the fixed navigation. */
+@media (min-width: 1024px) and (max-height: 950px) {
+  .home-hero-content {
+    justify-content: center !important;
+    padding-top: 0 !important;
+    padding-bottom: 64px !important;
+  }
+
+  .home-hero-card {
+    max-width: 640px !important;
+    padding: 34px 36px !important;
+  }
+
+  .home-hero-eyebrow {
+    margin-bottom: 16px !important;
+  }
+
+  .home-hero-heading {
+    font-size: 3rem !important;
+    line-height: 1.02 !important;
+  }
+
+  .home-hero-copy {
+    margin-top: 20px !important;
+    line-height: 1.65 !important;
+  }
+
+  .home-hero-actions {
+    margin-top: 24px !important;
+  }
+
+  .home-hero-trust {
+    bottom: 16px !important;
+  }
+}
+
 /* Serif utility — Cormorant Garamond italic accents */
 .font-serif-alt {
   font-family: var(--font-serif);
@@ -393,6 +445,13 @@
   border: 1px solid transparent;
   white-space: nowrap;
   box-shadow: 0 14px 34px rgba(43, 39, 35, 0.12);
+}
+
+@media (max-width: 639px) {
+  .btn {
+    max-width: 100%;
+    white-space: normal;
+  }
 }
 .btn-solid {
   background: var(--gold);

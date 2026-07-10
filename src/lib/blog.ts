@@ -101,7 +101,7 @@ export const blogPosts: BlogPost[] = [
     title: "5 Signs It's Time to Remodel Your Kitchen",
     excerpt:
       "Worn cabinets and outdated layouts aren't just cosmetic problems. They affect how you use your home every single day. Here's when to act.",
-    img: "/images/Transitional White & Walnut Kitchen.png",
+    img: "/images/Modern Farmhouse Two-Tone Kitchen.png",
     date: "January 15, 2026",
     readTime: "3 min read",
     description:

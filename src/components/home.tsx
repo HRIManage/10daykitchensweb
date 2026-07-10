@@ -12,7 +12,7 @@ import {
   Star,
 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useMotionValueEvent, useScroll, useTransform } from "framer-motion";
+import { useScroll, useTransform } from "framer-motion";
 import { processPhases, site, testimonials } from "@/lib/site";
 import { CountUp } from "@/lib/motion";
 import { CONTAINER, SECTION } from "@/components/layout";
@@ -182,59 +182,49 @@ function BeforeAfterSlider() {
    glass once; the trust band springs up from the bottom edge with its
    items rising in sequence. */
 const heroCardV = {
-  hidden: { opacity: 0, y: 36, scale: 0.95, filter: "blur(14px)" },
+  hidden: { opacity: 0, y: 14 },
   show: {
     opacity: 1,
     y: 0,
-    scale: 1,
-    filter: "blur(0px)",
-    transition: { duration: 0.9, ease, when: "beforeChildren", delayChildren: 0.4, staggerChildren: 0.13 },
+    transition: { duration: 0.65, ease, delay: 0.05 },
   },
 } as const;
 
-const heroItemV = {
-  hidden: { opacity: 0, y: 18 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease } },
-} as const;
-
 const trustBandV = {
-  hidden: { opacity: 0, y: 56 },
+  hidden: { opacity: 0, y: 18 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { type: "spring", stiffness: 90, damping: 16, delay: 1.0, when: "beforeChildren", staggerChildren: 0.09 },
+    transition: { duration: 0.6, ease, delay: 0.3 },
   },
 } as const;
 
 export function EditorialHero() {
   const [active, setActive] = useState(0);
   const reducedMotion = useReducedMotion();
+  const { scrollY } = useScroll();
+  const contentOpacity = useTransform(scrollY, [0, 340], [1, 0]);
+  const contentY = useTransform(scrollY, [0, 340], [0, 24]);
+  const contentScale = useTransform(scrollY, [0, 340], [1, 0.985]);
 
   // The card fades out first (0–420px of scroll), the photo stands alone and
   // cross-fades to the second image, and only then does the next section ride
   // up over the pinned hero.
-  const { scrollY } = useScroll();
-  const contentOpacity = useTransform(scrollY, [0, 420], [1, 0]);
-  const contentScale = useTransform(scrollY, [0, 420], [1, 0.96]);
-  const contentY = useTransform(scrollY, [0, 420], [0, 30]);
-
   // Past the card fade, scroll (not the timer) owns the slideshow, so the
   // second photo is always seen before the panel covers it.
-  const [pastFold, setPastFold] = useState(false);
-  useMotionValueEvent(scrollY, "change", (value) => setPastFold(value > 440));
-  const shown = pastFold && !reducedMotion ? 1 : active;
+  const shown = active;
 
   useEffect(() => {
-    if (reducedMotion || pastFold) return;
+    if (reducedMotion) return;
     const timer = window.setInterval(() => {
       setActive((current) => (current + 1) % heroImages.length);
     }, 9000);
     return () => window.clearInterval(timer);
-  }, [reducedMotion, pastFold]);
+  }, [reducedMotion]);
 
   return (
-    <div className="relative z-0 h-[195svh]">
-    <section className="sticky top-0 h-[100svh] overflow-hidden bg-cream pt-[8.5rem] lg:pt-40">
+    <div className="relative z-0 h-auto">
+    <section className="relative min-h-[880px] overflow-hidden bg-cream pt-[124px] md:min-h-[100svh] md:pt-[8.5rem] xl:pt-40">
       {/* Full-bleed rotating photography — cross-fade + slow Ken Burns drift */}
       <div className="absolute inset-0" aria-hidden="true">
         {heroImages.map((image, index) => (
@@ -245,11 +235,11 @@ export function EditorialHero() {
             animate={
               reducedMotion
                 ? { opacity: index === 0 ? 1 : 0 }
-                : { opacity: index === shown ? 1 : 0, scale: index === shown ? 1.07 : 1 }
+                : { opacity: index === shown ? 1 : 0, scale: index === shown ? 1.035 : 1 }
             }
             transition={{
-              opacity: { duration: 1.6, ease: "easeInOut" },
-              scale: { duration: 10, ease: "linear" },
+              opacity: { duration: 1.1, ease: "easeInOut" },
+              scale: { duration: 9, ease: "linear" },
             }}
           >
             <Image
@@ -269,15 +259,15 @@ export function EditorialHero() {
       </div>
 
       <motion.div
-        style={reducedMotion ? undefined : { opacity: contentOpacity, scale: contentScale, y: contentY }}
-        className={`${CONTAINER} relative z-10 flex h-[calc(100svh-8.5rem)] origin-top flex-col justify-center pb-24 pt-6 lg:h-[calc(100svh-10rem)]`}
+        style={reducedMotion ? undefined : { opacity: contentOpacity, y: contentY, scale: contentScale }}
+        className={`${CONTAINER} home-hero-content relative z-10 flex min-h-[756px] origin-top flex-col justify-start pb-36 pt-5 md:min-h-[calc(100svh-8.5rem)] md:justify-center md:pb-24 md:pt-6 xl:min-h-[calc(100svh-10rem)]`}
       >
         {/* Liquid-glass card — materializes from blur, contents cascade */}
         <motion.div
           variants={heroCardV}
           initial={reducedMotion ? "show" : "hidden"}
           animate="show"
-          className="relative w-full max-w-[680px] rounded-3xl border border-white/55 bg-white/30 p-8 shadow-[0_24px_80px_rgba(43,39,35,0.1)] backdrop-blur-md sm:p-9 lg:-ml-10 lg:p-11"
+          className="home-hero-card relative w-full max-w-[680px] rounded-3xl border border-white/55 bg-white/40 p-5 shadow-[0_24px_80px_rgba(43,39,35,0.1)] backdrop-blur-md sm:p-9 lg:-ml-10 lg:p-11"
         >
           {/* Soft white light source behind the card */}
           <div
@@ -289,29 +279,20 @@ export function EditorialHero() {
             aria-hidden="true"
             className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent"
           />
-          {/* One-time light sheen sweeping across the glass after it settles */}
-          {!reducedMotion ? (
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl"
-            >
-              <motion.span
-                className="absolute inset-y-0 w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/50 to-transparent"
-                initial={{ x: "-180%" }}
-                animate={{ x: "460%" }}
-                transition={{ duration: 1.2, ease: "easeInOut", delay: 1.5 }}
-              />
-            </span>
-          ) : null}
-
-          <motion.p variants={heroItemV} className="mb-6 text-[11.5px] font-bold uppercase tracking-[0.28em] text-brand-dark">
+          <motion.p
+            initial={reducedMotion ? false : { opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, ease, delay: 0.16 }}
+            className="home-hero-eyebrow mb-4 text-[10.5px] font-bold uppercase tracking-[0.18em] text-brand-dark sm:mb-6 sm:text-[11.5px] sm:tracking-[0.28em]"
+          >
             Kitchen &amp; Bath Remodeling · Lacey, WA
           </motion.p>
 
-          <motion.div variants={heroItemV}>
+          <motion.div>
             <HeadingReveal
               as="h1"
-              className="text-balance font-display text-[2.4rem] font-bold leading-[1.06] tracking-[-0.022em] text-ink sm:text-[2.9rem] lg:text-[3.25rem]"
+              delay={140}
+              className="home-hero-heading text-balance font-display text-[2rem] font-bold leading-[1.04] tracking-[-0.022em] text-ink min-[390px]:text-[2.2rem] sm:text-[2.9rem] lg:text-[3.25rem]"
             >
               Your dream kitchen &amp; bath,
               <br />
@@ -321,20 +302,30 @@ export function EditorialHero() {
             </HeadingReveal>
           </motion.div>
 
-          <motion.p variants={heroItemV} className="mt-6 max-w-md text-[15.5px] font-medium leading-relaxed text-ink-soft">
+          <motion.p
+            initial={reducedMotion ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease, delay: 0.32 }}
+            className="home-hero-copy mt-4 max-w-md text-[14px] font-medium leading-relaxed text-ink-soft sm:mt-6 sm:text-[15.5px]"
+          >
             Lacey kitchen and bath remodeling with guided design, quality craftsmanship, and a pre-planned process across Pierce and Thurston Counties.
           </motion.p>
 
-          <motion.div variants={heroItemV} className="mt-8 flex flex-wrap items-center gap-4">
+          <motion.div
+            initial={reducedMotion ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease, delay: 0.44 }}
+            className="home-hero-actions mt-5 flex flex-col items-stretch gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4"
+          >
             <Link
               href="/contact"
-              className="btn btn-solid inline-flex h-12 items-center justify-center transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_34px_rgba(93,187,70,0.32)]"
+              className="btn btn-solid inline-flex min-h-12 items-center justify-center px-4 text-center transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_34px_rgba(93,187,70,0.32)] sm:px-7"
             >
               Schedule Free Consultation
             </Link>
             <Link
               href="/portfolio"
-              className="group inline-flex h-12 items-center justify-center gap-2 border border-ink/25 px-5 text-[12.5px] font-bold uppercase tracking-[0.16em] text-ink transition-all duration-300 hover:-translate-y-0.5 hover:border-ink/50 hover:bg-white/50"
+              className="group inline-flex min-h-12 items-center justify-center gap-2 border border-ink/25 px-4 text-center text-[12px] font-bold uppercase tracking-[0.13em] text-ink transition-all duration-300 hover:-translate-y-0.5 hover:border-ink/50 hover:bg-white/50 sm:px-5 sm:text-[12.5px] sm:tracking-[0.16em]"
             >
               View our work
               <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1.5" />
@@ -370,7 +361,7 @@ export function EditorialHero() {
           </div>
         </motion.div>
 
-        <div className="absolute bottom-32 right-5 z-10 flex flex-col items-end gap-2.5 sm:right-8 lg:right-10">
+        <div className="absolute bottom-32 right-5 z-10 hidden flex-col items-end gap-2.5 sm:right-8 md:flex lg:right-10">
           <div className="flex gap-1.5" aria-hidden="true">
             {heroImages.map((image, index) => (
               <span
@@ -384,7 +375,7 @@ export function EditorialHero() {
         </div>
 
         {/* Glass trust band — springs up from the bottom edge, items cascade */}
-        <div className="absolute inset-x-5 bottom-8 sm:inset-x-8 lg:inset-x-10">
+        <div className="home-hero-trust absolute inset-x-6 bottom-5 sm:inset-x-8 md:bottom-8 lg:inset-x-10">
           <motion.div
             variants={trustBandV}
             initial={reducedMotion ? "show" : "hidden"}
@@ -394,9 +385,9 @@ export function EditorialHero() {
             {heroTrustItems.map((item) => (
               <div
                 key={item}
-                className="overflow-hidden px-4 py-4.5 text-center text-[11px] font-bold uppercase tracking-[0.18em] text-ink transition duration-300 hover:scale-[1.04] hover:bg-white/14 hover:text-brand sm:px-6 sm:text-[12px]"
+                className="overflow-hidden px-2 py-3 text-center text-[9px] font-bold uppercase tracking-[0.1em] text-ink transition duration-300 hover:scale-[1.04] hover:bg-white/14 hover:text-brand sm:px-6 sm:py-4.5 sm:text-[12px] sm:tracking-[0.18em]"
               >
-                <motion.span variants={heroItemV} className="block">
+                <motion.span className="block">
                   {item}
                 </motion.span>
               </div>
@@ -414,7 +405,7 @@ export function TrustedPartners() {
 
   return (
     <section className="partner-track overflow-hidden border-b border-line bg-[#fffefa]">
-      <div className={`${CONTAINER} py-6`}>
+      <FadeIn className={`${CONTAINER} py-6`}>
         <div className="mb-4 flex items-center justify-between gap-6">
           <p className="text-[13px] font-bold uppercase tracking-[0.24em] text-brand">
             Trusted Partners
@@ -441,7 +432,7 @@ export function TrustedPartners() {
             ))}
           </div>
         </div>
-      </div>
+      </FadeIn>
     </section>
   );
 }
@@ -456,7 +447,7 @@ export function ServicesEditorial() {
             title="Kitchen and bath remodeling in Lacey, Olympia, and the South Sound."
             body="10 Day Kitchens helps homeowners remodel kitchens and bathrooms with thoughtful design guidance, quality cabinetry, countertops, tile, and finishes, plus a streamlined 10 business day kitchen remodeling process built around your home and schedule."
           />
-          <div className="mt-10 grid gap-8 border-t border-line pt-8 sm:grid-cols-3 sm:gap-10">
+          <FadeIn delay={0.1} className="mt-10 grid gap-8 border-t border-line pt-8 sm:grid-cols-3 sm:gap-10">
             <div className="min-w-0">
               <p className="font-display text-[clamp(2.55rem,4.8vw,3.95rem)] font-medium leading-none text-ink">
                 <CountUp value={35} suffix="+" />
@@ -481,10 +472,10 @@ export function ServicesEditorial() {
                 Warranty
               </p>
             </div>
-          </div>
+          </FadeIn>
         </div>
 
-        <div className="relative min-h-[420px]">
+        <FadeIn delay={0.15} className="relative min-h-[420px]">
           <div className="absolute right-0 top-0 h-[78%] w-[82%] overflow-hidden bg-line">
           <Image
             src="/images/welcome-kitchen-subway-tile.jpg"
@@ -503,7 +494,7 @@ export function ServicesEditorial() {
               className="object-cover"
             />
           </div>
-        </div>
+        </FadeIn>
       </div>
     </section>
   );
@@ -513,46 +504,96 @@ export function StatementSection() {
   return (
     <section className="bg-[#fafaf8]">
       <div className={`${CONTAINER} py-12 sm:py-14`}>
-        <div className="mb-8 max-w-2xl">
+        <FadeIn className="mb-8 max-w-2xl">
           <p className="mb-4 text-[13px] font-bold uppercase tracking-[0.24em] text-brand">
             Services We Offer
           </p>
           <h2 className="font-display text-[clamp(1.9rem,3.2vw,3.1rem)] font-medium leading-[1.06] text-ink">
             Remodeling options built around your home, timeline, and budget.
           </h2>
-        </div>
+        </FadeIn>
         <div className="grid gap-px bg-line md:grid-cols-2 lg:grid-cols-4">
-          {categories.map((item) => (
-            <Link
-              key={item.title}
-              href={item.href}
-              className="group bg-[#fafaf8] p-4 transition duration-500 hover:-translate-y-1 hover:bg-[#fffefa] hover:shadow-[0_18px_42px_rgba(43,39,35,0.08)]"
-            >
-              <div className="relative aspect-[4/3] overflow-hidden bg-line">
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover transition duration-700 group-hover:scale-[1.06] group-hover:brightness-[1.02]"
-                />
-              </div>
-              <div className="pt-5 transition-transform duration-500 group-hover:translate-x-1">
-                <p className="text-[13px] font-bold uppercase tracking-[0.22em] text-brand transition-colors group-hover:text-brand-dark">
-                  Explore
-                </p>
-                <h3 className="mt-2 font-display text-2xl font-medium text-ink transition-colors group-hover:text-brand-dark">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-ink-soft/68">
-                  {item.note}
-                </p>
-              </div>
-            </Link>
+          {categories.map((item, index) => (
+            <FadeIn key={item.title} delay={index * 0.06}>
+              <Link
+                href={item.href}
+                onClick={(event) => {
+                  if (item.href === "/kitchen-remodel") {
+                    event.preventDefault();
+                    window.location.assign(item.href);
+                  }
+                }}
+                className="group relative z-0 block min-w-0 bg-[#fafaf8] p-4 transition duration-500 hover:z-10 hover:-translate-y-1 hover:bg-[#fffefa] hover:shadow-[0_18px_42px_rgba(43,39,35,0.08)] focus-visible:z-10"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden bg-line">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover transition duration-700 group-hover:scale-[1.06] group-hover:brightness-[1.02]"
+                  />
+                </div>
+                <div className="pt-5 transition-transform duration-500 group-hover:translate-x-1">
+                  <p className="text-[13px] font-bold uppercase tracking-[0.22em] text-brand transition-colors group-hover:text-brand-dark">
+                    Explore
+                  </p>
+                  <h3 className="mt-2 font-display text-2xl font-medium text-ink transition-colors group-hover:text-brand-dark">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-ink-soft/68">
+                    {item.note}
+                  </p>
+                </div>
+              </Link>
+            </FadeIn>
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+function ProjectScrollCard({ project, index }: { project: (typeof projects)[number]; index: number }) {
+  return (
+    <article
+      className="sticky top-28 grid min-h-[58vh] gap-8 bg-[#fffefa] py-6 lg:grid-cols-[1.12fr_0.88fr] lg:items-center lg:gap-14 lg:py-8"
+      style={{ zIndex: index + 1 }}
+    >
+      <Link href="/portfolio" className="group relative aspect-[16/10] overflow-hidden bg-line lg:aspect-[1.72]">
+        <Image
+          src={project.image}
+          alt={project.title}
+          fill
+          sizes="(max-width: 1024px) 100vw, 52vw"
+          className="object-cover transition duration-700 group-hover:scale-[1.035]"
+        />
+      </Link>
+
+      <div className="max-w-md">
+        <p className="font-display text-[clamp(1.65rem,2.8vw,2.7rem)] font-medium italic leading-[1.1] text-ink">
+          {project.title}
+        </p>
+        <p className="mt-8 text-[15px] leading-relaxed text-ink-soft/78">{project.summary}</p>
+        <p className="mt-8 text-[10px] font-semibold uppercase tracking-[0.18em] text-brand">
+          {project.category} | {project.location}
+        </p>
+      </div>
+    </article>
+  );
+}
+
+function ProcessScrollCard({ phase }: { phase: (typeof processPhases)[number] }) {
+  return (
+    <div className="group grid gap-4 py-6 sm:grid-cols-[5rem_1fr] lg:py-8">
+      <p className="font-display text-2xl font-medium text-brand-light">{phase.step}</p>
+      <div>
+        <h3 className="font-display text-[clamp(1.35rem,2vw,2rem)] font-medium text-white transition-colors duration-300 group-hover:text-brand-light">
+          {phase.title}
+        </h3>
+        <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-cream/78">{phase.body}</p>
+      </div>
+    </div>
   );
 }
 
@@ -573,33 +614,7 @@ export function RecentProjectsHover() {
 
         <div className="space-y-8 lg:space-y-14">
           {projects.map((project, index) => (
-            <article
-              key={project.title}
-              className="sticky top-28 grid min-h-[58vh] gap-8 bg-[#fffefa] py-6 lg:grid-cols-[1.12fr_0.88fr] lg:items-center lg:gap-14 lg:py-8"
-              style={{ zIndex: index + 1 }}
-            >
-              <Link href="/portfolio" className="group relative aspect-[16/10] overflow-hidden bg-line lg:aspect-[1.72]">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 52vw"
-                  className="object-cover transition duration-700 group-hover:scale-[1.035]"
-                />
-              </Link>
-
-              <div className="max-w-md">
-                <p className="font-display text-[clamp(1.65rem,2.8vw,2.7rem)] font-medium italic leading-[1.1] text-ink">
-                  {project.title}
-                </p>
-                <p className="mt-8 text-[15px] leading-relaxed text-ink-soft/78">
-                  {project.summary}
-                </p>
-                <p className="mt-8 text-[10px] font-semibold uppercase tracking-[0.18em] text-brand">
-                  {project.category} | {project.location}
-                </p>
-              </div>
-            </article>
+            <ProjectScrollCard key={project.title} project={project} index={index} />
           ))}
         </div>
 
@@ -633,18 +648,7 @@ export function ProcessEditorial() {
 
         <div className="divide-y divide-white/12 border-y border-white/12">
           {processPhases.slice(0, 5).map((phase) => (
-            <div
-              key={phase.step}
-              className="group grid gap-4 py-6 sm:grid-cols-[5rem_1fr] lg:py-8"
-            >
-              <p className="font-display text-2xl font-medium text-brand-light">{phase.step}</p>
-              <div>
-                <h3 className="font-display text-[clamp(1.35rem,2vw,2rem)] font-medium text-white transition-colors duration-300 group-hover:text-brand-light">
-                  {phase.title}
-                </h3>
-                <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-cream/78">{phase.body}</p>
-              </div>
-            </div>
+            <ProcessScrollCard key={phase.step} phase={phase} />
           ))}
         </div>
       </div>

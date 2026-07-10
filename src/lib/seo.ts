@@ -22,7 +22,7 @@ export function createLocalBusinessSchema({ url, description }: LocalBusinessOpt
     url,
     telephone: site.phone,
     email: site.email,
-    image: "https://10daykitchens.com/images/hero-kitchen.png",
+    image: "https://10daykitchens.com/images/hero-kitchen-custom.png",
     description: description ?? site.tagline,
     address: {
       "@type": "PostalAddress",

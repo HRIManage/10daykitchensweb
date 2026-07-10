@@ -115,15 +115,19 @@ const faqs = [
   },
 ];
 
-function Eyebrow({ children }: { children: ReactNode }) {
-  return <span className="eyebrow mb-4 block text-[0.82rem] font-bold">{children}</span>;
+function Eyebrow({ children, className = "" }: { children: ReactNode; className?: string }) {
+  return (
+    <span className={`mb-4 block text-[13px] font-bold uppercase tracking-[0.24em] text-brand ${className}`}>
+      {children}
+    </span>
+  );
 }
 
 function PrimaryButton({ href, children }: { href: string; children: ReactNode }) {
   return (
     <Link
       href={href}
-      className="group inline-flex h-[52px] items-center justify-center gap-3 bg-brand px-7 text-[12px] font-bold uppercase tracking-[0.15em] text-white transition-all duration-300 hover:-translate-y-1 hover:bg-brand-dark hover:shadow-[0_16px_34px_rgba(93,187,70,0.3)]"
+      className="group inline-flex min-h-[52px] items-center justify-center gap-2 bg-brand px-4 py-3 text-center text-[11px] font-bold uppercase tracking-[0.11em] text-white transition-all duration-300 hover:-translate-y-1 hover:bg-brand-dark hover:shadow-[0_16px_34px_rgba(93,187,70,0.3)] sm:gap-3 sm:px-7 sm:text-[12px] sm:tracking-[0.15em]"
     >
       {children}
       <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
@@ -135,7 +139,7 @@ function OutlineButton({ href, children }: { href: string; children: ReactNode }
   return (
     <Link
       href={href}
-      className="inline-flex h-[52px] items-center justify-center border border-line bg-white/55 px-7 text-[12px] font-bold uppercase tracking-[0.15em] text-ink transition-all duration-300 hover:-translate-y-1 hover:border-brand hover:text-brand-dark"
+      className="inline-flex min-h-[52px] items-center justify-center border border-line bg-white/55 px-4 py-3 text-center text-[11px] font-bold uppercase tracking-[0.11em] text-ink transition-all duration-300 hover:-translate-y-1 hover:border-brand hover:text-brand-dark sm:px-7 sm:text-[12px] sm:tracking-[0.15em]"
     >
       {children}
     </Link>
@@ -160,7 +164,7 @@ export default function KitchenRemodelPage() {
     <main className="bg-paper text-ink">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <section className="bg-paper pt-[158px] sm:pt-[176px]">
-        <div className={`${CONTAINER} grid min-h-[610px] gap-10 pb-14 lg:grid-cols-[0.88fr_1.12fr] lg:items-center lg:pb-18`}>
+        <div className={`${CONTAINER} grid gap-10 pb-14 lg:grid-cols-[0.88fr_1.12fr] lg:items-center xl:min-h-[610px] xl:pb-18`}>
           <div className="max-w-2xl">
             <Eyebrow>Custom Kitchen Remodel Lacey, WA</Eyebrow>
             <h1 className="max-w-3xl text-[clamp(2.55rem,4.7vw,4.75rem)] leading-[1.02] text-ink">
@@ -186,7 +190,7 @@ export default function KitchenRemodelPage() {
                 className="object-cover"
               />
             </div>
-            <div className="absolute -bottom-8 left-6 right-6 bg-[#2A2A2A] p-6 text-white shadow-[0_20px_60px_rgba(43,39,35,0.18)] sm:left-10 sm:right-auto sm:w-[390px]">
+            <div className="relative bg-[#2A2A2A] p-5 text-white shadow-[0_20px_60px_rgba(43,39,35,0.18)] sm:absolute sm:-bottom-8 sm:left-10 sm:w-[390px] sm:p-6">
               <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-brand-light">Best fit for</p>
               <p className="mt-3 text-[0.96rem] font-semibold leading-7 text-white/82">
                 Layout changes, moved trades, custom cabinetry, and larger kitchen renovation scopes.
@@ -200,7 +204,7 @@ export default function KitchenRemodelPage() {
         <div className={`${CONTAINER} grid gap-10 lg:grid-cols-[0.72fr_1fr] lg:items-center`}>
           <div>
             <Eyebrow>Premium custom service</Eyebrow>
-            <h2 className="text-[clamp(2.1rem,3.8vw,3.8rem)] leading-[1.05]">
+            <h2 className="font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em]">
               When your kitchen needs more than a refresh.
             </h2>
           </div>
@@ -243,7 +247,7 @@ export default function KitchenRemodelPage() {
           </div>
           <div className="bg-white p-7 shadow-[0_18px_70px_rgba(43,39,35,0.08)] sm:p-10">
             <Eyebrow>Full-service remodel</Eyebrow>
-            <h2 className="text-[clamp(2rem,3.4vw,3.4rem)] leading-[1.06]">
+            <h2 className="font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em]">
               A kitchen plan built around your home, not a package.
             </h2>
             <p className="mt-5 text-base leading-8 text-ink-soft">
@@ -258,7 +262,7 @@ export default function KitchenRemodelPage() {
         <div className={`${CONTAINER} grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-start`}>
           <div className="lg:sticky lg:top-36">
             <Eyebrow>How custom kitchen remodeling works</Eyebrow>
-            <h2 className="text-[clamp(2.1rem,3.8vw,3.8rem)] leading-[1.05]">A clear path for complex projects.</h2>
+            <h2 className="font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em]">A clear path for complex projects.</h2>
             <p className="mt-6 max-w-md text-base leading-8 text-ink-soft">
               Custom work needs tighter planning, not more guesswork. We define the scope early so your remodel can
               move with confidence.
@@ -282,7 +286,7 @@ export default function KitchenRemodelPage() {
         <div className={`${CONTAINER} grid gap-12 lg:grid-cols-2`}>
           <div>
             <Eyebrow>What is included</Eyebrow>
-            <h2 className="text-[clamp(2.1rem,3.6vw,3.6rem)] leading-[1.05]">Designed around your actual scope.</h2>
+            <h2 className="font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em]">Designed around your actual scope.</h2>
             <div className="mt-8 grid gap-4">
               {included.map((item) => (
                 <div key={item} className="flex gap-3 border-t border-line pt-4 text-[0.98rem] leading-7 text-ink-soft">
@@ -315,7 +319,7 @@ export default function KitchenRemodelPage() {
         <div className={`${CONTAINER} grid gap-10 border border-line bg-white p-7 shadow-[0_24px_70px_rgba(43,39,35,0.08)] sm:p-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center`}>
           <div>
             <Eyebrow>Looking for a faster kitchen remodel?</Eyebrow>
-            <h2 className="text-[clamp(2.1rem,3.8vw,3.8rem)] leading-[1.05] text-ink">
+            <h2 className="font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em] text-ink">
               Your kitchen may qualify for the 10 Day Kitchens Program.
             </h2>
           </div>
@@ -335,7 +339,7 @@ export default function KitchenRemodelPage() {
         <div className={`${CONTAINER} grid gap-12 lg:grid-cols-[0.7fr_1fr]`}>
           <div>
             <Eyebrow>Kitchen remodel FAQs</Eyebrow>
-            <h2 className="text-[clamp(2.1rem,3.8vw,3.8rem)] leading-[1.05]">Clear answers before you remodel.</h2>
+            <h2 className="font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em]">Clear answers before you remodel.</h2>
           </div>
           <div className="divide-y divide-line border-y border-line">
             {faqs.map((faq) => (

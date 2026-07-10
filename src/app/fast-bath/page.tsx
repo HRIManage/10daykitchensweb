@@ -173,7 +173,11 @@ function groupByCounty(cities: City[]) {
 }
 
 function Eyebrow({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <span className={`eyebrow mb-4 block text-[0.82rem] font-bold ${className}`}>{children}</span>;
+  return (
+    <span className={`mb-4 block text-[13px] font-bold uppercase tracking-[0.24em] text-brand ${className}`}>
+      {children}
+    </span>
+  );
 }
 
 function PrimaryButton({ href, children }: { href: string; children: ReactNode }) {
@@ -254,14 +258,14 @@ export default function FastBathPage() {
               ))}
             </div>
           </div>
-          <div className="relative">
+          <div className="relative mx-auto w-full max-w-[440px] lg:mx-0 lg:ml-auto">
             <div className="relative aspect-[1.12/1] overflow-hidden border border-line bg-white shadow-[0_26px_80px_rgba(43,39,35,0.12)]">
               <Image
                 src="/images/fast-bath-before-after-screenshot.png"
                 alt="Fast Bath before and after shower upgrade comparison"
                 fill
                 priority
-                sizes="(min-width: 1024px) 52vw, 100vw"
+                sizes="(min-width: 1024px) 440px, 90vw"
                 className="object-cover"
               />
             </div>
@@ -279,7 +283,7 @@ export default function FastBathPage() {
         <div className={`${CONTAINER} grid gap-10 lg:grid-cols-[0.72fr_1fr] lg:items-center`}>
           <div>
             <Eyebrow>Why Fast Bath?</Eyebrow>
-            <h2 className="text-[clamp(2.1rem,3.8vw,3.8rem)] leading-[1.05]">
+            <h2 className="font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em]">
               A smarter path when the whole bathroom does not need to come apart.
             </h2>
           </div>
@@ -312,7 +316,7 @@ export default function FastBathPage() {
         <div className={`${CONTAINER}`}>
           <div className="max-w-3xl">
             <Eyebrow>Services included</Eyebrow>
-            <h2 className="text-[clamp(2.1rem,3.8vw,3.8rem)] leading-[1.05]">
+            <h2 className="font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em]">
               Focused upgrades with a finished-room feel.
             </h2>
           </div>
@@ -336,7 +340,7 @@ export default function FastBathPage() {
           <FastBathBeforeAfterSlider />
           <div className="bg-sand p-7 sm:p-10">
             <Eyebrow>Before and after gallery</Eyebrow>
-            <h2 className="text-[clamp(2rem,3.4vw,3.4rem)] leading-[1.06]">
+            <h2 className="font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em]">
               Big visual change without rebuilding the entire bathroom.
             </h2>
             <p className="mt-5 text-base leading-8 text-ink-soft">
@@ -354,7 +358,7 @@ export default function FastBathPage() {
         <div className={`${CONTAINER} grid gap-12 lg:grid-cols-[0.82fr_1fr] lg:items-start`}>
           <div className="lg:sticky lg:top-36">
             <Eyebrow>Our process</Eyebrow>
-            <h2 className="text-[clamp(2.1rem,3.8vw,3.8rem)] leading-[1.05]">
+            <h2 className="font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em]">
               Simple, guided, and built to reduce stress.
             </h2>
             <p className="mt-6 max-w-md text-base leading-8 text-ink-soft">
@@ -380,7 +384,7 @@ export default function FastBathPage() {
         <div className={`${CONTAINER} grid gap-10 border border-line bg-white p-7 shadow-[0_24px_70px_rgba(43,39,35,0.08)] sm:p-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center`}>
           <div>
             <Eyebrow>Need a full custom bathroom renovation?</Eyebrow>
-            <h2 className="text-[clamp(2.1rem,3.8vw,3.8rem)] leading-[1.05] text-ink">
+            <h2 className="font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em] text-ink">
               Choose Bathroom Remodel when the layout, tile, or plumbing needs to change.
             </h2>
           </div>
@@ -410,7 +414,7 @@ export default function FastBathPage() {
           </div>
           <div className="bg-white p-7 shadow-[0_18px_70px_rgba(43,39,35,0.08)] sm:p-10">
             <Eyebrow>Why choose Fast Bath?</Eyebrow>
-            <h2 className="text-[clamp(2rem,3.4vw,3.4rem)] leading-[1.06]">
+            <h2 className="font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em]">
               Local installers. Premium products. A cleaner path to a better bathroom.
             </h2>
             <div className="mt-8 grid gap-4">
@@ -433,7 +437,7 @@ export default function FastBathPage() {
                 <CreditCard className="size-7" />
               </div>
               <Eyebrow className="text-brand-light">Financing available</Eyebrow>
-              <h2 className="text-[clamp(2rem,3.4vw,3.4rem)] leading-[1.06] text-white">
+              <h2 className="font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em] text-white">
                 Start your bathroom upgrade without waiting years.
               </h2>
             </div>
@@ -470,7 +474,7 @@ export default function FastBathPage() {
         <div className={`${CONTAINER} grid gap-12 lg:grid-cols-[0.7fr_1fr]`}>
           <div>
             <Eyebrow>Fast Bath FAQs</Eyebrow>
-            <h2 className="text-[clamp(2.1rem,3.8vw,3.8rem)] leading-[1.05]">
+            <h2 className="font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em]">
               Answers before you start.
             </h2>
           </div>
@@ -492,7 +496,7 @@ export default function FastBathPage() {
         <div className={CONTAINER}>
           <div className="mb-12">
             <Eyebrow>Where We Work</Eyebrow>
-            <h2 className="max-w-3xl text-[clamp(2.1rem,3.8vw,3.8rem)] leading-[1.05]">
+            <h2 className="max-w-3xl font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em]">
               Fast bathroom upgrades across the <em className="font-medium italic text-brand-dark">South Sound.</em>
             </h2>
             <p className="mt-6 max-w-2xl text-base leading-8 text-ink-soft">

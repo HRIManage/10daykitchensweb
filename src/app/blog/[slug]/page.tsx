@@ -21,7 +21,7 @@ export async function generateMetadata({
   if (!post) return {};
 
   return {
-    title: post.seoTitle,
+    title: { absolute: post.seoTitle },
     description: post.seoDescription,
     alternates: { canonical: `${BASE_URL}/resources/blog/${post.slug}` },
     openGraph: {
@@ -63,7 +63,7 @@ export default async function BlogPostPage({
     <main className="bg-paper text-ink">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
 
-      <section className="bg-paper pt-[138px] sm:pt-[152px]">
+      <section className="bg-paper pt-[158px] sm:pt-[176px]">
         <div className="site-container max-w-5xl pb-12">
           <p className="eyebrow mb-4 block">{post.tag}</p>
           <h1 className="max-w-4xl text-[clamp(2.4rem,4.7vw,4.6rem)] leading-[1.04] text-ink">{post.title}</h1>
