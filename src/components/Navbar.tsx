@@ -199,13 +199,7 @@ export default function Navbar() {
                         <Link
                           key={child.label}
                           href={child.href}
-                          onClick={(event) => {
-                            setOpenMenu(null);
-                            if (child.href === "/kitchen-remodel") {
-                              event.preventDefault();
-                              window.location.assign(child.href);
-                            }
-                          }}
+                          onClick={() => setOpenMenu(null)}
                           className="group relative block border-b border-line/70 px-5 py-4 transition last:border-0 hover:bg-white/68"
                         >
                           <span className="flex items-center justify-between gap-6 text-[13px] font-bold uppercase tracking-[0.12em] text-ink transition group-hover:text-brand-dark">
@@ -276,13 +270,7 @@ export default function Navbar() {
                       <Link
                         key={child.label}
                         href={child.href}
-                        onClick={(event) => {
-                          setMobileOpen(false);
-                          if (child.href === "/kitchen-remodel") {
-                            event.preventDefault();
-                            window.location.assign(child.href);
-                          }
-                        }}
+                        onClick={() => setMobileOpen(false)}
                         className="text-[14px] font-semibold text-ink-soft"
                       >
                         {child.label}

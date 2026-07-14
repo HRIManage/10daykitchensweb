@@ -447,7 +447,7 @@ export function ServicesEditorial() {
             title="Kitchen and bath remodeling in Lacey, Olympia, and the South Sound."
             body="10 Day Kitchens helps homeowners remodel kitchens and bathrooms with thoughtful design guidance, quality cabinetry, countertops, tile, and finishes, plus a streamlined 10 business day kitchen remodeling process built around your home and schedule."
           />
-          <FadeIn delay={0.1} className="mt-10 grid gap-8 border-t border-line pt-8 sm:grid-cols-3 sm:gap-10">
+          <FadeIn delay={0.1} className="mt-10 grid grid-cols-1 gap-8 border-t border-line pt-8 sm:grid-cols-3 sm:gap-10">
             <div className="min-w-0">
               <p className="font-display text-[clamp(2.55rem,4.8vw,3.95rem)] font-medium leading-none text-ink">
                 <CountUp value={35} suffix="+" />
@@ -517,12 +517,6 @@ export function StatementSection() {
             <FadeIn key={item.title} delay={index * 0.06}>
               <Link
                 href={item.href}
-                onClick={(event) => {
-                  if (item.href === "/kitchen-remodel") {
-                    event.preventDefault();
-                    window.location.assign(item.href);
-                  }
-                }}
                 className="group relative z-0 block min-w-0 bg-[#fafaf8] p-4 transition duration-500 hover:z-10 hover:-translate-y-1 hover:bg-[#fffefa] hover:shadow-[0_18px_42px_rgba(43,39,35,0.08)] focus-visible:z-10"
               >
                 <div className="relative aspect-[4/3] overflow-hidden bg-line">
