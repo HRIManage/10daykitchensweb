@@ -514,10 +514,10 @@ export function StatementSection() {
         </FadeIn>
         <div className="grid gap-px bg-line md:grid-cols-2 lg:grid-cols-4">
           {categories.map((item, index) => (
-            <FadeIn key={item.title} delay={index * 0.06}>
+            <FadeIn key={item.title} delay={index * 0.06} className="h-full">
               <Link
                 href={item.href}
-                className="group relative z-0 block min-w-0 bg-[#fafaf8] p-4 transition duration-500 hover:z-10 hover:-translate-y-1 hover:bg-[#fffefa] hover:shadow-[0_18px_42px_rgba(43,39,35,0.08)] focus-visible:z-10"
+                className="group relative z-0 flex h-full min-w-0 flex-col bg-[#fafaf8] p-4 transition duration-500 hover:z-10 hover:-translate-y-1 hover:bg-[#fffefa] hover:shadow-[0_18px_42px_rgba(43,39,35,0.08)] focus-visible:z-10"
               >
                 <div className="relative aspect-[4/3] overflow-hidden bg-line">
                   <Image
@@ -528,7 +528,7 @@ export function StatementSection() {
                     className="object-cover transition duration-700 group-hover:scale-[1.06] group-hover:brightness-[1.02]"
                   />
                 </div>
-                <div className="pt-5 transition-transform duration-500 group-hover:translate-x-1">
+                <div className="flex flex-1 flex-col pt-5 transition-transform duration-500 group-hover:translate-x-1">
                   <p className="text-[13px] font-bold uppercase tracking-[0.22em] text-brand transition-colors group-hover:text-brand-dark">
                     Explore
                   </p>
