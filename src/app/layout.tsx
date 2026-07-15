@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollRevealProvider from "@/components/ScrollRevealProvider";
 import { site } from "@/lib/site";
+import { Analytics } from "@vercel/analytics/next";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -65,6 +66,7 @@ export default function RootLayout({
         <ScrollRevealProvider />
         {children}
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
