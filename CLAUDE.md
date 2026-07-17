@@ -99,11 +99,11 @@ Kitchen & bath remodeling company, Lacey/Olympia/Tacoma WA (Pierce & Thurston Co
 
 ## Rules for content-only edits
 
-1. Always work on a new branch, never commit directly to main. Open a PR when done.
+1. Make the edit locally, then show it to the user running on localhost (`npm run dev` → http://localhost:3000). Only after the user explicitly approves what they see, commit and push directly to `main` (which auto-deploys to production on Vercel). No feature branch or PR is required unless the user asks for one.
 2. Only touch content — visible text, image files/references, phone numbers, addresses, testimonial text. Do not modify `package.json`, config files, anything in a `lib/`, `api/`, or `middleware` folder, or anything that looks like a build/deploy script.
 3. New photos: save into the images folder `/init` identifies (likely under `public/images/` or similar) using descriptive lowercase-hyphenated filenames (e.g. `lacey-kitchen-remodel-03.jpg`), then reference the new file in the relevant gallery/section component. Keep image file sizes reasonable — compress before adding if a photo is over ~2MB.
 4. Phone number / address: these are likely repeated in a header and footer component, and possibly in layout files, JSON-LD/schema markup, and a Contact section. Update every instance you find, and search the codebase for the old number/address string to make sure nothing was missed.
-5. After any change, tell the user in plain English what changed and give them the Vercel preview URL. Don't reference git, branches, or commits in that summary.
+5. After any change, tell the user in plain English what changed and show it to them on the localhost preview (http://localhost:3000). Don't reference git, branches, or commits in that summary.
 6. If a request is ambiguous ("update the phone number" without specifying which one, when there may be a general line and a specific location's line), ask which one before editing.
 
 ## What NOT to do
