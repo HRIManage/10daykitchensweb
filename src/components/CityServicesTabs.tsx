@@ -23,7 +23,7 @@ const services = [
     icon: Clock3,
     description:
       "A faster kitchen remodel for qualified homes that keep the existing footprint, use approved selections, and are planned completely before day one.",
-    price: "$30k+ ranges",
+    price: "$45k+ ranges",
     timeline: "10 business days",
     href: "/10-day-kitchen-program",
     image: "/images/welcome-kitchen-subway-tile.jpg",
