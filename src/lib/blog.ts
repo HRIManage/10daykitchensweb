@@ -70,7 +70,7 @@ export const blogPosts: BlogPost[] = [
     tag: "Cost Guide",
     title: "How Much Does a Kitchen Remodel Cost in Olympia, WA?",
     excerpt:
-      "Most kitchen remodels in Olympia run $30,000 to $80,000, with layout changes starting around $70,000. Here is what drives the number, what it buys, and how the 10-day path compares.",
+      "Most kitchen remodels in Olympia run $45,000 to $80,000, with layout changes starting around $70,000. Here is what drives the number, what it buys, and how the 10-day path compares.",
     img: "/images/welcome-kitchen-subway-tile.jpg",
     date: "2026-08-31",
     readTime: "8 min read",
@@ -82,7 +82,7 @@ export const blogPosts: BlogPost[] = [
     body: [
       {
         type: "p",
-        text: "Most kitchen remodels in Olympia and the wider South Sound run between $30,000 and $80,000, with layout-change and structural projects starting around $70,000. The final number depends on three things: how much of the room you change, the cabinet and countertop lines you choose, and whether walls, plumbing, or electrical have to move.",
+        text: "Most kitchen remodels in Olympia and the wider South Sound start around $45,000 and run to $80,000 or more, with layout-change and structural projects starting around $70,000. The final number depends on three things: how much of the room you change, the cabinet and countertop lines you choose, and whether walls, plumbing, or electrical have to move.",
       },
       {
         type: "p",
@@ -98,13 +98,13 @@ export const blogPosts: BlogPost[] = [
         headers: ["Project type", "Typical range", "What's included"],
         rows: [
           [
-            "Refresh / same-layout",
-            "$30,000 – $45,000",
-            "New cabinets in the existing footprint, new countertops, sink and faucet, flooring, lighting, paint. No walls or plumbing moved.",
+            "Same-layout remodel",
+            "$45,000 – $60,000",
+            "New cabinets in the existing footprint, new countertops, sink and faucet, flooring, and lighting. No walls or plumbing moved.",
           ],
           [
-            "Full same-layout remodel",
-            "$45,000 – $80,000",
+            "Upgraded same-layout remodel",
+            "$60,000 – $80,000",
             "Everything above with higher-end cabinet lines, quartz or natural stone, tile backsplash, upgraded appliances, and more cabinetry.",
           ],
           [
@@ -211,7 +211,7 @@ export const blogPosts: BlogPost[] = [
     faqs: [
       {
         q: "What is the average kitchen remodel cost in Olympia?",
-        a: "Most Olympia kitchen remodels fall between $30,000 and $80,000. Same-layout projects that keep the plumbing and appliances in place start around $30,000 to $45,000; remodels with layout or structural changes start around $70,000.",
+        a: "Most Olympia kitchen remodels fall between $45,000 and $80,000. Same-layout projects that keep the plumbing and appliances in place start around $45,000; remodels with layout or structural changes start around $70,000.",
       },
       {
         q: "How long does a kitchen remodel take in Olympia?",
@@ -222,8 +222,8 @@ export const blogPosts: BlogPost[] = [
         a: "Cabinetry, countertops, flooring, sink and fixtures, lighting, and installation, plus permit handling when required. The quote is binding — there are no hidden costs added later.",
       },
       {
-        q: "Can I remodel my kitchen for under $30,000 in Olympia?",
-        a: "Below roughly $30,000 you are generally looking at a partial update — refacing cabinets, swapping countertops, or a cosmetic refresh rather than a full remodel with new cabinetry.",
+        q: "Can I remodel my kitchen for under $45,000 in Olympia?",
+        a: "Below roughly $45,000 you are generally looking at a partial update — refacing cabinets, swapping countertops, or a cosmetic refresh rather than a full remodel with new cabinetry and installation.",
       },
       {
         q: "Do you serve areas outside Olympia?",
