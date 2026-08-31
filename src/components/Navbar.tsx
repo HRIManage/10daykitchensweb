@@ -16,7 +16,7 @@ const navItems: NavItem[] = [
     label: "Services",
     children: [
       { label: "Kitchen Remodel", href: "/kitchen-remodel", description: "Full custom layouts, trades, and finishes" },
-      { label: "10 Day Kitchens Program", href: "/10businessdaykitchenprogram", description: "Fast existing-layout kitchen remodels" },
+      { label: "10 Day Kitchens Program", href: "/10-day-kitchen-program", description: "Fast existing-layout kitchen remodels" },
       { label: "Bath Remodel", href: "/bathroom-remodel", description: "Showers, vanities, flooring, and fixtures" },
       { label: "Fast Bath", href: "/fast-bath", description: "Tub conversions, showers, and bath upgrades" },
     ],
@@ -26,9 +26,9 @@ const navItems: NavItem[] = [
   {
     label: "Resources",
     children: [
-      { label: "FAQs", href: "/faq-1", description: "Answers before you remodel" },
+      { label: "FAQs", href: "/faq", description: "Answers before you remodel" },
       { label: "Financing", href: "/financing", description: "Project payment options" },
-      { label: "Blog / Advice", href: "/resources/blog", description: "Planning tips and remodel guidance" },
+      { label: "Blog / Advice", href: "/blog", description: "Planning tips and remodel guidance" },
       { label: "Collections", href: "/resources/catalog", description: "Cabinet and surface inspiration" },
     ],
   },
@@ -222,7 +222,7 @@ export default function Navbar() {
 
           <div className="flex flex-none items-center gap-3">
             <Link
-              href="/contact-1"
+              href="/contact"
               onClick={() => setOpenMenu(null)}
               className="hidden h-11 items-center bg-brand px-5 text-[12px] font-bold uppercase tracking-[0.14em] text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-dark hover:shadow-[0_10px_28px_rgba(93,187,70,0.35)] xl:inline-flex"
             >
@@ -282,7 +282,7 @@ export default function Navbar() {
             </div>
           ))}
           <Link
-            href="/contact-1"
+            href="/contact"
             onClick={() => setMobileOpen(false)}
             className="mt-5 block bg-brand px-6 py-3.5 text-center text-[13px] font-bold uppercase tracking-[0.14em] text-white"
           >

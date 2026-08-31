@@ -23,7 +23,7 @@ export async function generateMetadata({
   return {
     title: { absolute: post.seoTitle },
     description: post.seoDescription,
-    alternates: { canonical: `${BASE_URL}/resources/blog/${post.slug}` },
+    alternates: { canonical: `${BASE_URL}/blog/${post.slug}` },
     openGraph: {
       title: post.seoTitle,
       description: post.seoDescription,
@@ -56,7 +56,7 @@ export default async function BlogPostPage({
       "@type": "Organization",
       name: "10 Day Kitchens",
     },
-    mainEntityOfPage: `${BASE_URL}/resources/blog/${post.slug}`,
+    mainEntityOfPage: `${BASE_URL}/blog/${post.slug}`,
   };
 
   return (
@@ -100,7 +100,7 @@ export default async function BlogPostPage({
           </div>
 
           <div className="mt-10 border-t border-line pt-6">
-            <Link href="/resources/blog" className="text-[12px] font-bold uppercase tracking-[0.14em] text-brand-dark hover:text-brand">
+            <Link href="/blog" className="text-[12px] font-bold uppercase tracking-[0.14em] text-brand-dark hover:text-brand">
               Back to blog
             </Link>
           </div>

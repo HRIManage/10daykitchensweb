@@ -36,18 +36,26 @@ export const metadata: Metadata = {
   },
   description:
     "Beautiful, functional kitchen and bath remodels installed in just 10 business days. Family owned since 2004, 35+ years of experience, 5-year warranty. Serving Pierce and Thurston Counties.",
-  keywords: [
-    "kitchen remodel",
-    "bathroom remodel",
-    "Lacey WA remodeling",
-    "Olympia kitchen remodel",
-    "Tacoma bathroom remodel",
-    "10 day kitchens",
-  ],
   openGraph: {
+    type: "website",
+    siteName: site.name,
+    locale: "en_US",
     title: `${site.name} - Dream Kitchens & Baths in 10 Days`,
     description:
       "Beautiful, functional kitchen and bath remodels installed in just 10 business days. Family owned since 2004.",
+    images: [
+      {
+        url: "/images/hero-kitchen-custom.png",
+        alt: `${site.name} - custom kitchen remodel in Lacey, WA`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${site.name} - Dream Kitchens & Baths in 10 Days`,
+    description:
+      "Beautiful, functional kitchen and bath remodels installed in just 10 business days. Family owned since 2004.",
+    images: ["/images/hero-kitchen-custom.png"],
   },
 };
 

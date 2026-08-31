@@ -18,13 +18,13 @@ export const metadata: Metadata = {
   description:
     "A streamlined 10 business day kitchen remodel program for qualified existing-layout kitchens in Lacey, Olympia, Tacoma, Thurston County, and Pierce County.",
   alternates: {
-    canonical: "https://10daykitchens.com/10businessdaykitchenprogram",
+    canonical: "https://10daykitchens.com/10-day-kitchen-program",
   },
   openGraph: {
     title: "10 Day Kitchens Program | Fast Kitchen Remodel Lacey WA",
     description:
       "A streamlined 10 business day kitchen remodel program for qualified same-layout kitchens in Lacey, Olympia, Tacoma, Thurston County, and Pierce County.",
-    url: "https://10daykitchens.com/10businessdaykitchenprogram",
+    url: "https://10daykitchens.com/10-day-kitchen-program",
   },
 };
 
@@ -164,7 +164,7 @@ export default function TenDayProgramPage() {
     name: "10 Day Kitchens Program",
     description:
       "A fast kitchen remodel program for qualified existing-layout kitchens in Lacey, Olympia, Tacoma, Thurston County, and Pierce County, installed in 10 business days with approved selections.",
-    url: "https://10daykitchens.com/10businessdaykitchenprogram",
+    url: "https://10daykitchens.com/10-day-kitchen-program",
     serviceType: [
       "10 Day Kitchen Remodel",
       "Fast Kitchen Remodel",

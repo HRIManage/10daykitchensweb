@@ -16,13 +16,15 @@ type ServiceSchemaOptions = {
 export function createLocalBusinessSchema({ url, description }: LocalBusinessOptions) {
   return {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": "HomeAndConstructionBusiness",
     "@id": url,
     name: site.name,
     url,
     telephone: site.phone,
     email: site.email,
     image: "https://10daykitchens.com/images/hero-kitchen-custom.png",
+    logo: "https://10daykitchens.com/images/logo.webp",
+    priceRange: "$30,000+",
     description: description ?? site.tagline,
     address: {
       "@type": "PostalAddress",
@@ -32,6 +34,16 @@ export function createLocalBusinessSchema({ url, description }: LocalBusinessOpt
       postalCode: "98516",
       addressCountry: "US",
     },
+    hasMap: site.mapsHref,
+    sameAs: [site.facebookHref, site.instagramHref],
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "09:00",
+        closes: "17:30",
+      },
+    ],
     areaServed: [
       "Lacey, WA",
       "Olympia, WA",

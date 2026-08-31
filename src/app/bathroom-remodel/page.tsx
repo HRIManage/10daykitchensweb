@@ -13,6 +13,15 @@ export const metadata: Metadata = {
   title: "Bathroom Remodel Lacey WA | Olympia & Tacoma",
   description:
     "Full bathroom remodels across Pierce & Thurston Counties — tile showers, vanities, flooring, and fixtures with one clear schedule and a 5-year warranty.",
+  alternates: {
+    canonical: "https://10daykitchens.com/bathroom-remodel",
+  },
+  openGraph: {
+    title: "Bathroom Remodel Lacey WA | 10 Day Kitchens",
+    description:
+      "Full bathroom remodels across Pierce & Thurston Counties — tile showers, vanities, flooring, and fixtures with one clear schedule and a 5-year warranty.",
+    url: "https://10daykitchens.com/bathroom-remodel",
+  },
 };
 
 const processSteps = [
