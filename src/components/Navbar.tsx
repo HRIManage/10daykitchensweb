@@ -29,7 +29,7 @@ const navItems: NavItem[] = [
       { label: "FAQs", href: "/faq", description: "Answers before you remodel" },
       { label: "Financing", href: "/financing", description: "Project payment options" },
       { label: "Blog / Advice", href: "/blog", description: "Planning tips and remodel guidance" },
-      { label: "Collections", href: "/resources/catalog", description: "Cabinet and surface inspiration" },
+      { label: "Collections", href: "/collections", description: "Cabinet and surface inspiration" },
     ],
   },
 ];

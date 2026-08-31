@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import PageCta from "@/components/PageCta";
-import { blogPosts, getBlogPost } from "@/lib/blog";
+import { blogPosts, formatBlogDate, getBlogPost } from "@/lib/blog";
 
 const BASE_URL = "https://10daykitchens.com";
 
@@ -48,6 +48,7 @@ export default async function BlogPostPage({
     description: post.seoDescription,
     image: `${BASE_URL}${post.img}`,
     datePublished: post.date,
+    dateModified: post.date,
     author: {
       "@type": "Organization",
       name: "10 Day Kitchens",
@@ -69,7 +70,7 @@ export default async function BlogPostPage({
           <h1 className="max-w-4xl text-[clamp(2.4rem,4.7vw,4.6rem)] leading-[1.04] text-ink">{post.title}</h1>
           <p className="mt-6 max-w-3xl text-[1rem] leading-8 text-ink-soft">{post.description}</p>
           <div className="mt-6 flex flex-wrap items-center gap-4 text-[12px] font-bold uppercase tracking-[0.12em] text-ink-soft">
-            <span>{post.date}</span>
+            <span>{formatBlogDate(post.date)}</span>
             <span>|</span>
             <span>{post.readTime}</span>
           </div>

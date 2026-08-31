@@ -54,7 +54,10 @@ export async function generateMetadata({
   if (!city) return {};
 
   return {
-    title: city.metaTitle,
+    // `absolute` bypasses the root layout's "%s | 10 Day Kitchens" template —
+    // several city metaTitles already end with "| 10 Day Kitchens", which the
+    // template would otherwise duplicate.
+    title: { absolute: city.metaTitle },
     description: city.metaDescription,
     alternates: { canonical: `${BASE_URL}/kitchen-remodel/${city.slug}` },
     openGraph: { title: city.metaTitle, description: city.metaDescription },
