@@ -1,7 +1,7 @@
 import Link from "next/link";
 import InteriorHero from "@/components/InteriorHero";
 import PageCta from "@/components/PageCta";
-import { blogPosts, featuredPost } from "@/lib/blog";
+import { blogPosts, featuredPost, formatBlogDate } from "@/lib/blog";
 
 export const metadata = {
   title: "Blog & Advice",
@@ -64,7 +64,7 @@ export default function BlogPage() {
                 Read the Story
               </Link>
               <p className="mt-4 text-xs text-[#aaaaaa]">
-                {featuredPost.date} | {featuredPost.readTime}
+                {formatBlogDate(featuredPost.date)} | {featuredPost.readTime}
               </p>
             </div>
           </div>
@@ -107,7 +107,7 @@ export default function BlogPage() {
                   <p className="flex-1 text-sm leading-relaxed text-[#777]">{post.excerpt}</p>
                   <div className="mt-5 flex items-center justify-between border-t border-[rgba(17,17,17,0.06)] pt-4">
                     <p className="text-xs text-[#aaa]">
-                      {post.date} | {post.readTime}
+                      {formatBlogDate(post.date)} | {post.readTime}
                     </p>
                     <Link
                       href={`/blog/${post.slug}`}

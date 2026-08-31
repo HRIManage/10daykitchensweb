@@ -33,6 +33,11 @@ const nextConfig: NextConfig = {
         destination: "/blog/:slug",
         permanent: true,
       },
+      {
+        source: "/resources/catalog",
+        destination: "/collections",
+        permanent: true,
+      },
 
       // --- Legacy URLs from the previous site ---
       {
@@ -52,7 +57,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/services/cabinet-wholesale",
-        destination: "/resources/catalog",
+        destination: "/collections",
         permanent: true,
       },
       {

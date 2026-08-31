@@ -4,6 +4,7 @@ export type BlogPost = {
   title: string;
   excerpt: string;
   img: string;
+  /** ISO 8601 (YYYY-MM-DD) so it is valid in Article schema. Use `formatBlogDate` for display. */
   date: string;
   readTime: string;
   description: string;
@@ -12,6 +13,18 @@ export type BlogPost = {
   body: string[];
 };
 
+const MONTHS = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+];
+
+/** "2026-03-10" -> "March 10, 2026". Parsed manually to stay timezone-safe. */
+export function formatBlogDate(iso: string): string {
+  const [year, month, day] = iso.split("-").map(Number);
+  if (!year || !month || !day) return iso;
+  return `${MONTHS[month - 1]} ${day}, ${year}`;
+}
+
 export const featuredPost: BlogPost = {
   slug: "chehalis-kitchen-transformation",
   tag: "Project Story",
@@ -19,7 +32,7 @@ export const featuredPost: BlogPost = {
   excerpt:
     "A family in Chehalis reached out after watching their kitchen age for 15 years. Outdated cabinets, worn countertops, and a layout that no longer worked for how they lived. Here's exactly what happened over 10 business days and the final result.",
   img: "/images/ba-after-chehalis.jpg",
-  date: "March 10, 2026",
+  date: "2026-03-10",
   readTime: "5 min read",
   description:
     "A real Chehalis kitchen remodel story from first consultation through final walkthrough, completed on a disciplined 10 business day schedule.",
@@ -42,7 +55,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "Cabinet color sets the entire mood of your kitchen. We break down the most popular palettes and what they say about how you live.",
     img: "/images/Hunter Green Kitchen.png",
-    date: "February 28, 2026",
+    date: "2026-02-28",
     readTime: "4 min read",
     description:
       "A practical guide to cabinet color choices, contrast, light, and finish direction for kitchen remodels in the South Sound.",
@@ -62,7 +75,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "Tapping into home equity is one of the smartest ways to fund a renovation. Here's how to decide between a HELOC and a cash-out refinance.",
     img: "/images/Design Review Meeting.png",
-    date: "February 14, 2026",
+    date: "2026-02-14",
     readTime: "6 min read",
     description:
       "Compare HELOC financing and cash-out refinance options for kitchen and bath remodeling projects with clearer tradeoffs in mind.",
@@ -82,7 +95,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "Both are beautiful, but they behave very differently over time. We help you make the call based on how your family actually uses the kitchen.",
     img: "/images/Material Selection Boards.png",
-    date: "January 30, 2026",
+    date: "2026-01-30",
     readTime: "5 min read",
     description:
       "Quartz and granite each solve different needs. Compare maintenance, look, and long-term use before choosing counters.",
@@ -102,7 +115,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "Worn cabinets and outdated layouts aren't just cosmetic problems. They affect how you use your home every single day. Here's when to act.",
     img: "/images/Modern Farmhouse Two-Tone Kitchen.png",
-    date: "January 15, 2026",
+    date: "2026-01-15",
     readTime: "3 min read",
     description:
       "A short guide to recognizing when an aging kitchen is affecting function, storage, comfort, and daily use enough to justify a remodel.",
@@ -122,7 +135,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "Day by day, here's exactly what happens from the moment our crew arrives to the final walkthrough and how we keep your home livable throughout.",
     img: "/images/Materials Delivery.png",
-    date: "December 20, 2025",
+    date: "2025-12-20",
     readTime: "7 min read",
     description:
       "A day-by-day overview of the 10 Day Kitchens process, from preparation and materials to installation and final walkthrough.",
@@ -142,7 +155,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "Limited square footage doesn't mean limited style. These layout and material choices can make any bathroom feel twice as large.",
     img: "/images/White Oak Spa Bathroom.png",
-    date: "December 5, 2025",
+    date: "2025-12-05",
     readTime: "4 min read",
     description:
       "Smart layout, finish, and storage strategies for making a small bathroom feel brighter, calmer, and easier to use.",

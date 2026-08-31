@@ -32,7 +32,7 @@ const serviceLinks = [
 
 const exploreLinks = [
   { label: "About", href: "/about" },
-  { label: "Collections", href: "/resources/catalog" },
+  { label: "Collections", href: "/collections" },
   { label: "Blog / Advice", href: "/blog" },
   { label: "Financing", href: "/financing" },
   { label: "FAQs", href: "/faq" },
