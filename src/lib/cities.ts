@@ -34,7 +34,7 @@ export const cities: City[] = [
     tier: 1,
     published: true,
     intro:
-      "10 Day Kitchens provides kitchen remodeling in Tacoma, WA — cabinetry, countertops, flooring, and fixtures installed in 10 business days. We're a family-owned, licensed remodeler serving Tacoma homeowners from our Lacey showroom, with kitchen packages from $30,000 and a 5-year workmanship warranty.",
+      "10 Day Kitchens provides kitchen remodeling in Tacoma, WA — cabinetry, countertops, flooring, and fixtures installed in 10 business days. We're a family-owned, licensed remodeler serving Tacoma homeowners from our Lacey showroom, with kitchen packages from $45,000 and a 5-year workmanship warranty.",
     neighborhoods: [
       {
         name: "Proctor & North End",
@@ -65,7 +65,7 @@ export const cities: City[] = [
       {
         question: "What does a kitchen remodel cost in Tacoma?",
         answer:
-          "Our 10-Day Package ranges from $30,000 for smaller kitchens to $80,000+ for large ones; Executive Remodels with structural work start at $70,000. You get a binding quote before any work begins — no hidden costs.",
+          "Our 10-Day Package ranges from $45,000 for smaller kitchens to $80,000+ for large ones; Executive Remodels with structural work start at $70,000. You get a binding quote before any work begins — no hidden costs.",
       },
       {
         question: "Do you serve all of Tacoma?",
@@ -80,7 +80,7 @@ export const cities: City[] = [
     ],
     metaTitle: "Kitchen Remodel Tacoma WA | Done in 10 Days",
     metaDescription:
-      "Kitchen remodeling in Tacoma, WA installed in 10 business days. Family-owned, licensed & insured, 5-year warranty. Packages from $30k. Free consultation.",
+      "Kitchen remodeling in Tacoma, WA installed in 10 business days. Family-owned, licensed & insured, 5-year warranty. Packages from $45k. Free consultation.",
     heroImage: "/images/Premium White Oak Showcase Kitchen (1).png",
     nearbySlugs: ["university-place", "lakewood", "fife", "puyallup"],
   },

@@ -7,7 +7,7 @@ import { CONTAINER, SECTION } from "@/components/layout";
 export const metadata: Metadata = {
   title: "FAQ | Kitchen & Bath Remodeling Questions",
   description:
-    "How long does a kitchen remodel take? What does it cost? Answers about our 10-business-day process, pricing ($30k–$80k+), permits, warranty, and more.",
+    "How long does a kitchen remodel take? What does it cost? Answers about our 10-business-day process, pricing ($45k–$80k+), permits, warranty, and more.",
   alternates: {
     canonical: "https://10daykitchens.com/faq",
   },
@@ -65,7 +65,7 @@ const categories = [
     faqs: [
       {
         q: "What is the average cost of a kitchen remodel?",
-        a: "Our 10-Day Package ranges from $30,000 for small kitchens up to $80,000+ for large kitchens. Executive Remodels start at $70,000. All pricing is transparent — you receive a binding quote before any work begins.",
+        a: "Our 10-Day Package ranges from $45,000 for small kitchens up to $80,000+ for large kitchens. Executive Remodels start at $70,000. All pricing is transparent — you receive a binding quote before any work begins.",
       },
       {
         q: "Do you provide a warranty on your remodeling work?",

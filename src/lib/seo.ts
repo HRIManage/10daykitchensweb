@@ -24,7 +24,7 @@ export function createLocalBusinessSchema({ url, description }: LocalBusinessOpt
     email: site.email,
     image: "https://10daykitchens.com/images/hero-kitchen-custom.png",
     logo: "https://10daykitchens.com/images/logo.webp",
-    priceRange: "$30,000+",
+    priceRange: "$45,000+",
     description: description ?? site.tagline,
     address: {
       "@type": "PostalAddress",
