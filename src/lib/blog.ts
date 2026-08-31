@@ -446,27 +446,27 @@ export const blogPosts: BlogPost[] = [
     body: [
       {
         type: "p",
-        text: "Bathroom remodel cost comes down to scope more than anything else. A focused shower or tub replacement, a full guest bathroom, and a primary suite are three different projects with three different budgets. The ranges below are typical for the South Sound — your quote depends on the size of the room, the fixtures you choose, and whether plumbing moves.",
+        text: "Bathroom remodel cost comes down to scope more than anything else. A focused shower or tub replacement, a full guest bathroom, and a primary suite are three different projects with three different budgets. What yours costs depends on the size of the room, the fixtures you choose, and whether plumbing moves — the only way to get a real number is a quote after we see the space.",
       },
-      { type: "h2", text: "Bathroom remodel price ranges" },
+      { type: "h2", text: "The three levels of a bathroom remodel" },
       {
         type: "table",
-        headers: ["Project type", "Typical range", "What's involved"],
+        headers: ["Level", "What's involved", "Best for"],
         rows: [
           [
             "Fast Bath update",
-            "$9,000 – $18,000",
-            "Tub-to-shower conversion or shower replacement, new fixtures and surround, minimal disruption. Plumbing stays in place.",
+            "Tub-to-shower conversion or shower replacement, new fixtures and surround. Plumbing stays in place, minimal disruption.",
+            "The layout works and you mainly want a better, safer, cleaner shower or tub.",
           ],
           [
             "Full bathroom remodel",
-            "$18,000 – $35,000",
             "New vanity, tile shower or tub, flooring, lighting, fixtures, and finishes in the existing footprint.",
+            "The whole room is dated or no longer functions, but the footprint is fine.",
           ],
           [
             "Primary suite remodel",
-            "$35,000 – $60,000+",
-            "Larger footprint, double vanity, tile shower with glass, freestanding tub, heated floors, and higher-end finishes. May involve layout changes.",
+            "Larger footprint, double vanity, tile shower with glass, freestanding tub, heated floors, higher-end finishes. May involve layout changes.",
+            "A primary bathroom you want to feel like a retreat, not just updated.",
           ],
         ],
       },
@@ -479,7 +479,7 @@ export const blogPosts: BlogPost[] = [
       { type: "h3", text: "The shower" },
       {
         type: "p",
-        text: "A tiled shower with a glass enclosure is usually the most expensive element in a bathroom, more than the vanity or flooring. Tile choice, niche and bench details, and the size of the glass all affect the number.",
+        text: "A tiled shower with a glass enclosure is usually the most expensive element in a bathroom, more than the vanity or flooring. Tile choice, niche and bench details, and the size of the glass all affect the price.",
       },
       { type: "h3", text: "Tile and finish level" },
       {
@@ -503,8 +503,8 @@ export const blogPosts: BlogPost[] = [
     ],
     faqs: [
       {
-        q: "What is the average bathroom remodel cost in the South Sound?",
-        a: "It depends on scope. A Fast Bath shower or tub update typically runs $9,000 to $18,000; a full bathroom remodel $18,000 to $35,000; a primary suite $35,000 to $60,000 or more.",
+        q: "How much does a bathroom remodel cost in the South Sound?",
+        a: "It depends on scope. A Fast Bath shower or tub update is the most affordable path; a full bathroom remodel replaces everything in the existing footprint; a primary suite with a large tiled shower, freestanding tub, and double vanity is the top end. We give you a binding quote after seeing the space, with no hidden costs added later.",
       },
       {
         q: "What is the most expensive part of a bathroom remodel?",
