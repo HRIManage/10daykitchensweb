@@ -232,6 +232,295 @@ export const blogPosts: BlogPost[] = [
     ],
   },
   {
+    slug: "how-much-does-a-10-day-kitchen-cost",
+    tag: "Cost Guide",
+    title: "How Much Does a 10-Day Kitchen Remodel Cost?",
+    excerpt:
+      "The 10 Day Kitchens Program starts around $45,000 and is quoted at a fixed price before work begins. Here is what the number covers, what qualifies, and why a fast timeline does not mean a cheap one.",
+    img: "/images/Materials Delivery.png",
+    date: "2026-08-29",
+    readTime: "7 min read",
+    description:
+      "What the 10 Day Kitchens Program costs, what is included in the fixed price, which kitchens qualify, and how the 10 business day timeline affects the budget.",
+    seoTitle: "How Much Does a 10-Day Kitchen Remodel Cost?",
+    seoDescription:
+      "The 10 Day Kitchens Program starts around $45,000 with a binding fixed price. See what is included, which kitchens qualify, and how the fast timeline works.",
+    body: [
+      {
+        type: "p",
+        text: "The 10 Day Kitchens Program starts around $45,000 for a qualified same-layout kitchen and is quoted at a binding fixed price before any work begins. Most program kitchens land between $45,000 and $80,000 depending on cabinetry, countertops, and how much of the room is being replaced.",
+      },
+      {
+        type: "p",
+        text: "A fast timeline is not the same as a budget remodel. The 10-day schedule comes from planning and staging, not from cutting scope or using cheaper materials. Here is how the pricing actually works.",
+      },
+      { type: "h2", text: "What the fixed price includes" },
+      {
+        type: "list",
+        items: [
+          "Cabinetry from one of four lines, all with plywood boxes, soft-close hardware, and dovetail drawers",
+          "Countertops — quartz, or natural stone as an upgrade",
+          "Sink, faucet, and fixture installation",
+          "Flooring and lighting",
+          "Demolition, haul-away, and installation labor",
+          "Permit handling and inspections when the project requires them",
+          "A 5-year workmanship warranty",
+        ],
+      },
+      {
+        type: "p",
+        text: "The quote is binding. The number in your contract is the number you pay — there are no allowances that balloon later or change orders for work that should have been scoped up front.",
+      },
+      { type: "h2", text: "What moves the price within the range" },
+      { type: "h3", text: "Cabinet line and quantity" },
+      {
+        type: "p",
+        text: "Cabinets are the largest single cost in most kitchens. The four lines sit at different price points, and a kitchen with a large island and floor-to-ceiling storage costs more than a compact galley regardless of line. Door style and finish also matter — a painted shaker in a premium line is a different number than a stained slab in an entry line. Our guide to [choosing a cabinet color](/blog/choosing-cabinet-colors) covers the design side.",
+      },
+      { type: "h3", text: "Countertop material" },
+      {
+        type: "p",
+        text: "Quartz is predictable and included at program pricing. Natural stone adds cost and varies by slab. See [quartz vs. granite](/blog/quartz-vs-granite) for the trade-offs.",
+      },
+      { type: "h3", text: "Appliances and finishes" },
+      {
+        type: "p",
+        text: "Appliance packages, tile backsplash, hardware, and lighting each shift the total by a few thousand dollars. These are the easiest levers to pull during selections if you need to hit a specific budget.",
+      },
+      { type: "h2", text: "Which kitchens qualify for the 10-day price?" },
+      {
+        type: "p",
+        text: "The fixed 10 business day schedule and pricing apply when the project stays within the existing layout:",
+      },
+      {
+        type: "list",
+        items: [
+          "The kitchen keeps its current footprint and cabinet configuration",
+          "Plumbing, gas, appliances, and electrical stay in their current locations",
+          "No load-bearing walls or structural work is involved",
+          "All selections are finalized before the contract is signed",
+        ],
+      },
+      {
+        type: "p",
+        text: "If you want to move the sink, open a wall, or add an island with plumbing, the project becomes an Executive Remodel — still a fixed quote, but with a custom scope and timeline that starts around $70,000. Read more about [the 10 Day Kitchens Program](/10-day-kitchen-program) and [what to expect day by day](/blog/what-to-expect-10-day-remodel).",
+      },
+      { type: "h2", text: "Why a faster remodel can cost less overall" },
+      {
+        type: "p",
+        text: "A traditional remodel that drags for 8 to 12 weeks has hidden costs: more meals out, longer disruption, and more opportunities for the budget to drift as decisions get made mid-project. Locking every selection and the full price before day one removes most of that risk. You are paying for a planned two-week install, not an open-ended construction project.",
+      },
+      {
+        type: "p",
+        text: "The fastest way to a real number is a free in-home consultation. [Book one here](/contact) and we will bring the plan, the schedule, and a binding quote.",
+      },
+    ],
+    faqs: [
+      {
+        q: "How much does the 10 Day Kitchens Program cost?",
+        a: "Program kitchens start around $45,000 and typically run to $80,000, quoted at a binding fixed price before work begins. Executive Remodels with layout or structural changes start around $70,000.",
+      },
+      {
+        q: "Is a 10-day kitchen cheaper than a regular remodel?",
+        a: "Not necessarily. The speed comes from planning and staging, not from lower-cost materials. The advantage is a fixed price and a fixed timeline, which removes the budget drift common in long remodels.",
+      },
+      {
+        q: "What if my kitchen does not qualify for the 10-day schedule?",
+        a: "Kitchens that need layout changes, moved plumbing, or structural work are handled as Executive Remodels — still a fixed quote, with a custom timeline instead of the 10 business day window.",
+      },
+      {
+        q: "Are there hidden costs or change orders?",
+        a: "No. The contract price is binding. Selections and scope are finalized before work starts, so there are no allowances that increase later or surprise change orders.",
+      },
+    ],
+  },
+  {
+    slug: "kitchen-remodel-cost-tacoma",
+    tag: "Cost Guide",
+    title: "How Much Does a Kitchen Remodel Cost in Tacoma, WA?",
+    excerpt:
+      "Kitchen remodels in Tacoma generally run $45,000 to $80,000, with layout and structural changes starting around $70,000. Here is what drives the number in Tacoma's older housing stock.",
+    img: "/images/full kitchen with marble cpuntertop.jpg",
+    date: "2026-08-27",
+    readTime: "8 min read",
+    description:
+      "A 2026 guide to kitchen remodel pricing in Tacoma and Pierce County — real ranges by scope, what older Tacoma homes tend to need, permit rules, and the 10 business day path.",
+    seoTitle: "Kitchen Remodel Cost in Tacoma, WA (2026 Guide)",
+    seoDescription:
+      "What a kitchen remodel costs in Tacoma in 2026 — price ranges by scope, what Tacoma's older homes tend to need, permits, and how the 10-day remodel works.",
+    body: [
+      {
+        type: "p",
+        text: "Most kitchen remodels in Tacoma start around $45,000 and run to $80,000 or more, with layout-change and structural projects starting around $70,000. Tacoma's housing stock spans a full century, so the biggest swing factor here is often what a remodel uncovers behind the walls of an older home.",
+      },
+      { type: "h2", text: "Kitchen remodel price ranges in Tacoma" },
+      {
+        type: "table",
+        headers: ["Project type", "Typical range", "What's included"],
+        rows: [
+          [
+            "Same-layout remodel",
+            "$45,000 – $60,000",
+            "New cabinets in the existing footprint, countertops, sink and faucet, flooring, and lighting. No walls or plumbing moved.",
+          ],
+          [
+            "Upgraded same-layout remodel",
+            "$60,000 – $80,000",
+            "Higher-end cabinet lines, quartz or natural stone, tile backsplash, upgraded appliances, and more cabinetry.",
+          ],
+          [
+            "Executive remodel (layout changes)",
+            "$70,000+",
+            "Opening closed-off kitchens, moving plumbing or gas, electrical upgrades, structural work, custom cabinetry, and a custom timeline.",
+          ],
+        ],
+      },
+      {
+        type: "p",
+        text: "Every quote is binding — the contract price is the price you pay. Same-layout kitchens may qualify for [the 10 Day Kitchens Program](/10-day-kitchen-program).",
+      },
+      { type: "h2", text: "What drives kitchen remodel cost in Tacoma" },
+      { type: "h3", text: "The age of the home" },
+      {
+        type: "p",
+        text: "Craftsman and Tudor homes in the North End and Proctor were built long before modern electrical and plumbing codes. When cabinets come off, older wiring often needs to be brought to code, and pre-war walls deserve a structural look before anything is removed. A good contractor assesses both during the first visit so it is in the quote, not a surprise after demolition.",
+      },
+      { type: "h3", text: "Opening up a closed layout" },
+      {
+        type: "p",
+        text: "Many older Tacoma kitchens are walled off from the dining room. Opening that up is one of the most requested changes — and one of the biggest cost drivers, because it usually involves structural work, electrical rerouting, and sometimes plumbing. That moves the project into Executive Remodel territory.",
+      },
+      { type: "h3", text: "Cabinetry and countertops" },
+      {
+        type: "p",
+        text: "As in any kitchen, cabinets are the largest single line, followed by countertops. Mid-century and 1980s–90s homes in the West End and Northeast Tacoma are often good candidates for efficient same-layout updates — swapping dated oak and laminate for shaker cabinetry and quartz without moving anything.",
+      },
+      { type: "h2", text: "Do you need a permit for a kitchen remodel in Tacoma?" },
+      {
+        type: "p",
+        text: "Standard cabinet and countertop replacements usually do not require a permit. Permits are typically needed for plumbing changes, new or relocated electrical circuits, structural work, and gas line changes. In Tacoma these go through the City of Tacoma Planning and Development Services department. 10 Day Kitchens manages the application and inspections when a project requires them.",
+      },
+      { type: "h2", text: "How the showroom and timeline work for Tacoma homeowners" },
+      {
+        type: "p",
+        text: "The 10 Day Kitchens showroom is in Lacey, about 35 minutes south of Tacoma on I-5. Most homeowners complete cabinet, countertop, and finish selections in a single visit, because everything is organized around the project schedule before installation begins. Qualified same-layout Tacoma kitchens are then installed in 10 business days; larger structural projects get a custom timeline in the contract.",
+      },
+      {
+        type: "p",
+        text: "For a real number on your kitchen, [book a free consultation](/contact) or see more about [kitchen remodeling in Tacoma](/kitchen-remodel/tacoma).",
+      },
+    ],
+    faqs: [
+      {
+        q: "What is the average kitchen remodel cost in Tacoma?",
+        a: "Most Tacoma kitchen remodels fall between $45,000 and $80,000. Same-layout projects start around $45,000; remodels that open up the layout or involve structural work start around $70,000.",
+      },
+      {
+        q: "Why do older Tacoma homes sometimes cost more to remodel?",
+        a: "Homes in the North End, Proctor, and Stadium District were built before modern codes. Electrical often needs updating and pre-war walls need structural review, both of which are assessed and priced during the first consultation.",
+      },
+      {
+        q: "How long does a kitchen remodel take in Tacoma?",
+        a: "Qualified same-layout kitchens are completed in 10 business days. Projects with structural changes or layout work receive a custom timeline stated in the contract.",
+      },
+      {
+        q: "Where do Tacoma homeowners choose materials?",
+        a: "At the 10 Day Kitchens showroom in Lacey, about 35 minutes from Tacoma via I-5. Most clients finish selections in one visit.",
+      },
+    ],
+  },
+  {
+    slug: "bathroom-remodel-cost-south-sound",
+    tag: "Cost Guide",
+    title: "How Much Does a Bathroom Remodel Cost in the South Sound?",
+    excerpt:
+      "Bathroom remodel costs in the South Sound depend heavily on scope — a focused shower or tub update, a full guest bath, or a primary suite are three very different numbers. Here is how to think about it.",
+    img: "/images/modern master bathroom with nice shower and double vanity.jpg",
+    date: "2026-08-25",
+    readTime: "6 min read",
+    description:
+      "How bathroom remodel pricing works in Olympia, Tacoma, and the South Sound — the difference between a Fast Bath update, a full bathroom remodel, and a primary suite.",
+    seoTitle: "Bathroom Remodel Cost in the South Sound (2026)",
+    seoDescription:
+      "Bathroom remodel costs in Olympia, Tacoma, and the South Sound by scope — Fast Bath updates, full bathroom remodels, and primary suites, plus what drives the price.",
+    body: [
+      {
+        type: "p",
+        text: "Bathroom remodel cost comes down to scope more than anything else. A focused shower or tub replacement, a full guest bathroom, and a primary suite are three different projects with three different budgets. The ranges below are typical for the South Sound — your quote depends on the size of the room, the fixtures you choose, and whether plumbing moves.",
+      },
+      { type: "h2", text: "Bathroom remodel price ranges" },
+      {
+        type: "table",
+        headers: ["Project type", "Typical range", "What's involved"],
+        rows: [
+          [
+            "Fast Bath update",
+            "$9,000 – $18,000",
+            "Tub-to-shower conversion or shower replacement, new fixtures and surround, minimal disruption. Plumbing stays in place.",
+          ],
+          [
+            "Full bathroom remodel",
+            "$18,000 – $35,000",
+            "New vanity, tile shower or tub, flooring, lighting, fixtures, and finishes in the existing footprint.",
+          ],
+          [
+            "Primary suite remodel",
+            "$35,000 – $60,000+",
+            "Larger footprint, double vanity, tile shower with glass, freestanding tub, heated floors, and higher-end finishes. May involve layout changes.",
+          ],
+        ],
+      },
+      { type: "h2", text: "What drives bathroom remodel cost" },
+      { type: "h3", text: "Whether plumbing moves" },
+      {
+        type: "p",
+        text: "Keeping the toilet, sink, and shower drain where they are is the single biggest way to control cost. Relocating fixtures means opening walls and floors and adds both time and money.",
+      },
+      { type: "h3", text: "The shower" },
+      {
+        type: "p",
+        text: "A tiled shower with a glass enclosure is usually the most expensive element in a bathroom, more than the vanity or flooring. Tile choice, niche and bench details, and the size of the glass all affect the number.",
+      },
+      { type: "h3", text: "Tile and finish level" },
+      {
+        type: "p",
+        text: "Floor and wall tile, vanity material, faucet and fixture finishes, mirror and lighting — these compound quickly. A calm, consistent material palette usually looks better and costs less than mixing many finishes. Our [small bathroom design guide](/blog/small-bathroom-design-tips) covers getting more impact from a tight space.",
+      },
+      { type: "h3", text: "The condition of the subfloor and walls" },
+      {
+        type: "p",
+        text: "Bathrooms hide water damage. Once tile and the vanity come out, a soft subfloor or damaged framing sometimes needs repair. A thorough contractor checks for this during the consultation and notes the risk in the quote.",
+      },
+      { type: "h2", text: "Fast Bath vs. a full bathroom remodel" },
+      {
+        type: "p",
+        text: "If the layout works and you mainly want a better, safer, cleaner shower or tub, a [Fast Bath](/fast-bath) upgrade is the efficient path — lower cost, shorter timeline, less disruption. If the whole room feels dated or does not function, a full [bathroom remodel](/bathroom-remodel) replaces everything and is planned around a clear schedule with a 5-year workmanship warranty.",
+      },
+      {
+        type: "p",
+        text: "The only way to price your bathroom accurately is to look at it. [Book a free consultation](/contact) and we will walk through options, timeline, and a binding quote.",
+      },
+    ],
+    faqs: [
+      {
+        q: "What is the average bathroom remodel cost in the South Sound?",
+        a: "It depends on scope. A Fast Bath shower or tub update typically runs $9,000 to $18,000; a full bathroom remodel $18,000 to $35,000; a primary suite $35,000 to $60,000 or more.",
+      },
+      {
+        q: "What is the most expensive part of a bathroom remodel?",
+        a: "Usually the shower — a tiled shower with a glass enclosure costs more than the vanity or flooring. Moving plumbing is the other major cost driver.",
+      },
+      {
+        q: "How can I keep my bathroom remodel affordable?",
+        a: "Keep the fixtures where they are, choose a simple consistent tile and finish palette, and consider a Fast Bath update if the layout already works and only the shower or tub needs attention.",
+      },
+      {
+        q: "Do you offer a warranty on bathroom remodels?",
+        a: "Yes. Full bathroom remodels come with a 5-year workmanship warranty.",
+      },
+    ],
+  },
+  {
     slug: "choosing-cabinet-colors",
     tag: "Design Tips",
     title: "How to Choose the Right Cabinet Color for Your Kitchen",
