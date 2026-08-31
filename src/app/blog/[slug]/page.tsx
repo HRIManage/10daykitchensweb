@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import BlogContent from "@/components/BlogContent";
 import PageCta from "@/components/PageCta";
 import { blogPosts, formatBlogDate, getBlogPost } from "@/lib/blog";
 
@@ -41,28 +42,42 @@ export default async function BlogPostPage({
   const post = getBlogPost(slug);
   if (!post) notFound();
 
-  const articleJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: post.title,
-    description: post.seoDescription,
-    image: `${BASE_URL}${post.img}`,
-    datePublished: post.date,
-    dateModified: post.date,
-    author: {
-      "@type": "Organization",
-      name: "10 Day Kitchens",
+  const jsonLd: object[] = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: post.title,
+      description: post.seoDescription,
+      image: `${BASE_URL}${post.img}`,
+      datePublished: post.date,
+      dateModified: post.date,
+      author: {
+        "@type": "Organization",
+        name: "10 Day Kitchens",
+      },
+      publisher: {
+        "@type": "Organization",
+        name: "10 Day Kitchens",
+      },
+      mainEntityOfPage: `${BASE_URL}/blog/${post.slug}`,
     },
-    publisher: {
-      "@type": "Organization",
-      name: "10 Day Kitchens",
-    },
-    mainEntityOfPage: `${BASE_URL}/blog/${post.slug}`,
-  };
+  ];
+
+  if (post.faqs?.length) {
+    jsonLd.push({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: post.faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.q,
+        acceptedAnswer: { "@type": "Answer", text: faq.a },
+      })),
+    });
+  }
 
   return (
     <main className="bg-paper text-ink">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <section className="bg-paper pt-[158px] sm:pt-[176px]">
         <div className="site-container max-w-5xl pb-12">
@@ -94,11 +109,28 @@ export default async function BlogPostPage({
 
       <section className="bg-paper py-14 sm:py-[4.5rem] lg:py-24">
         <div className="site-container max-w-3xl">
-          <div className="space-y-6 text-[1.02rem] leading-8 text-ink-soft">
-            {post.body.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </div>
+          <BlogContent body={post.body} />
+
+          {post.faqs?.length ? (
+            <div className="mt-14 border-t border-line pt-10">
+              <h2 className="text-[1.9rem] leading-tight text-ink">Frequently asked questions</h2>
+              <div className="mt-6">
+                {post.faqs.map((faq) => (
+                  <details key={faq.q} className="group border-b border-line">
+                    <summary className="flex cursor-pointer list-none items-start justify-between gap-4 py-5 [&::-webkit-details-marker]:hidden">
+                      <h3 className="text-[1.05rem] font-semibold text-ink transition-colors group-hover:text-brand-dark">
+                        {faq.q}
+                      </h3>
+                      <span className="mt-1 text-xl leading-none text-brand-dark transition-transform group-open:rotate-45">
+                        +
+                      </span>
+                    </summary>
+                    <p className="max-w-2xl pb-6 text-[1rem] leading-relaxed text-ink-soft">{faq.a}</p>
+                  </details>
+                ))}
+              </div>
+            </div>
+          ) : null}
 
           <div className="mt-10 border-t border-line pt-6">
             <Link href="/blog" className="text-[12px] font-bold uppercase tracking-[0.14em] text-brand-dark hover:text-brand">

@@ -1,3 +1,18 @@
+/**
+ * A block of article body content. Legacy posts use plain strings (rendered as
+ * paragraphs); richer posts use typed blocks. Paragraph and list text may contain
+ * inline links written as `[label](/path)` — internal paths become <Link>, full
+ * URLs open in a new tab.
+ */
+export type ContentBlock =
+  | { type: "h2" | "h3" | "p"; text: string }
+  | { type: "list"; ordered?: boolean; items: string[] }
+  | { type: "table"; headers: string[]; rows: string[][] };
+
+export type BlogBody = (string | ContentBlock)[];
+
+export type BlogFaq = { q: string; a: string };
+
 export type BlogPost = {
   slug: string;
   tag: string;
@@ -10,7 +25,9 @@ export type BlogPost = {
   description: string;
   seoTitle: string;
   seoDescription: string;
-  body: string[];
+  body: BlogBody;
+  /** Optional Q&A block — rendered on the page and emitted as FAQPage schema. */
+  faqs?: BlogFaq[];
 };
 
 const MONTHS = [
@@ -48,6 +65,172 @@ export const featuredPost: BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   featuredPost,
+  {
+    slug: "kitchen-remodel-cost-olympia",
+    tag: "Cost Guide",
+    title: "How Much Does a Kitchen Remodel Cost in Olympia, WA?",
+    excerpt:
+      "Most kitchen remodels in Olympia run $30,000 to $80,000, with layout changes starting around $70,000. Here is what drives the number, what it buys, and how the 10-day path compares.",
+    img: "/images/welcome-kitchen-subway-tile.jpg",
+    date: "2026-08-31",
+    readTime: "8 min read",
+    description:
+      "A 2026 breakdown of kitchen remodel pricing in Olympia and the South Sound — real ranges by scope, the factors that move the cost, permit rules, and how a fixed 10 business day remodel works.",
+    seoTitle: "Kitchen Remodel Cost in Olympia, WA (2026 Guide)",
+    seoDescription:
+      "What a kitchen remodel costs in Olympia and the South Sound in 2026 — real price ranges by scope, what drives the number, and how the 10-day path works.",
+    body: [
+      {
+        type: "p",
+        text: "Most kitchen remodels in Olympia and the wider South Sound run between $30,000 and $80,000, with layout-change and structural projects starting around $70,000. The final number depends on three things: how much of the room you change, the cabinet and countertop lines you choose, and whether walls, plumbing, or electrical have to move.",
+      },
+      {
+        type: "p",
+        text: "This guide breaks down what that money actually buys, what pushes a project up or down within the range, and how a planned 10 business day remodel compares to an open-ended construction timeline.",
+      },
+      { type: "h2", text: "Kitchen remodel price ranges in the South Sound" },
+      {
+        type: "p",
+        text: "Here is how projects tend to fall by scope. These are 10 Day Kitchens package ranges for homes in Thurston and Pierce Counties, not national averages.",
+      },
+      {
+        type: "table",
+        headers: ["Project type", "Typical range", "What's included"],
+        rows: [
+          [
+            "Refresh / same-layout",
+            "$30,000 – $45,000",
+            "New cabinets in the existing footprint, new countertops, sink and faucet, flooring, lighting, paint. No walls or plumbing moved.",
+          ],
+          [
+            "Full same-layout remodel",
+            "$45,000 – $80,000",
+            "Everything above with higher-end cabinet lines, quartz or natural stone, tile backsplash, upgraded appliances, and more cabinetry.",
+          ],
+          [
+            "Executive remodel (layout changes)",
+            "$70,000+",
+            "Removing or moving walls, relocating plumbing or gas, adding electrical circuits, structural work, custom cabinetry, and a custom timeline.",
+          ],
+        ],
+      },
+      {
+        type: "p",
+        text: "Every 10 Day Kitchens project is quoted with a binding price before any work starts — the number in the contract is the number you pay. If your kitchen keeps its existing layout, it may qualify for [the 10 Day Kitchens Program](/10-day-kitchen-program).",
+      },
+      { type: "h2", text: "What drives the cost of a kitchen remodel" },
+      { type: "h3", text: "1. How much you change the layout" },
+      {
+        type: "p",
+        text: "This is the single biggest cost lever. Keeping the sink, range, and refrigerator where they are avoids plumbing, gas, and electrical relocation, keeps you out of most permit requirements, and is what makes a fast, fixed-price remodel possible.",
+      },
+      {
+        type: "p",
+        text: "Moving those elements — opening a wall to the dining room, adding an island with a sink, relocating the range — turns the project into an Executive Remodel with a custom scope and timeline.",
+      },
+      { type: "h3", text: "2. Cabinetry" },
+      {
+        type: "p",
+        text: "Cabinets are usually the largest single line in a kitchen budget. 10 Day Kitchens carries four cabinet lines at different price points, all with plywood box construction, soft-close hinges and slides, and dovetail drawer boxes as standard. Where you land depends on door style, finish, and how much cabinetry the kitchen holds.",
+      },
+      { type: "h3", text: "3. Countertops" },
+      {
+        type: "p",
+        text: "Quartz is the most common choice — consistent, low-maintenance, and priced predictably. Natural stone such as granite or marble costs more and varies slab to slab. Countertop cost scales with square footage and edge detail. Our guide on [quartz vs. granite](/blog/quartz-vs-granite) walks through the trade-offs.",
+      },
+      { type: "h3", text: "4. Appliances, flooring, and finishes" },
+      {
+        type: "p",
+        text: "Appliance packages, flooring type, tile backsplash, lighting, and hardware each move the number by a few thousand dollars. These are also the easiest places to adjust a budget up or down during selections.",
+      },
+      { type: "h3", text: "5. The condition of what is behind the walls" },
+      {
+        type: "p",
+        text: "Older Olympia homes — especially in South Capitol and other pre-war neighborhoods — sometimes need electrical brought to code or hidden plumbing addressed once the cabinets come off. A good contractor flags this risk during the first visit rather than after demolition.",
+      },
+      { type: "h2", text: "Do you need a permit for a kitchen remodel in Olympia?" },
+      {
+        type: "p",
+        text: "Standard cabinet and countertop replacements usually do not require a permit. You generally need one when the project involves:",
+      },
+      {
+        type: "list",
+        items: [
+          "Moving or adding plumbing",
+          "New or relocated electrical circuits",
+          "Removing or altering walls or other structural elements",
+          "Gas line changes",
+        ],
+      },
+      {
+        type: "p",
+        text: "For homes inside city limits, permits go through the City of Olympia; properties outside the city are typically reviewed by Thurston County. 10 Day Kitchens handles the permit application and inspections when a project needs them.",
+      },
+      { type: "h2", text: "Why a 10-day timeline changes the cost conversation" },
+      {
+        type: "p",
+        text: "A traditional kitchen remodel often runs 6 to 12 weeks, and much of that time is waiting — for materials, for the next trade, for a decision that was not made yet. Every week the kitchen is out of use has a real cost to the household.",
+      },
+      {
+        type: "p",
+        text: "The 10 Day Kitchens Program front-loads all of that. Cabinets, counters, fixtures, flooring, and finishes are selected and ordered before the contract is signed, and every material is staged before day one. The result is a fixed 10 business day install window for qualified same-layout kitchens, and far less drift in the schedule or the budget. Our [day-by-day walkthrough](/blog/what-to-expect-10-day-remodel) covers what each day looks like.",
+      },
+      { type: "p", text: "This path fits when:" },
+      {
+        type: "list",
+        items: [
+          "The kitchen keeps its existing footprint and layout",
+          "Plumbing, gas, appliances, and electrical locations stay in place",
+          "No load-bearing walls or structural changes are involved",
+          "Selections are finalized before the contract",
+        ],
+      },
+      {
+        type: "p",
+        text: "Projects that need layout changes get an Executive Remodel scope with a custom timeline instead.",
+      },
+      { type: "h2", text: "How to get an accurate number for your kitchen" },
+      {
+        type: "p",
+        text: "Online calculators and national averages only get you so far — Olympia pricing, your home's age, and your selections all matter. The fastest way to a real number:",
+      },
+      {
+        type: "list",
+        ordered: true,
+        items: [
+          "Book a free in-home consultation. We look at the space, talk through what you want to change, and identify anything unusual behind the walls.",
+          "Make your selections. Cabinets, counters, fixtures, and finishes at the Lacey showroom — most homeowners finish in one visit.",
+          "Get a binding quote. One price, in writing, before any work begins.",
+        ],
+      },
+      {
+        type: "p",
+        text: "See more about [kitchen remodeling in Olympia](/kitchen-remodel/olympia), or [schedule a free consultation](/contact) to price your project.",
+      },
+    ],
+    faqs: [
+      {
+        q: "What is the average kitchen remodel cost in Olympia?",
+        a: "Most Olympia kitchen remodels fall between $30,000 and $80,000. Same-layout projects that keep the plumbing and appliances in place start around $30,000 to $45,000; remodels with layout or structural changes start around $70,000.",
+      },
+      {
+        q: "How long does a kitchen remodel take in Olympia?",
+        a: "Qualified same-layout kitchens are completed in 10 business days. That timeline applies when the footprint stays put and all selections are finalized before installation. Projects with structural work receive a custom timeline.",
+      },
+      {
+        q: "What is included in the price?",
+        a: "Cabinetry, countertops, flooring, sink and fixtures, lighting, and installation, plus permit handling when required. The quote is binding — there are no hidden costs added later.",
+      },
+      {
+        q: "Can I remodel my kitchen for under $30,000 in Olympia?",
+        a: "Below roughly $30,000 you are generally looking at a partial update — refacing cabinets, swapping countertops, or a cosmetic refresh rather than a full remodel with new cabinetry.",
+      },
+      {
+        q: "Do you serve areas outside Olympia?",
+        a: "Yes. 10 Day Kitchens works throughout Thurston and Pierce Counties, including Lacey, Tumwater, Tacoma, Lakewood, and the surrounding South Sound, from the showroom in Lacey.",
+      },
+    ],
+  },
   {
     slug: "choosing-cabinet-colors",
     tag: "Design Tips",
