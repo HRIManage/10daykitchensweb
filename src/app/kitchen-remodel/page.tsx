@@ -176,7 +176,7 @@ export default function KitchenRemodelPage() {
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <PrimaryButton href="/contact">Schedule free consultation</PrimaryButton>
-              <OutlineButton href="/10businessdaykitchenprogram">Compare 10 day program</OutlineButton>
+              <OutlineButton href="/10-day-kitchen-program">Compare 10 day program</OutlineButton>
             </div>
           </div>
           <div className="relative">
@@ -329,7 +329,7 @@ export default function KitchenRemodelPage() {
               structural components moved, our 10 Day Kitchens Program may be the faster, more affordable path.
             </p>
             <div className="mt-8">
-              <PrimaryButton href="/10businessdaykitchenprogram">Explore the program</PrimaryButton>
+              <PrimaryButton href="/10-day-kitchen-program">Explore the program</PrimaryButton>
             </div>
           </div>
         </div>

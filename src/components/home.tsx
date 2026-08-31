@@ -49,7 +49,7 @@ const categories = [
     title: "10 Day Kitchen Program",
     note: "Our signature pre-planned kitchen remodel, installed in just 10 business days.",
     image: "/images/welcome-kitchen-subway-tile.jpg",
-    href: "/10businessdaykitchenprogram",
+    href: "/10-day-kitchen-program",
   },
   {
     title: "Bathroom Remodeling",

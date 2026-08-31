@@ -53,7 +53,14 @@ export function MaskLine({
   );
 }
 
-/** Animated integer that counts up from 0 once scrolled into view. */
+/**
+ * Animated integer that counts up once scrolled into view.
+ *
+ * The server render and first client paint show the real `value` so crawlers,
+ * AI answer engines, and no-JS visitors never read "0" (e.g. "0+ years
+ * experience"). The count-from-zero animation only runs after hydration, once
+ * the element scrolls into view.
+ */
 export function CountUp({
   value,
   suffix = "",
@@ -64,9 +71,13 @@ export function CountUp({
   duration?: number;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
+  // `useInView` is false on the server and on the first client render, so the
+  // real `value` is what gets rendered into the HTML; the count-from-zero
+  // animation only starts once the IntersectionObserver reports the element in
+  // view (client-only, post-hydration).
   const inView = useInView(ref, { once: true, margin: "0px 0px -10% 0px" });
   const reducedMotion = useReducedMotion();
-  const [display, setDisplay] = useState(reducedMotion ? value : 0);
+  const [display, setDisplay] = useState(value);
 
   useEffect(() => {
     if (!inView || reducedMotion) return;

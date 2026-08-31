@@ -7,6 +7,34 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // --- Canonical URL cleanup (remove cloning artifacts) ---
+      {
+        source: "/contact-1",
+        destination: "/contact",
+        permanent: true,
+      },
+      {
+        source: "/faq-1",
+        destination: "/faq",
+        permanent: true,
+      },
+      {
+        source: "/10businessdaykitchenprogram",
+        destination: "/10-day-kitchen-program",
+        permanent: true,
+      },
+      {
+        source: "/resources/blog",
+        destination: "/blog",
+        permanent: true,
+      },
+      {
+        source: "/resources/blog/:slug",
+        destination: "/blog/:slug",
+        permanent: true,
+      },
+
+      // --- Legacy URLs from the previous site ---
       {
         source: "/washington/thurston-county/lacey",
         destination: "/kitchen-remodel/lacey",
@@ -23,18 +51,13 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: "/contact",
-        destination: "/contact-1",
-        permanent: true,
-      },
-      {
         source: "/services/cabinet-wholesale",
         destination: "/resources/catalog",
         permanent: true,
       },
       {
         source: "/home-renovation/12-kitchen-remodel-design-ideas",
-        destination: "/resources/blog",
+        destination: "/blog",
         permanent: true,
       },
       {
@@ -59,7 +82,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/home-renovation/winter-kitchen-remodel",
-        destination: "/resources/blog",
+        destination: "/blog",
         permanent: true,
       },
       {
@@ -69,7 +92,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/home-renovation",
-        destination: "/resources/blog",
+        destination: "/blog",
         permanent: true,
       },
       {
@@ -79,7 +102,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/services/home-office-remodel",
-        destination: "/contact-1",
+        destination: "/contact",
         permanent: true,
       },
       {
@@ -95,11 +118,6 @@ const nextConfig: NextConfig = {
       {
         source: "/washington/pierce-county/lakewood",
         destination: "/kitchen-remodel/lakewood",
-        permanent: true,
-      },
-      {
-        source: "/sitemap",
-        destination: "/",
         permanent: true,
       },
     ];

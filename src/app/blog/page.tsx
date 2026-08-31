@@ -8,7 +8,7 @@ export const metadata = {
   description:
     "Expert remodeling insights from the 10 Day Kitchens team. Kitchen design tips, financing guides, and real project stories to help you plan your perfect remodel.",
   alternates: {
-    canonical: "https://10daykitchens.com/resources/blog",
+    canonical: "https://10daykitchens.com/blog",
   },
 };
 
@@ -58,7 +58,7 @@ export default function BlogPage() {
               </h2>
               <p className="mb-6 text-base leading-relaxed text-[#777777]">{featuredPost.excerpt}</p>
               <Link
-                href={`/resources/blog/${featuredPost.slug}`}
+                href={`/blog/${featuredPost.slug}`}
                 className="inline-block self-start rounded-full bg-[#111111] px-6 py-3 text-xs font-semibold uppercase tracking-wider text-white transition-all hover:bg-[#5DBB46]"
               >
                 Read the Story
@@ -110,7 +110,7 @@ export default function BlogPage() {
                       {post.date} | {post.readTime}
                     </p>
                     <Link
-                      href={`/resources/blog/${post.slug}`}
+                      href={`/blog/${post.slug}`}
                       className="text-xs font-semibold uppercase tracking-wider text-[#5DBB46] hover:underline"
                     >
                       Read More

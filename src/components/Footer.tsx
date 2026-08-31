@@ -24,7 +24,7 @@ function InstagramIcon() {
 
 const serviceLinks = [
   { label: "Kitchen Remodel", href: "/kitchen-remodel" },
-  { label: "10 Day Kitchens Program", href: "/10businessdaykitchenprogram" },
+  { label: "10 Day Kitchens Program", href: "/10-day-kitchen-program" },
   { label: "Bathroom Remodel", href: "/bathroom-remodel" },
   { label: "Fast Bath", href: "/fast-bath" },
   { label: "Our Projects", href: "/portfolio" },
@@ -33,10 +33,10 @@ const serviceLinks = [
 const exploreLinks = [
   { label: "About", href: "/about" },
   { label: "Collections", href: "/resources/catalog" },
-  { label: "Blog / Advice", href: "/resources/blog" },
+  { label: "Blog / Advice", href: "/blog" },
   { label: "Financing", href: "/financing" },
-  { label: "FAQs", href: "/faq-1" },
-  { label: "Contact Us", href: "/contact-1" },
+  { label: "FAQs", href: "/faq" },
+  { label: "Contact Us", href: "/contact" },
 ] as const;
 
 export default function Footer() {
@@ -62,7 +62,7 @@ export default function Footer() {
 
             <div className="mt-7 flex flex-wrap gap-3">
               <Link
-                href="/contact-1"
+                href="/contact"
                 className="inline-flex min-h-[50px] items-center justify-center gap-3 bg-brand px-6 text-[12px] font-bold uppercase tracking-[0.14em] text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-dark hover:shadow-[0_14px_30px_rgba(93,187,70,0.24)]"
               >
                 Contact Us
@@ -168,7 +168,7 @@ export default function Footer() {
               {serviceCities.map((city) => (
                 <Link
                   key={city.slug}
-                  href={city.published ? `/kitchen-remodel/${city.slug}` : "/contact-1"}
+                  href={city.published ? `/kitchen-remodel/${city.slug}` : "/contact"}
                   className="text-[14.5px] font-semibold text-ink-soft transition hover:text-brand-dark"
                 >
                   {city.name}
