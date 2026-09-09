@@ -15,3 +15,16 @@ export const PHONE_CONSULT_URL = "https://10daykitchens.hbportal.co/schedule/698
 
 /** Free 45–60 minute in-home consultation. */
 export const HOME_CONSULT_URL = "https://10daykitchens.hbportal.co/schedule/698cd72f0b70d6003aba15e6";
+
+/**
+ * Appends contact fields to the in-home consultation scheduler URL as best-effort
+ * prefill. HoneyBook returns 200 for unknown params, so extra keys are harmless.
+ */
+export function buildConsultUrl(fields: { name?: string; email?: string; phone?: string }): string {
+  const params = new URLSearchParams();
+  if (fields.name?.trim()) params.set("full_name", fields.name.trim());
+  if (fields.email?.trim()) params.set("email", fields.email.trim());
+  if (fields.phone?.trim()) params.set("phone", fields.phone.trim());
+  const query = params.toString();
+  return query ? `${HOME_CONSULT_URL}?${query}` : HOME_CONSULT_URL;
+}
