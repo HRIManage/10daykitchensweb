@@ -24,9 +24,8 @@ import FinancingStrip from "@/components/landing/FinancingStrip";
 import LeadForm from "@/components/landing/LeadForm";
 import SchedulerEmbed from "@/components/landing/SchedulerEmbed";
 import StickyCtaBar from "@/components/landing/StickyCtaBar";
-import TrustBar from "@/components/landing/TrustBar";
 import { getServiceAreaCities, type City } from "@/lib/cities";
-import { site, testimonials } from "@/lib/site";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Fast Bath: A New Bathroom in as Fast as 3 Days | Lacey, WA",
@@ -40,21 +39,28 @@ export const metadata: Metadata = {
     description:
       "Tub-to-shower conversions, shower replacements, and vanity updates installed in as fast as 3 days. Free in-home consultation.",
     url: "https://10daykitchens.com/fast-bath",
-    images: [{ url: "/images/fast-bath-before-after-screenshot.png", alt: "Fast Bath before and after" }],
+    images: [{ url: "/images/fast-bath-hero-ba.jpg", alt: "Fast Bath before and after" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Fast Bath: A New Bathroom in as Fast as 3 Days",
     description: "Tub-to-shower conversions and shower replacements installed in as fast as 3 days.",
-    images: ["/images/fast-bath-before-after-screenshot.png"],
+    images: ["/images/fast-bath-hero-ba.jpg"],
   },
 };
 
 const heroTrust = [
   "Family-owned since 2004",
   "Licensed & bonded",
-  "5-year warranty",
+  "Premium materials",
   "Free in-home consultation",
+];
+
+const heroStats = [
+  { value: "3 days", label: "Typical install" },
+  { value: "5 years", label: "Workmanship warranty" },
+  { value: "35+ yrs", label: "In the trade" },
+  { value: "$0", label: "For your quote" },
 ];
 
 const serviceCards = [
@@ -192,34 +198,36 @@ export default function FastBathPage() {
       <section className="bg-paper pt-[150px] pb-14 sm:pt-[172px]">
         <div className={`${CONTAINER} grid gap-12 lg:grid-cols-[1fr_0.92fr] lg:items-start`}>
           <div className="max-w-2xl">
-            <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-brand-dark">
+            <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-brand-dark">
               Fast Bath &middot; Lacey, WA
             </p>
-            <h1 className="mt-4 max-w-2xl text-[clamp(2.5rem,4.6vw,4.6rem)] leading-[1.03] text-ink">
-              A new bathroom in as fast as 3 days.
+            <h1 className="mt-4 text-[clamp(2.5rem,4.7vw,4.7rem)] font-medium leading-[1.02] tracking-[-0.02em] text-ink">
+              A new bathroom in{" "}
+              <span className="whitespace-nowrap italic text-brand-dark">as few as 3 days.</span>
             </h1>
             <p className="mt-6 max-w-xl text-[1.05rem] leading-8 text-ink-soft">
-              Fast Bath gives you professional installation and premium materials with far less
-              disruption than a full remodel — tub-to-shower conversions, shower replacements,
-              wall panels, and vanities.
+              Professional installation and premium materials with far less disruption than a full
+              remodel &mdash; tub-to-shower conversions, shower replacements, wall panels, and
+              vanities.
             </p>
-            <div className="mt-7 flex flex-wrap gap-x-4 gap-y-2">
+            <ul className="mt-7 flex flex-wrap gap-2.5">
               {heroTrust.map((item) => (
-                <span
+                <li
                   key={item}
-                  className="text-[12px] font-semibold uppercase tracking-[0.1em] text-ink-soft"
+                  className="inline-flex items-center gap-1.5 border border-line bg-white px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.1em] text-ink"
                 >
+                  <Check className="size-3.5 text-brand-dark" aria-hidden />
                   {item}
-                </span>
+                </li>
               ))}
-            </div>
-            <div className="relative mt-9 hidden aspect-[1.3/1] w-full max-w-[520px] overflow-hidden border border-line bg-white lg:block">
+            </ul>
+            <div className="relative mt-9 hidden aspect-[1.28/1] w-full overflow-hidden border border-line bg-white shadow-[0_28px_80px_rgba(43,39,35,0.14)] lg:block">
               <Image
-                src="/images/fast-bath-before-after-screenshot.png"
-                alt="Fast Bath tub-to-shower conversion, before and after"
+                src="/images/fast-bath-hero-ba.jpg"
+                alt="Real Fast Bath tub-to-shower conversion — dated tub and shower curtain replaced with a walk-in glass shower"
                 fill
                 priority
-                sizes="520px"
+                sizes="(min-width: 1024px) 52vw, 100vw"
                 className="object-cover"
               />
             </div>
@@ -235,10 +243,10 @@ export default function FastBathPage() {
                 Get an instant estimate
               </Link>
             </p>
-            <div className="relative mt-6 aspect-[1.4/1] w-full overflow-hidden border border-line bg-white lg:hidden">
+            <div className="relative mt-6 aspect-[1.3/1] w-full overflow-hidden border border-line bg-white shadow-[0_20px_50px_rgba(43,39,35,0.12)] lg:hidden">
               <Image
-                src="/images/fast-bath-before-after-screenshot.png"
-                alt="Fast Bath tub-to-shower conversion, before and after"
+                src="/images/fast-bath-hero-ba.jpg"
+                alt="Real Fast Bath tub-to-shower conversion, before and after"
                 fill
                 priority
                 sizes="100vw"
@@ -249,102 +257,48 @@ export default function FastBathPage() {
         </div>
       </section>
 
-      <TrustBar />
-
-      {/* Homeowner quotes */}
-      <section className={`${SECTION} bg-white`}>
-        <div className={`${CONTAINER} grid gap-10 lg:grid-cols-[0.7fr_1fr] lg:items-center`}>
-          <div>
-            <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-brand-dark">
-              What homeowners say
-            </p>
-            <p className="mt-4 font-display text-[clamp(1.85rem,3.1vw,2.8rem)] font-medium leading-tight text-ink">
-              Family-owned and working in the South Sound since 2004.
-            </p>
-          </div>
-          <div className="grid gap-5 sm:grid-cols-2">
-            {testimonials.map((review) => (
-              <blockquote key={review.name} className="border border-line bg-paper p-6">
-                <p className="text-[0.98rem] leading-7 text-ink-soft">&ldquo;{review.quote}&rdquo;</p>
-                <footer className="mt-4 text-[12px] font-bold uppercase tracking-[0.12em] text-ink">
-                  {review.name} &middot; {review.location}
-                </footer>
-              </blockquote>
-            ))}
-          </div>
+      {/* Numeric stat band */}
+      <section className="bg-forest text-white">
+        <div className={`${CONTAINER} grid grid-cols-2 divide-x divide-white/12 border-y border-white/12 md:grid-cols-4`}>
+          {heroStats.map((stat) => (
+            <div key={stat.label} className="px-4 py-8 text-center md:py-10">
+              <p className="font-display text-[clamp(2rem,4vw,3rem)] font-semibold leading-none text-brand-light">
+                {stat.value}
+              </p>
+              <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.14em] text-white/70">
+                {stat.label}
+              </p>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* What Fast Bath covers */}
+      {/* Before / after — the proof, up front */}
       <section className={`${SECTION} bg-paper`}>
-        <div className={CONTAINER}>
-          <div className="max-w-3xl">
-            <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-brand-dark">
-              What Fast Bath covers
-            </p>
-            <h2 className="mt-3 font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em]">
-              Focused upgrades with a finished-room feel.
-            </h2>
-          </div>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {serviceCards.map((service) => (
-              <div key={service.title} className="border border-line bg-white p-6">
-                <service.icon className="mb-7 size-6 text-brand-dark" aria-hidden />
-                <h3 className="text-[1.35rem] leading-tight">{service.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-ink-soft">{service.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 3-step process */}
-      <section className={`${SECTION} bg-white`}>
-        <div className={CONTAINER}>
-          <div className="max-w-3xl">
-            <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-brand-dark">How it works</p>
-            <h2 className="mt-3 font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em]">
-              Three steps, no drift.
-            </h2>
-          </div>
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {steps.map((step, i) => (
-              <div key={step.title} className="border-t-2 border-ink pt-6">
-                <div className="flex items-center gap-3">
-                  <span className="font-display text-3xl font-semibold text-brand-dark">{i + 1}</span>
-                  <step.icon className="size-5 text-brand-dark" aria-hidden />
-                </div>
-                <h3 className="mt-4 text-[1.3rem] font-semibold leading-snug">{step.title}</h3>
-                <p className="mt-3 text-[0.96rem] leading-7 text-ink-soft">{step.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Before / after */}
-      <section className={`${SECTION} bg-paper`}>
-        <div className={`${CONTAINER} grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center`}>
-          <FastBathBeforeAfterSlider />
-          <div className="bg-sand p-7 sm:p-10">
-            <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-brand-dark">
+        <div className={`${CONTAINER} grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center`}>
+          <div className="order-2 lg:order-1">
+            <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-brand-dark">
               Before &amp; after
             </p>
-            <h2 className="mt-3 font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em]">
-              A big visual change without rebuilding the whole room.
+            <h2 className="mt-3 font-display text-[clamp(1.9rem,3.3vw,3.2rem)] font-medium leading-[1.06] tracking-[-0.02em]">
+              Same footprint. A completely different room.
             </h2>
-            <p className="mt-5 text-base leading-8 text-ink-soft">
-              Real Fast Bath projects: tub-to-shower conversions, shower replacements, new wall
-              panels, updated vanities, fixtures, and accessories.
+            <p className="mt-5 max-w-md text-base leading-8 text-ink-soft">
+              This one was a tired tub with a shower curtain and a dark vanity. Ten days later:
+              a walk-in glass shower, white cabinetry, and a hex-tile floor &mdash; no walls moved,
+              no plumbing relocated. Drag the handle to see it.
             </p>
-            <div className="mt-8">
-              <Link
-                href="/portfolio"
-                className="inline-flex min-h-[52px] items-center gap-2 bg-brand-dark px-7 text-[13px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-ink"
-              >
-                View more projects
-                <ArrowRight className="size-4" aria-hidden />
-              </Link>
+            <Link
+              href="/portfolio"
+              className="mt-8 inline-flex min-h-[52px] items-center gap-2 bg-brand-dark px-7 text-[13px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-ink"
+            >
+              See more projects
+              <ArrowRight className="size-4" aria-hidden />
+            </Link>
+          </div>
+          <div className="order-1 lg:order-2">
+            <div className="mx-auto w-full max-w-[420px] lg:ml-auto lg:mr-0">
+              <FastBathBeforeAfterSlider />
             </div>
           </div>
         </div>
@@ -355,6 +309,57 @@ export default function FastBathPage() {
         headline="Book your free in-home consultation."
         buttonLabel="Pick a time"
       />
+
+      {/* What Fast Bath covers */}
+      <section className={`${SECTION} bg-sand`}>
+        <div className={CONTAINER}>
+          <div className="max-w-3xl">
+            <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-brand-dark">
+              What Fast Bath covers
+            </p>
+            <h2 className="mt-3 font-display text-[clamp(1.9rem,3.3vw,3.2rem)] font-medium leading-[1.06] tracking-[-0.02em]">
+              Focused upgrades with a finished-room feel.
+            </h2>
+          </div>
+          <div className="mt-10 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+            {serviceCards.map((service) => (
+              <div key={service.title} className="bg-white p-6">
+                <service.icon className="mb-6 size-6 text-brand-dark" aria-hidden />
+                <h3 className="text-[1.15rem] font-semibold leading-tight text-ink">{service.title}</h3>
+                <p className="mt-2.5 text-[0.9rem] leading-7 text-ink-soft">{service.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 3-step process — dark for contrast */}
+      <section className="bg-forest py-16 text-white sm:py-20 lg:py-24">
+        <div className={CONTAINER}>
+          <div className="max-w-3xl">
+            <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-brand-light">
+              How it works
+            </p>
+            <h2 className="mt-3 font-display text-[clamp(1.9rem,3.3vw,3.2rem)] font-medium leading-[1.06] tracking-[-0.02em]">
+              Three steps, no drift.
+            </h2>
+          </div>
+          <div className="mt-12 grid gap-8 md:grid-cols-3">
+            {steps.map((step, i) => (
+              <div key={step.title} className="border-t-2 border-brand-light/40 pt-6">
+                <div className="flex items-baseline gap-3">
+                  <span className="font-display text-[3.2rem] font-semibold leading-none text-brand-light">
+                    {i + 1}
+                  </span>
+                  <step.icon className="size-5 text-brand-light" aria-hidden />
+                </div>
+                <h3 className="mt-4 text-[1.2rem] font-semibold leading-snug text-white">{step.title}</h3>
+                <p className="mt-3 text-[0.95rem] leading-7 text-white/70">{step.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Fast Bath vs full remodel */}
       <section className={`${SECTION} bg-white`}>
