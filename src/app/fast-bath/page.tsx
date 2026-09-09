@@ -13,7 +13,6 @@ import {
   PanelsTopLeft,
   ShowerHead,
   Sparkles,
-  Star,
   Wrench,
 } from "lucide-react";
 import { CONTAINER, SECTION } from "@/components/layout";
@@ -51,16 +50,11 @@ export const metadata: Metadata = {
   },
 };
 
-// Placeholder trust numbers — replace with the Google Business Profile rating/count
-// once the profile is live and has reviews.
-const REVIEW_RATING = "4.9";
-const REVIEW_COUNT = "40+";
-
 const heroTrust = [
-  `★ ${REVIEW_RATING} (${REVIEW_COUNT} reviews)`,
   "Family-owned since 2004",
   "Licensed & bonded",
   "5-year warranty",
+  "Free in-home consultation",
 ];
 
 const serviceCards = [
@@ -248,19 +242,14 @@ export default function FastBathPage() {
 
       <TrustBar />
 
-      {/* Rating + quotes */}
+      {/* Homeowner quotes */}
       <section className={`${SECTION} bg-white`}>
         <div className={`${CONTAINER} grid gap-10 lg:grid-cols-[0.7fr_1fr] lg:items-center`}>
           <div>
-            <div className="flex items-center gap-2 text-brand-dark">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} className="size-5 fill-current" aria-hidden />
-              ))}
-            </div>
-            <p className="mt-4 font-display text-[clamp(2rem,3.4vw,3rem)] font-medium leading-tight text-ink">
-              {REVIEW_RATING} from {REVIEW_COUNT} homeowner reviews
+            <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-brand-dark">
+              What homeowners say
             </p>
-            <p className="mt-3 text-[1rem] leading-7 text-ink-soft">
+            <p className="mt-4 font-display text-[clamp(1.85rem,3.1vw,2.8rem)] font-medium leading-tight text-ink">
               Family-owned and working in the South Sound since 2004.
             </p>
           </div>
