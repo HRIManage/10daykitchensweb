@@ -116,12 +116,18 @@ export default function BathroomRemodelPage() {
                 </span>
               ))}
             </FadeIn>
-            <FadeIn delay={0.15} className="mt-9">
+            <FadeIn delay={0.15} className="mt-9 flex flex-wrap items-center gap-4">
               <Link
                 href="/contact"
                 className="btn btn-solid inline-flex h-12 items-center transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_34px_rgba(93,187,70,0.32)]"
               >
                 Schedule Free Consultation
+              </Link>
+              <Link
+                href="/bathroom-estimate"
+                className="inline-flex h-12 items-center border border-line bg-white px-6 text-[12px] font-bold uppercase tracking-[0.14em] text-ink transition hover:border-brand-dark hover:text-brand-dark"
+              >
+                Get an instant estimate
               </Link>
             </FadeIn>
           </div>
