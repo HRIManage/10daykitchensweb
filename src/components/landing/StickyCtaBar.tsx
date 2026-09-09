@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { CalendarCheck, Phone } from "lucide-react";
 import { site } from "@/lib/site";
 
@@ -10,17 +11,31 @@ declare global {
   }
 }
 
+/**
+ * Mobile-only fixed call/book bar. Rendered through a portal to `document.body`
+ * because the app's per-page `template.tsx` wraps content in a GSAP-transformed
+ * div, which would otherwise become the containing block for `position: fixed`.
+ */
 export default function StickyCtaBar() {
+  const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    const raf = requestAnimationFrame(() => {
+      setMounted(true);
+      setVisible(window.scrollY > 600);
+    });
     const onScroll = () => setVisible(window.scrollY > 600);
-    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <div
       className={`fixed inset-x-0 bottom-0 z-50 grid grid-cols-2 border-t border-line bg-white transition-transform motion-reduce:transition-none lg:hidden ${
         visible ? "translate-y-0" : "translate-y-full"
@@ -41,6 +56,7 @@ export default function StickyCtaBar() {
         <CalendarCheck className="size-4" aria-hidden />
         Book free visit
       </a>
-    </div>
+    </div>,
+    document.body,
   );
 }
