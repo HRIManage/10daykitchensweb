@@ -5,12 +5,15 @@ import {
   ArrowRight,
   Bath,
   BadgeCheck,
+  Calculator,
   Check,
+  Clock3,
   ClipboardList,
   Home,
   MapPin,
   PackageCheck,
   PanelsTopLeft,
+  Phone,
   ShowerHead,
   Sparkles,
   Wrench,
@@ -18,11 +21,8 @@ import {
 import { CONTAINER, SECTION } from "@/components/layout";
 import { CustomerReviews } from "@/components/home";
 import FastBathBeforeAfterSlider from "@/components/FastBathBeforeAfterSlider";
-import PageCta from "@/components/PageCta";
-import CtaBand from "@/components/landing/CtaBand";
 import FinancingStrip from "@/components/landing/FinancingStrip";
 import LeadForm from "@/components/landing/LeadForm";
-import SchedulerEmbed from "@/components/landing/SchedulerEmbed";
 import StickyCtaBar from "@/components/landing/StickyCtaBar";
 import { getServiceAreaCities, type City } from "@/lib/cities";
 import { site } from "@/lib/site";
@@ -61,6 +61,17 @@ const heroStats = [
   { value: "5 years", label: "Workmanship warranty" },
   { value: "35+ yrs", label: "In the trade" },
   { value: "$0", label: "For your quote" },
+];
+
+const sectionLinks = [
+  { label: "Before & after", href: "#before-after" },
+  { label: "What's included", href: "#services" },
+  { label: "How it works", href: "#process" },
+  { label: "Reviews", href: "#reviews" },
+  { label: "Full remodel?", href: "#compare" },
+  { label: "Financing", href: "#financing" },
+  { label: "FAQs", href: "#faqs" },
+  { label: "Book a visit", href: "#book" },
 ];
 
 const serviceCards = [
@@ -257,15 +268,59 @@ export default function FastBathPage() {
         </div>
       </section>
 
-      {/* Numeric stat band */}
-      <section className="bg-forest text-white">
-        <div className={`${CONTAINER} grid grid-cols-2 divide-x divide-white/12 border-y border-white/12 md:grid-cols-4`}>
+      {/* Estimator CTA + stat band */}
+      <section className="relative overflow-hidden bg-forest text-white">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-24 -top-24 size-[380px] rounded-full bg-brand/10 blur-3xl"
+        />
+        <div className={`${CONTAINER} relative py-14 sm:py-16`}>
+          <div className="grid items-center gap-10 lg:grid-cols-[1.15fr_0.85fr]">
+            <div>
+              <p className="inline-flex items-center gap-2 border border-brand-light/40 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-brand-light">
+                <Calculator className="size-3.5" aria-hidden />
+                Free instant estimate
+              </p>
+              <h2 className="mt-5 max-w-xl font-display text-[clamp(2rem,3.6vw,3.4rem)] font-medium leading-[1.05] tracking-[-0.02em]">
+                What will <em className="not-italic text-brand-light">your</em> bathroom cost?
+              </h2>
+              <p className="mt-4 max-w-lg text-[1.02rem] leading-8 text-white/72">
+                Answer six quick questions about your space and get a real price range in about two
+                minutes. No phone call required, no obligation.
+              </p>
+            </div>
+
+            <div className="border border-white/15 bg-white/[0.04] p-7 backdrop-blur-sm">
+              <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-white/55">
+                A recent Fast Bath estimate
+              </p>
+              <p className="mt-2 font-display text-[clamp(1.9rem,3.4vw,2.6rem)] font-semibold leading-none text-white">
+                $9,700 <span className="text-white/40">&ndash;</span> $12,400
+              </p>
+              <p className="mt-2 text-[13px] text-white/55">
+                Standard bath &middot; tub-to-shower &middot; premium finishes
+              </p>
+              <Link
+                href="/bathroom-estimate"
+                className="mt-6 flex min-h-[56px] w-full items-center justify-center gap-2 bg-brand-light px-6 text-[13px] font-bold uppercase tracking-[0.12em] text-forest transition hover:bg-white"
+              >
+                Get my instant estimate
+                <ArrowRight className="size-4" aria-hidden />
+              </Link>
+              <p className="mt-3 text-center text-[11px] text-white/45">
+                Takes about 2 minutes &middot; 100% free
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className={`${CONTAINER} relative grid grid-cols-2 divide-x divide-white/12 border-t border-white/12 md:grid-cols-4`}>
           {heroStats.map((stat) => (
-            <div key={stat.label} className="px-4 py-8 text-center md:py-10">
-              <p className="font-display text-[clamp(2rem,4vw,3rem)] font-semibold leading-none text-brand-light">
+            <div key={stat.label} className="px-4 py-8 text-center">
+              <p className="font-display text-[clamp(1.7rem,3vw,2.4rem)] font-semibold leading-none text-brand-light">
                 {stat.value}
               </p>
-              <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.14em] text-white/70">
+              <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.14em] text-white/60">
                 {stat.label}
               </p>
             </div>
@@ -273,8 +328,23 @@ export default function FastBathPage() {
         </div>
       </section>
 
+      {/* Jump nav */}
+      <nav aria-label="Page sections" className="border-b border-line bg-white">
+        <div className={`${CONTAINER} flex gap-1 overflow-x-auto py-1`}>
+          {sectionLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="whitespace-nowrap px-4 py-3 text-[12px] font-bold uppercase tracking-[0.12em] text-ink-soft transition hover:text-brand-dark"
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </nav>
+
       {/* Before / after — the proof, up front */}
-      <section className={`${SECTION} bg-paper`}>
+      <section id="before-after" className={`${SECTION} scroll-mt-24 bg-paper`}>
         <div className={`${CONTAINER} grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center`}>
           <div className="order-2 lg:order-1">
             <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-brand-dark">
@@ -304,14 +374,61 @@ export default function FastBathPage() {
         </div>
       </section>
 
-      <CtaBand
-        eyebrow="Ready for a better bathroom?"
-        headline="Book your free in-home consultation."
-        buttonLabel="Pick a time"
-      />
+      {/* Two ways to start */}
+      <section className="scroll-mt-24 bg-forest py-16 text-white sm:py-20">
+        <div className={CONTAINER}>
+          <div className="max-w-2xl">
+            <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-brand-light">
+              Ready to start?
+            </p>
+            <h2 className="mt-3 font-display text-[clamp(2rem,3.6vw,3.4rem)] font-medium leading-[1.05] tracking-[-0.02em]">
+              Two ways to get your Fast Bath moving.
+            </h2>
+          </div>
+          <div className="mt-10 grid gap-4 md:grid-cols-2">
+            <div className="flex flex-col border border-white/15 bg-white/[0.04] p-8">
+              <Clock3 className="size-7 text-brand-light" aria-hidden />
+              <h3 className="mt-5 font-display text-[1.5rem] font-medium">Book a free in-home visit</h3>
+              <p className="mt-2 flex-1 text-[0.98rem] leading-7 text-white/70">
+                45&ndash;60 minutes. We measure the space, walk through materials, and leave you
+                with a firm, written quote. No pressure, no cost.
+              </p>
+              <Link
+                href="#book"
+                className="mt-6 inline-flex min-h-[54px] items-center justify-center gap-2 bg-brand-light px-6 text-[13px] font-bold uppercase tracking-[0.12em] text-forest transition hover:bg-white"
+              >
+                Pick a time
+                <ArrowRight className="size-4" aria-hidden />
+              </Link>
+            </div>
+            <div className="flex flex-col border border-white/15 bg-white/[0.04] p-8">
+              <Calculator className="size-7 text-brand-light" aria-hidden />
+              <h3 className="mt-5 font-display text-[1.5rem] font-medium">Get an instant estimate</h3>
+              <p className="mt-2 flex-1 text-[0.98rem] leading-7 text-white/70">
+                Six quick questions, about two minutes, and you get a real price range on screen
+                &mdash; before you ever talk to anyone.
+              </p>
+              <Link
+                href="/bathroom-estimate"
+                className="mt-6 inline-flex min-h-[54px] items-center justify-center gap-2 border border-white px-6 text-[13px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-white hover:text-forest"
+              >
+                Start the estimate
+                <ArrowRight className="size-4" aria-hidden />
+              </Link>
+            </div>
+          </div>
+          <p className="mt-8 text-[0.95rem] text-white/60">
+            Or just call us &mdash;{" "}
+            <a href={site.phoneHref} className="font-semibold text-brand-light hover:text-white">
+              {site.phone}
+            </a>
+            , Monday to Friday.
+          </p>
+        </div>
+      </section>
 
       {/* What Fast Bath covers */}
-      <section className={`${SECTION} bg-sand`}>
+      <section id="services" className={`${SECTION} scroll-mt-24 bg-sand`}>
         <div className={CONTAINER}>
           <div className="max-w-3xl">
             <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-brand-dark">
@@ -323,18 +440,35 @@ export default function FastBathPage() {
           </div>
           <div className="mt-10 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
             {serviceCards.map((service) => (
-              <div key={service.title} className="bg-white p-6">
+              <div key={service.title} className="flex flex-col bg-white p-6">
                 <service.icon className="mb-6 size-6 text-brand-dark" aria-hidden />
                 <h3 className="text-[1.15rem] font-semibold leading-tight text-ink">{service.title}</h3>
-                <p className="mt-2.5 text-[0.9rem] leading-7 text-ink-soft">{service.body}</p>
+                <p className="mt-2.5 flex-1 text-[0.9rem] leading-7 text-ink-soft">{service.body}</p>
+                <Link
+                  href="/bathroom-estimate"
+                  className="mt-5 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-brand-dark transition hover:gap-2.5 hover:text-ink"
+                >
+                  Price this
+                  <ArrowRight className="size-3.5" aria-hidden />
+                </Link>
               </div>
             ))}
           </div>
+          <p className="mt-8 text-[0.95rem] text-ink-soft">
+            Not sure which one you need?{" "}
+            <Link
+              href="/bathroom-estimate"
+              className="font-semibold text-brand-dark underline underline-offset-4"
+            >
+              Answer six questions and we&rsquo;ll price it for you
+            </Link>
+            .
+          </p>
         </div>
       </section>
 
       {/* 3-step process — dark for contrast */}
-      <section className="bg-forest py-16 text-white sm:py-20 lg:py-24">
+      <section id="process" className="scroll-mt-24 bg-forest py-16 text-white sm:py-20 lg:py-24">
         <div className={CONTAINER}>
           <div className="max-w-3xl">
             <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-brand-light">
@@ -361,8 +495,12 @@ export default function FastBathPage() {
         </div>
       </section>
 
+      <div id="reviews" className="scroll-mt-24">
+        <CustomerReviews />
+      </div>
+
       {/* Fast Bath vs full remodel */}
-      <section className={`${SECTION} bg-white`}>
+      <section id="compare" className={`${SECTION} scroll-mt-24 bg-white`}>
         <div
           className={`${CONTAINER} grid gap-10 border border-line bg-paper p-7 shadow-[0_24px_70px_rgba(43,39,35,0.08)] sm:p-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center`}
         >
@@ -401,12 +539,69 @@ export default function FastBathPage() {
         </div>
       </section>
 
-      <FinancingStrip />
+      <div id="financing" className="scroll-mt-24">
+        <FinancingStrip />
+      </div>
 
-      <SchedulerEmbed />
+      {/* Showroom / visit us */}
+      <section className={`${SECTION} bg-white`}>
+        <div className={`${CONTAINER} grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center`}>
+          <div>
+            <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-brand-dark">
+              Visit the showroom
+            </p>
+            <h2 className="mt-3 font-display text-[clamp(1.9rem,3.3vw,3.2rem)] font-medium leading-[1.06] tracking-[-0.02em]">
+              See and touch it before you decide.
+            </h2>
+            <p className="mt-5 max-w-md text-base leading-8 text-ink-soft">
+              Cabinet doors, quartz slabs, tile, and fixture finishes are all in one place in Lacey.
+              Most homeowners finish their selections in a single visit.
+            </p>
+          </div>
+          <div className="grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2">
+            <div className="bg-paper p-6">
+              <MapPin className="mb-4 size-5 text-brand-dark" aria-hidden />
+              <p className="text-[12px] font-bold uppercase tracking-[0.12em] text-ink">Showroom</p>
+              <p className="mt-2 text-[0.95rem] leading-7 text-ink-soft">{site.address}</p>
+              <a
+                href={site.mapsHref}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-3 inline-block text-[12px] font-bold uppercase tracking-[0.12em] text-brand-dark underline underline-offset-4"
+              >
+                Get directions
+              </a>
+            </div>
+            <div className="bg-paper p-6">
+              <Clock3 className="mb-4 size-5 text-brand-dark" aria-hidden />
+              <p className="text-[12px] font-bold uppercase tracking-[0.12em] text-ink">Hours</p>
+              <div className="mt-2 space-y-1 text-[0.95rem] leading-7 text-ink-soft">
+                {site.showroomHours.map((entry) => (
+                  <p key={entry.day}>
+                    <span className="font-semibold text-ink">{entry.day}:</span> {entry.time}
+                  </p>
+                ))}
+              </div>
+            </div>
+            <div className="bg-paper p-6 sm:col-span-2">
+              <Phone className="mb-4 size-5 text-brand-dark" aria-hidden />
+              <p className="text-[12px] font-bold uppercase tracking-[0.12em] text-ink">
+                Prefer to talk it through?
+              </p>
+              <a
+                href={site.phoneHref}
+                className="mt-2 inline-block font-display text-[1.6rem] font-semibold text-brand-dark hover:text-ink"
+              >
+                {site.phone}
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
 
       {/* FAQ */}
-      <section className={`${SECTION} bg-paper`}>
+      <section id="faqs" className={`${SECTION} scroll-mt-24 bg-paper`}>
         <div className={`${CONTAINER} grid gap-12 lg:grid-cols-[0.7fr_1fr]`}>
           <div>
             <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-brand-dark">Fast Bath FAQs</p>
@@ -430,7 +625,6 @@ export default function FastBathPage() {
         </div>
       </section>
 
-      <CustomerReviews />
 
       {/* Service area */}
       <section className={`${SECTION} bg-cream`}>
@@ -489,16 +683,48 @@ export default function FastBathPage() {
         </div>
       </section>
 
-      <PageCta
-        eyebrow="Start your bathroom transformation"
-        title={<>A new bathroom, sooner than you think.</>}
-        body="Book a free in-home consultation and we will bring the plan, the materials, and a firm quote."
-        primaryLabel="Book free consultation"
-        primaryHref="#book"
-        secondaryLabel={`Call ${site.phone}`}
-        secondaryHref={site.phoneHref}
-        watermark="Fast Bath"
-      />
+      {/* Closing CTA — repeat the form */}
+      <section id="book" className="scroll-mt-24 bg-forest py-16 text-white sm:py-20 lg:py-24">
+        <div className={`${CONTAINER} grid gap-12 lg:grid-cols-[1fr_0.92fr] lg:items-center`}>
+          <div>
+            <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-brand-light">
+              Last step
+            </p>
+            <h2 className="mt-3 max-w-xl font-display text-[clamp(2.1rem,4vw,3.8rem)] font-medium leading-[1.02] tracking-[-0.02em]">
+              A new bathroom is closer than you think.
+            </h2>
+            <p className="mt-5 max-w-md text-[1.05rem] leading-8 text-white/72">
+              Book your free in-home consultation. We bring the plan, the materials, and a firm
+              quote &mdash; you decide from there.
+            </p>
+            <ul className="mt-7 flex flex-wrap gap-2.5">
+              {heroTrust.map((item) => (
+                <li
+                  key={item}
+                  className="inline-flex items-center gap-1.5 border border-white/20 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.1em] text-white/85"
+                >
+                  <Check className="size-3.5 text-brand-light" aria-hidden />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <a
+              href={site.phoneHref}
+              className="mt-8 inline-flex items-center gap-2.5 font-display text-[1.7rem] font-semibold text-brand-light transition hover:text-white"
+            >
+              <Phone className="size-5" aria-hidden />
+              {site.phone}
+            </a>
+          </div>
+          <div>
+            <LeadForm
+              variant="section"
+              heading="Book your free consultation"
+              sublabel="We'll confirm a time that works and bring everything to your door."
+            />
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
