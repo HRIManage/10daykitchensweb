@@ -226,6 +226,15 @@ export default function FastBathPage() {
           </div>
           <div className="lg:pt-2">
             <LeadForm />
+            <p className="mt-4 text-center text-[13px] text-ink-soft">
+              Prefer a number first?{" "}
+              <Link
+                href="/bathroom-estimate"
+                className="font-semibold text-brand-dark underline underline-offset-2"
+              >
+                Get an instant estimate
+              </Link>
+            </p>
             <div className="relative mt-6 aspect-[1.4/1] w-full overflow-hidden border border-line bg-white lg:hidden">
               <Image
                 src="/images/fast-bath-before-after-screenshot.png"
