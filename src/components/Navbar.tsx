@@ -84,7 +84,8 @@ export default function Navbar() {
       setOpenMenu(null);
       setMobileOpen(false);
       document.body.style.overflow = "";
-      window.scrollTo(0, 0);
+      // Keep deep links like /fast-bath#financing where the browser scrolled them.
+      if (!window.location.hash) window.scrollTo(0, 0);
     });
     return () => cancelAnimationFrame(frame);
   }, [pathname]);
