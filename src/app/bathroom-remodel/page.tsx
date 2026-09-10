@@ -29,12 +29,12 @@ const processSteps = [
   { num: "01", title: "Consultation", desc: "Your goals, style, and must-haves — vanities, tile, fixtures, storage." },
   { num: "02", title: "Design & Contract", desc: "A clear plan and contract, so there are no surprises." },
   { num: "03", title: "Materials", desc: "Every item ordered and inspected before installation begins." },
-  { num: "04", title: "Installation", desc: "Completed in approximately 10 business days." },
+  { num: "04", title: "Installation", desc: "Our expert crew keeps the work moving on a clear schedule." },
   { num: "05", title: "Walkthrough", desc: "We review every detail with you before close-out." },
 ];
 
 const highlights = [
-  { icon: Clock, label: "≈10 business days" },
+  { icon: Clock, label: "Fast turnaround by experts" },
   { icon: ShieldCheck, label: "5-year warranty" },
   { icon: Sparkles, label: "Guided selections" },
 ];
@@ -187,7 +187,7 @@ export default function BathroomRemodelPage() {
                 />
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/45 to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-white">
-                    {img.caption} · 10 business days
+                    {img.caption}
                   </p>
                 </div>
               </ImageReveal>
@@ -265,7 +265,7 @@ export default function BathroomRemodelPage() {
                 Prefer to talk? {site.phone}
               </a>
               <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-white/50">
-                ≈10 business days · 5-year warranty · Licensed &amp; insured
+                Fast turnaround by experts · 5-year warranty · Licensed &amp; insured
               </p>
             </div>
           </FadeIn>
