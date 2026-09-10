@@ -406,11 +406,9 @@ export default async function CityPage({
 
       <PageCta
         eyebrow={`${city.name} Free Consultation`}
-        title={`Your ${city.name} kitchen or bath, planned clearly from day one.`}
+        title={<>Your {city.name} kitchen or bath, <em>planned clearly from day one.</em></>}
         body="Call now or schedule online. We will bring the plan, the schedule, and a binding quote."
-        secondaryLabel={site.phone}
-        secondaryHref={site.phoneHref}
-        watermark={city.name}
+        source={`kitchen-remodel-${city.slug}`}
       />
     </main>
   );

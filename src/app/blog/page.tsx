@@ -125,9 +125,9 @@ export default function BlogPage() {
 
       <PageCta
         eyebrow="Ready to Start?"
-        title="Turn inspiration into reality."
+        title={<>Turn inspiration <em>into reality.</em></>}
         body="Schedule a free consultation and we will help you plan your perfect kitchen or bath transformation."
-        watermark="Advice"
+        source="blog"
       />
     </main>
   );

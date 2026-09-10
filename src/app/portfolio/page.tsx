@@ -161,9 +161,9 @@ export default function PortfolioPage() {
 
       <PageCta
         eyebrow="Ready to Start?"
-        title="Your transformation awaits."
+        title={<>Your transformation <em>awaits.</em></>}
         body="Join hundreds of South Sound homeowners who have trusted us with their most important space."
-        watermark="Projects"
+        source="portfolio"
       />
     </main>
   );

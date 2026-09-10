@@ -8,8 +8,8 @@ import {
   ProcessEditorial,
   CustomerReviews,
   TransformationSection,
-  ClosingCTA,
 } from "@/components/home";
+import PageCta from "@/components/PageCta";
 import { createLocalBusinessSchema, createServiceSchema } from "@/lib/seo";
 import { site } from "@/lib/site";
 
@@ -62,7 +62,12 @@ export default function Home() {
         <ProcessEditorial />
         <TransformationSection />
         <CustomerReviews />
-        <ClosingCTA />
+        <PageCta
+          eyebrow="Ready to start planning?"
+          title={<>Visit our showroom or <em>book a free consultation.</em></>}
+          body="Talk through your kitchen or bath remodel, see materials in our Lacey showroom, and get clear guidance on options, budget, and timing."
+          source="home"
+        />
       </div>
     </main>
   );

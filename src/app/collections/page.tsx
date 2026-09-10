@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import PageCta from "@/components/PageCta";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -350,30 +351,12 @@ export default function CollectionsPage() {
         </div>
       </section>
 
-      {/* ── CTA ── */}
-      <section className="page-cta-section">
-        <div className="page-cta-watermark" aria-hidden="true">Materials</div>
-        <div className="page-cta-content">
-          <div>
-            <span className="eyebrow" style={{ display: "block", marginBottom: 20, color: "rgba(93,187,70,0.75)" }}>Come See It in Person</span>
-            <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(52px, 7vw, 96px)", fontWeight: 400, lineHeight: 1.02, letterSpacing: "-0.03em", color: "var(--white)", margin: "0 0 28px" }}>
-              Touch the Materials<br />
-              <em style={{ fontStyle: "italic", color: "var(--gold)" }}>Before You Decide.</em>
-            </h2>
-            <p style={{ color: "var(--white-dim)", fontSize: 18, lineHeight: 1.75, fontWeight: 400, maxWidth: 460, margin: 0 }}>
-              Nothing replaces seeing materials in real light. Schedule a free consultation and explore every collection with our team by your side.
-            </p>
-          </div>
-          <div className="page-cta-btn-card">
-            <a className="btn btn-solid pulse-shimmer-btn" href={SCHEDULE_URL} target="_blank" rel="noopener noreferrer">
-              Book a Free Consultation
-            </a>
-            <a className="btn btn-solid" href="/contact">
-              Contact Us
-            </a>
-          </div>
-        </div>
-      </section>
+      <PageCta
+        eyebrow="Come see it in person"
+        title={<>Touch the materials <em>before you decide.</em></>}
+        body="Nothing replaces seeing materials in real light. Schedule a free consultation and explore every collection with our team by your side."
+        source="collections"
+      />
     </main>
   );
 }

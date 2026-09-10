@@ -7,7 +7,6 @@ import { CONTAINER } from "@/components/layout";
 import { CustomerReviews } from "@/components/home";
 import PageCta from "@/components/PageCta";
 import { createServiceSchema } from "@/lib/seo";
-import { site } from "@/lib/site";
 import DayByDayTimeline from "@/components/DayByDayTimeline";
 import ProgramPricingExplorer from "@/components/ProgramPricingExplorer";
 
@@ -409,11 +408,9 @@ export default function TenDayProgramPage() {
 
       <PageCta
         eyebrow="Ready to start planning?"
-        title="Let's see if your kitchen can move faster."
+        title={<>Let&apos;s see if your kitchen can <em>move faster.</em></>}
         body="We will review your current layout, photos, selections, and timeline so you know whether the 10 Day Kitchens Program or a full custom kitchen remodel is the better fit."
-        secondaryLabel={site.phone}
-        secondaryHref={site.phoneHref}
-        watermark="10 Days"
+        source="10-day-kitchen-program"
       />
     </main>
   );

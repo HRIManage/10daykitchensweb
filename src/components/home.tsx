@@ -7,13 +7,11 @@ import {
   ArrowRight,
   ChevronLeft,
   ChevronRight,
-  Check,
-  Phone,
   Star,
 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useScroll, useTransform } from "framer-motion";
-import { processPhases, site, testimonials } from "@/lib/site";
+import { processPhases, testimonials } from "@/lib/site";
 import { CountUp } from "@/lib/motion";
 import { CONTAINER, SECTION } from "@/components/layout";
 import { ease, FadeIn, SectionHeader } from "@/components/shared";
@@ -769,113 +767,6 @@ export function TransformationSection() {
                 Decades of remodeling experience, refined into a process built for speed, clarity, and quality.
               </p>
             </motion.div>
-          </div>
-        </FadeIn>
-      </div>
-    </section>
-  );
-}
-
-export function ClosingCTA() {
-  return (
-    <section id="contact" className="bg-[#fffefa] text-ink">
-      <div className={`${CONTAINER} py-16 sm:py-20 lg:py-24`}>
-        <FadeIn>
-          <div className="grid gap-10 lg:grid-cols-[1.16fr_0.84fr] lg:items-start lg:gap-12">
-            <div className="min-w-0">
-              <p className="text-[13px] font-bold uppercase tracking-[0.32em] text-brand">
-                READY TO START PLANNING?
-              </p>
-              <h2 className="mt-5 max-w-[11ch] font-display text-[clamp(2.5rem,6.2vw,4.6rem)] font-medium leading-[0.97] tracking-[-0.045em] text-ink">
-                VISIT OUR
-                <br />
-                <span className="italic text-brand-dark">SHOWROOM</span>
-              </h2>
-              <p className="mt-7 max-w-[640px] text-[17px] leading-[1.85] text-ink-soft/86">
-                Book a free consultation to talk through your kitchen or bath remodel, visit our
-                Lacey showroom, and get clear guidance on options, budget, and timing. We respond
-                quickly and keep the next step simple.
-              </p>
-
-              <div className="mt-14 grid gap-10 border-t border-line pt-10 sm:grid-cols-[minmax(0,0.95fr)_minmax(0,1.1fr)] sm:gap-14 lg:gap-20">
-                <div className="min-w-0">
-                  <p className="text-[13px] font-bold uppercase tracking-[0.24em] text-brand">
-                    Address
-                  </p>
-                  <a
-                    href={site.mapsHref}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-4 block max-w-[260px] text-[17px] leading-[1.9] text-ink transition-colors duration-200 hover:text-brand-dark"
-                  >
-                    8695 Martin Way E #101
-                    <br />
-                    Lacey, WA 98516
-                  </a>
-                </div>
-
-                <div className="min-w-0">
-                  <p className="text-[13px] font-bold uppercase tracking-[0.24em] text-brand">
-                    Hours
-                  </p>
-                  <div className="mt-4 space-y-3 text-[17px] leading-[1.9] text-ink-soft/84">
-                    <p>Mon - Fri: 9:00 AM - 5:30 PM</p>
-                    <p>Sat: By appointment only</p>
-                    <p>Sun: Closed</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="relative overflow-hidden border border-white/12 bg-[#2A2A2A] px-8 py-9 text-white shadow-[0_28px_70px_rgba(43,39,35,0.18)] sm:px-10 sm:py-10 lg:mt-4 lg:px-11 lg:py-11">
-              <div className="absolute inset-x-0 top-0 h-1 bg-brand" />
-              <div className="relative">
-                <h3 className="mt-7 font-display text-[clamp(2rem,3vw,2.55rem)] font-medium leading-[1.04] tracking-[-0.03em] text-white">
-                  Book a consultation
-                </h3>
-                <p className="mt-5 max-w-md text-[17px] leading-[1.85] text-white/76">
-                  Meet with our team in the showroom or by phone. We&apos;ll review your project,
-                  answer questions, and help map out the best next step.
-                </p>
-
-                <div className="mt-8 space-y-0 border-y border-white/10 py-6">
-                  <div>
-                    <div className="flex items-start gap-3 py-3 text-[16px] leading-relaxed text-white/82">
-                      <Check className="mt-1 size-4 shrink-0 text-brand-light" />
-                      <span>Free consultation with no commitment</span>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex items-start gap-3 py-3 text-[16px] leading-relaxed text-white/82">
-                      <Check className="mt-1 size-4 shrink-0 text-brand-light" />
-                      <span>In-person showroom visit or phone call</span>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex items-start gap-3 py-3 text-[16px] leading-relaxed text-white/82">
-                      <Check className="mt-1 size-4 shrink-0 text-brand-light" />
-                      <span>Free estimates and fast follow-up from our local team</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-8 space-y-3">
-                  <Link
-                    href="/contact"
-                    className="inline-flex w-full items-center justify-center bg-brand px-6 py-4 text-[13px] font-semibold uppercase tracking-[0.22em] text-ink transition duration-200 hover:bg-brand-dark hover:text-white"
-                  >
-                    Schedule Now
-                  </Link>
-                  <a
-                    href={site.phoneHref}
-                    className="inline-flex w-full items-center justify-center gap-2 border border-white/20 px-6 py-4 text-[13px] font-semibold uppercase tracking-[0.22em] text-white transition duration-200 hover:border-brand-light hover:text-brand-light"
-                  >
-                    <Phone className="size-4" />
-                    {site.phone}
-                  </a>
-                </div>
-              </div>
-            </div>
           </div>
         </FadeIn>
       </div>
