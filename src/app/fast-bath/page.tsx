@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import {
+  Accessibility,
   ArrowRight,
   BadgeCheck,
-  Bath,
   Check,
   Clock3,
   CreditCard,
@@ -16,6 +16,7 @@ import {
   ShowerHead,
   Sparkles,
   Wrench,
+  type LucideIcon,
 } from "lucide-react";
 import { CONTAINER } from "@/components/layout";
 import { CustomerReviews } from "@/components/home";
@@ -51,30 +52,57 @@ const trustItems = [
   { icon: ShieldCheck, title: "Workmanship warranty", body: "Licensed, insured, and backed locally." },
 ];
 
-const serviceGroups = [
+type ServiceGroup = {
+  /** Anchor id, so ads and other pages can link straight to the card. */
+  id?: string;
+  eyebrow?: string;
+  /** Short label pinned to the photo. */
+  badge?: string;
+  title: string;
+  body: string;
+  image: string;
+  imageAlt: string;
+  items: string[];
+  icon: LucideIcon;
+  cta?: { label: string; href: string };
+};
+
+// The third card renders full-width, so the service we most want to feature goes last.
+const serviceGroups: ServiceGroup[] = [
   {
     title: "Tub and shower updates",
     body: "Replace the hardest-working part of your bathroom while keeping the existing footprint whenever possible.",
     image: "/images/fast-bath-simple-service.png",
     imageAlt: "Bright bathroom with a tub, wood vanity, and modern black fixtures",
-    items: ["Tub to shower conversion", "Shower replacement", "Shower wall systems"],
+    items: ["Tub to shower conversion", "Shower replacement", "Bathtub replacement", "Shower wall systems"],
     icon: ShowerHead,
-  },
-  {
-    title: "Safer, easier bathing",
-    body: "Create a more open, comfortable setup with practical features selected around the way you use the room.",
-    image: "/images/white-oak-spa-bathroom-service.png",
-    imageAlt: "Spacious bathroom with a glass walk-in shower and white oak vanity",
-    items: ["Walk-in shower", "Bathtub replacement", "Fixtures and hardware"],
-    icon: Bath,
   },
   {
     title: "A complete room refresh",
     body: "Bring the rest of the bathroom up to date with coordinated surfaces, storage, lighting, and finishing details.",
     image: "/images/hero-bathroom-custom.png",
     imageAlt: "Finished bathroom with double vanity, glass shower, and freestanding tub",
-    items: ["Vanity upgrade", "Counters and sinks", "Mirrors, lighting, and accessories"],
+    items: ["Vanity upgrade", "Counters and sinks", "Fixtures and hardware", "Mirrors, lighting, and accessories"],
     icon: Sparkles,
+  },
+  {
+    id: "accessible-bathrooms",
+    eyebrow: "Safer, easier bathing",
+    badge: "ADA-compliant design",
+    title: "Accessible bathroom remodel services",
+    body: "An ADA-compliant, beautifully designed bathroom that delivers peace of mind. Every grab bar, seat, and threshold is planned around how you use the room, so it feels safe without looking clinical.",
+    image: "/images/white-oak-spa-bathroom-service.png",
+    imageAlt: "Spacious bathroom with a low-threshold glass walk-in shower and open floor space",
+    items: [
+      "Low-threshold walk-in showers",
+      "Grab bars and shower seats",
+      "Comfort-height toilets",
+      "Slip-resistant flooring",
+      "Handheld showerheads",
+      "Lever-style faucets and handles",
+    ],
+    icon: Accessibility,
+    cta: { label: "Plan an accessible bathroom", href: "/contact" },
   },
 ];
 
@@ -106,6 +134,13 @@ const chooseUs = [
   "Clear communication and clean job sites",
 ];
 
+// Same terms as the sitewide FinancingStrip, so the page never promises more than /financing does.
+const financingPoints = [
+  { term: "Monthly payment plans", detail: "Available through GreenSky." },
+  { term: "0% promotional options", detail: "For qualifying projects." },
+  { term: "No surprises", detail: "Scope and pricing explained before work begins." },
+];
+
 const faqs = [
   {
     question: "How long does Fast Bath installation take?",
@@ -116,6 +151,11 @@ const faqs = [
     question: "Can I keep my existing bathroom layout?",
     answer:
       "Yes. Fast Bath is built around keeping the general layout intact whenever possible. If plumbing, electrical, or walls need to move, our full bathroom remodel service is usually the better fit.",
+  },
+  {
+    question: "Can you make my bathroom more accessible?",
+    answer:
+      "Yes. We install low-threshold walk-in showers, grab bars, shower seats, comfort-height toilets, and slip-resistant flooring, planned to ADA accessibility guidelines. If you need wider doorways or relocated plumbing, our full bathroom remodel service is the better fit.",
   },
   {
     question: "What is included in a Fast Bath upgrade?",
@@ -178,7 +218,13 @@ export default function FastBathPage() {
       address: site.address,
     },
     areaServed: serviceCities.map((city) => `${city.name}, WA`),
-    serviceType: ["Bathroom Upgrades", "Tub to Shower Conversion", "Shower Replacement", "Walk-In Shower Installation"],
+    serviceType: [
+      "Bathroom Upgrades",
+      "Tub to Shower Conversion",
+      "Shower Replacement",
+      "Walk-In Shower Installation",
+      "Accessible Bathroom Remodel",
+    ],
     url: "https://10daykitchens.com/fast-bath",
   };
 
@@ -279,35 +325,52 @@ export default function FastBathPage() {
           </p>
 
           <div className="mt-12 grid gap-5 lg:grid-cols-12">
-            {serviceGroups.map((service, index) => (
-              <article
-                key={service.title}
-                className={`group overflow-hidden border border-line bg-white ${index === 0 ? "lg:col-span-7" : index === 1 ? "lg:col-span-5" : "lg:col-span-12 lg:grid lg:grid-cols-[0.9fr_1.1fr]"}`}
-              >
-                <div className={`relative overflow-hidden ${index === 2 ? "min-h-[320px]" : "aspect-[16/10]"}`}>
-                  <Image
-                    src={service.image}
-                    alt={service.imageAlt}
-                    fill
-                    sizes={index === 2 ? "(min-width: 1024px) 45vw, 100vw" : "(min-width: 1024px) 55vw, 100vw"}
-                    className="object-cover transition-transform duration-700 group-hover:scale-[1.025]"
-                  />
-                </div>
-                <div className="p-7 sm:p-9">
-                  <service.icon className="mb-6 size-7 text-brand" aria-hidden="true" />
-                  <h3 className="font-display text-[2rem] font-medium leading-tight">{service.title}</h3>
-                  <p className="mt-4 max-w-xl text-[0.96rem] leading-7 text-ink-soft">{service.body}</p>
-                  <ul className="mt-7 grid gap-3 sm:grid-cols-2">
-                    {service.items.map((item) => (
-                      <li key={item} className="flex items-center gap-3 text-sm font-semibold">
-                        <Check className="size-4 flex-none text-brand" aria-hidden="true" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </article>
-            ))}
+            {serviceGroups.map((service, index) => {
+              const wide = index === 2;
+              return (
+                <article
+                  key={service.title}
+                  id={service.id}
+                  className={`group scroll-mt-48 overflow-hidden border border-line bg-white ${index === 0 ? "lg:col-span-7" : index === 1 ? "lg:col-span-5" : "lg:col-span-12 lg:grid lg:grid-cols-[0.9fr_1.1fr]"}`}
+                >
+                  <div className={`relative overflow-hidden ${wide ? "min-h-[320px]" : "aspect-[16/10]"}`}>
+                    <Image
+                      src={service.image}
+                      alt={service.imageAlt}
+                      fill
+                      sizes={wide ? "(min-width: 1024px) 45vw, 100vw" : "(min-width: 1024px) 55vw, 100vw"}
+                      className="object-cover transition-transform duration-700 group-hover:scale-[1.025]"
+                    />
+                    {service.badge ? (
+                      <span className="absolute left-4 top-4 rounded-full bg-white/95 px-3.5 py-2 text-[11px] font-bold uppercase tracking-[0.14em] text-ink shadow-[0_8px_24px_rgba(43,39,35,0.14)]">
+                        {service.badge}
+                      </span>
+                    ) : null}
+                  </div>
+                  <div className={`p-7 sm:p-9 ${wide ? "lg:flex lg:flex-col lg:justify-center lg:p-12" : ""}`}>
+                    <service.icon className="mb-6 size-7 text-brand" aria-hidden="true" />
+                    {service.eyebrow ? (
+                      <p className="mb-3 text-[12px] font-bold uppercase tracking-[0.2em] text-brand-dark">{service.eyebrow}</p>
+                    ) : null}
+                    <h3 className="font-display text-[2rem] font-medium leading-tight">{service.title}</h3>
+                    <p className="mt-4 max-w-xl text-[0.96rem] leading-7 text-ink-soft">{service.body}</p>
+                    <ul className="mt-7 grid gap-3 sm:grid-cols-2">
+                      {service.items.map((item) => (
+                        <li key={item} className="flex items-center gap-3 text-sm font-semibold">
+                          <Check className="size-4 flex-none text-brand" aria-hidden="true" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                    {service.cta ? (
+                      <div className="mt-8">
+                        <PrimaryButton href={service.cta.href}>{service.cta.label}</PrimaryButton>
+                      </div>
+                    ) : null}
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -386,22 +449,57 @@ export default function FastBathPage() {
         </div>
       </section>
 
-      <section id="financing" className={`${SECTION} scroll-mt-48`}>
-        <div className={`${CONTAINER} grid gap-8 bg-sand p-7 sm:p-10 lg:grid-cols-[0.7fr_1.3fr] lg:items-center lg:p-14`}>
-          <div className="flex size-16 items-center justify-center bg-brand text-white">
-            <CreditCard className="size-8" aria-hidden="true" />
-          </div>
+      {/* Financing — the page's one dark band, so its CTA is the loudest thing mid-scroll */}
+      <section id="financing" className="relative scroll-mt-48 overflow-hidden bg-forest pb-10 pt-16 text-white sm:pb-12 sm:pt-20 lg:pb-14 lg:pt-24">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_50%_70%_at_88%_50%,rgba(93,187,70,0.16),transparent_70%)]"
+        />
+        <div className={`${CONTAINER} relative grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-16`}>
           <div>
-            <h2 className={`${HEADING} max-w-3xl`}>A project plan that fits your home and budget.</h2>
-            <p className="mt-5 max-w-2xl text-base leading-8 text-ink-soft">
+            <p className="text-[12px] font-bold uppercase tracking-[0.22em] text-brand-light">Financing</p>
+            <h2 className={`${HEADING} mt-4 max-w-2xl`}>
+              A project plan that fits your home and{" "}
+              <em className="font-medium italic text-brand-light">budget.</em>
+            </h2>
+            <p className="mt-6 max-w-xl text-base leading-8 text-white/70">
               Financing options are available for qualified homeowners. We explain the scope, selections, and payment options clearly before work begins.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <PrimaryButton href="/bathroom-estimator">Free instant estimate</PrimaryButton>
-              <SecondaryButton href="/financing">Explore financing</SecondaryButton>
-            </div>
+            <dl className="mt-9 grid gap-6 border-t border-white/12 pt-7 sm:grid-cols-3">
+              {financingPoints.map((point) => (
+                <div key={point.term}>
+                  <dt className="text-[13px] font-bold text-white">{point.term}</dt>
+                  <dd className="mt-1 text-[13px] leading-6 text-white/55">{point.detail}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          <div className="border border-white/15 border-t-2 border-t-brand bg-white/[0.05] p-7 shadow-[0_28px_80px_rgba(0,0,0,0.28)] sm:p-9">
+            <p className="font-display text-[1.9rem] font-medium leading-tight">Start with your price range.</p>
+            <p className="mt-3 text-[15px] leading-7 text-white/65">
+              Get a free planning estimate in about two minutes. We&rsquo;ll walk you through payment options at your consultation.
+            </p>
+            {/* Forest text on brand green is 6.9:1 — white on it would fail WCAG AA. */}
+            <Link
+              href="/bathroom-estimator"
+              className="group mt-7 flex min-h-[60px] w-full items-center justify-center gap-3 rounded-full bg-brand px-7 text-[13px] font-bold uppercase tracking-[0.14em] text-forest transition duration-300 hover:-translate-y-0.5 hover:bg-brand-light focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-light motion-safe:animate-[shimmer-pulse_2.6s_ease-in-out_infinite]"
+            >
+              Get my free estimate
+              <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+            </Link>
+            <Link
+              href="/financing"
+              className="mt-5 flex items-center justify-center gap-2 text-[12px] font-bold uppercase tracking-[0.14em] text-white/80 transition hover:text-brand-light"
+            >
+              Explore financing options
+              <ArrowRight className="size-3.5" aria-hidden="true" />
+            </Link>
           </div>
         </div>
+        <p className={`${CONTAINER} relative mt-10 text-[11px] leading-5 text-white/40`}>
+          This information is for general purposes only and is not financial advice. Please consult a qualified financial advisor before making financial decisions.
+        </p>
       </section>
 
       <CustomerReviews />

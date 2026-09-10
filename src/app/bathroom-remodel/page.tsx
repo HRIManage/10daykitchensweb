@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Clock, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, Clock, Phone, ShieldCheck, Sparkles } from "lucide-react";
 import InteriorHero from "@/components/InteriorHero";
-import PageCta from "@/components/PageCta";
+import LeadForm from "@/components/landing/LeadForm";
 import { CONTAINER, SECTION } from "@/components/layout";
 import { FadeIn, SectionHeader } from "@/components/shared";
 import ImageReveal from "@/components/ImageReveal";
 import { createServiceSchema } from "@/lib/seo";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Bathroom Remodel Lacey WA | Olympia & Tacoma",
@@ -36,6 +37,13 @@ const highlights = [
   { icon: Clock, label: "≈10 business days" },
   { icon: ShieldCheck, label: "5-year warranty" },
   { icon: Sparkles, label: "Guided selections" },
+];
+
+/** What happens after someone books — a real sequence, so it is numbered. */
+const consultSteps = [
+  { title: "Send your details", body: "Takes about a minute, then you pick a time on our calendar." },
+  { title: "We come to you", body: "We measure the room and walk you through tile, vanity, and fixture options." },
+  { title: "Get a clear plan", body: "A written plan and contract before work starts, so there are no surprises." },
 ];
 
 const galleryImages = [
@@ -214,13 +222,73 @@ export default function BathroomRemodelPage() {
         </div>
       </section>
 
-      <PageCta
-        eyebrow="Serving Pierce & Thurston Counties"
-        title="Plan a bathroom remodel that feels calm from day one."
-        body="Lacey, Olympia, Tacoma, Chehalis, and communities across the South Sound."
-        primaryLabel="Get Your Free Quote"
-        watermark="Bath"
-      />
+      {/* Closing CTA — the form is right here, so booking takes no extra click */}
+      <section
+        id="consultation"
+        className="relative scroll-mt-24 overflow-hidden border-t border-brand/35 bg-forest py-20 text-white sm:py-24 lg:py-28"
+      >
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_55%_60%_at_85%_45%,rgba(93,187,70,0.13),transparent_70%)]"
+        />
+        <div className={`${CONTAINER} relative grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16`}>
+          <FadeIn>
+            <p className="text-[12px] font-bold uppercase tracking-[0.22em] text-brand-light">
+              Free in-home consultation
+            </p>
+            <h2 className="mt-5 font-display text-[clamp(2.5rem,5vw,4.6rem)] font-medium leading-[1.02] tracking-[-0.03em]">
+              Plan a bathroom remodel that feels{" "}
+              <em className="font-medium italic text-brand-light">calm from day one.</em>
+            </h2>
+
+            <ol className="mt-10 border-l border-white/15">
+              {consultSteps.map((step, i) => (
+                <li key={step.title} className="relative pb-7 pl-8 last:pb-0">
+                  <span
+                    aria-hidden="true"
+                    className="absolute -left-[13px] top-0 flex size-[26px] items-center justify-center rounded-full border border-brand-light/50 bg-forest font-display text-[15px] leading-none text-brand-light"
+                  >
+                    {i + 1}
+                  </span>
+                  <h3 className="font-sans text-[15px] font-bold text-white">{step.title}</h3>
+                  <p className="mt-1 text-[15px] leading-7 text-white/65">{step.body}</p>
+                </li>
+              ))}
+            </ol>
+
+            <div className="mt-10 flex flex-col gap-3 border-t border-white/12 pt-7 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-8">
+              <a
+                href={site.phoneHref}
+                className="inline-flex items-center gap-2.5 text-[15px] font-bold text-white transition hover:text-brand-light"
+              >
+                <Phone className="size-4 text-brand-light" aria-hidden="true" />
+                Prefer to talk? {site.phone}
+              </a>
+              <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-white/50">
+                ≈10 business days · 5-year warranty · Licensed &amp; insured
+              </p>
+            </div>
+          </FadeIn>
+
+          <FadeIn delay={0.1}>
+            <LeadForm
+              variant="section"
+              source="bathroom-remodel"
+              heading="Book your free consultation"
+              sublabel="Free, no pressure, and right in your home."
+            />
+            <p className="mt-5 text-center text-[14px] text-white/65 lg:text-left">
+              Not ready for a visit?{" "}
+              <Link
+                href="/bathroom-estimator"
+                className="font-bold text-brand-light underline underline-offset-4 transition hover:text-white"
+              >
+                Get an instant estimate
+              </Link>
+            </p>
+          </FadeIn>
+        </div>
+      </section>
     </main>
   );
 }

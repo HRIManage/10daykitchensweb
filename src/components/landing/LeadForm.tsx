@@ -27,10 +27,13 @@ declare global {
 
 export default function LeadForm({
   variant = "hero",
+  source = "fast-bath",
   heading = "Book your free in-home consultation",
   sublabel = "We measure, show you materials, and give you a firm quote — no pressure, no cost.",
 }: {
   variant?: "hero" | "section";
+  /** Page the form sits on; prefixes the analytics event label. */
+  source?: string;
   heading?: string;
   sublabel?: string;
 }) {
@@ -57,7 +60,7 @@ export default function LeadForm({
     if (Object.keys(found).length > 0) return;
 
     setSubmitting(true);
-    window.gtag?.("event", "generate_lead", { form: `fast-bath-${variant}` });
+    window.gtag?.("event", "generate_lead", { form: `${source}-${variant}` });
     window.location.href = buildConsultUrl({
       name: `${values.firstName} ${values.lastName}`.trim(),
       email: values.email,
