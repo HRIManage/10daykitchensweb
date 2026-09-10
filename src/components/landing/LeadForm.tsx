@@ -91,7 +91,7 @@ export default function LeadForm({
         onChange={set(name)}
         aria-invalid={errors[name] ? true : undefined}
         aria-describedby={errors[name] ? `lf-${variant}-${name}-err` : undefined}
-        className="mt-1.5 w-full border border-line bg-white px-3.5 py-2.5 text-[0.95rem] text-ink outline-none focus-visible:border-brand-dark focus-visible:ring-2 focus-visible:ring-brand-dark/30"
+        className="mt-1.5 w-full border border-line bg-white px-3.5 py-2.5 text-[16px] text-ink outline-none focus-visible:border-brand-dark focus-visible:ring-2 focus-visible:ring-brand-dark/30"
       />
       {errors[name] ? (
         <p

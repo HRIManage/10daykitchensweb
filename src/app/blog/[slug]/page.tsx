@@ -79,7 +79,7 @@ export default async function BlogPostPage({
     <main className="bg-paper text-ink">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <section className="bg-paper pt-[158px] sm:pt-[176px]">
+      <section className="bg-paper pt-[88px] sm:pt-[136px] xl:pt-[172px]">
         <div className="site-container max-w-5xl pb-12">
           <p className="eyebrow mb-4 block">{post.tag}</p>
           <h1 className="max-w-4xl text-[clamp(2.4rem,4.7vw,4.6rem)] leading-[1.04] text-ink">{post.title}</h1>

@@ -382,12 +382,12 @@ export default function BathroomEstimator() {
                   </div>
                   <div className="mt-5 grid gap-4 sm:grid-cols-2">
                     <label className="text-sm font-bold">Finish level
-                      <select value={finish} onChange={(event) => setFinish(event.target.value as Finish)} className="mt-2 min-h-12 w-full rounded-md border border-line bg-white px-4 font-normal">
+                      <select value={finish} onChange={(event) => setFinish(event.target.value as Finish)} className="mt-2 min-h-12 w-full rounded-md border border-line bg-white px-4 text-base font-normal">
                         <option value="standard">Standard finishes</option><option value="premium">Premium finishes</option><option value="luxury">Luxury finishes</option>
                       </select>
                     </label>
                     <label className="text-sm font-bold">Project county
-                      <select value={county} onChange={(event) => setCounty(event.target.value)} className="mt-2 min-h-12 w-full rounded-md border border-line bg-white px-4 font-normal">
+                      <select value={county} onChange={(event) => setCounty(event.target.value)} className="mt-2 min-h-12 w-full rounded-md border border-line bg-white px-4 text-base font-normal">
                         <option value="">Select county</option><option>Thurston County</option><option>Pierce County</option><option>Lewis County</option><option>Mason County</option><option>Other nearby area</option>
                       </select>
                     </label>
@@ -412,9 +412,9 @@ export default function BathroomEstimator() {
                 <div className="mt-8 grid gap-5 sm:grid-cols-2">
                   {[
                     ["firstName", "First name", "First name", "text"], ["lastName", "Last name", "Last name", "text"], ["email", "Email", "you@example.com", "email"], ["phone", "Phone", "(360) 123-4567", "tel"], ["city", "City", "Lacey", "text"], ["zip", "ZIP code", "98503", "text"],
-                  ].map(([key, label, placeholder, type]) => <label key={key} className="text-sm font-bold">{label}<input type={type} value={contact[key as keyof typeof contact]} onChange={(event) => setContact((current) => ({ ...current, [key]: event.target.value }))} placeholder={placeholder} className="mt-2 min-h-12 w-full rounded-md border border-line bg-white px-4 font-normal" /></label>)}
+                  ].map(([key, label, placeholder, type]) => <label key={key} className="text-sm font-bold">{label}<input type={type} value={contact[key as keyof typeof contact]} onChange={(event) => setContact((current) => ({ ...current, [key]: event.target.value }))} placeholder={placeholder} className="mt-2 min-h-12 w-full rounded-md border border-line bg-white px-4 text-base font-normal" /></label>)}
                   <label className="text-sm font-bold">When are you planning to start?
-                    <select value={contact.timeline} onChange={(event) => setContact((current) => ({ ...current, timeline: event.target.value }))} className="mt-2 min-h-12 w-full rounded-md border border-line bg-white px-4 font-normal"><option value="">Select timeline</option><option>As soon as possible</option><option>1 to 3 months</option><option>3 to 6 months</option><option>Just researching</option></select>
+                    <select value={contact.timeline} onChange={(event) => setContact((current) => ({ ...current, timeline: event.target.value }))} className="mt-2 min-h-12 w-full rounded-md border border-line bg-white px-4 text-base font-normal"><option value="">Select timeline</option><option>As soon as possible</option><option>1 to 3 months</option><option>3 to 6 months</option><option>Just researching</option></select>
                   </label>
                 </div>
                 {showErrors && !contactComplete && <p className="mt-4 text-sm font-bold text-red-700">Complete your name, email, phone, and ZIP code to continue.</p>}

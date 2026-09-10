@@ -154,7 +154,7 @@ export default function ContactPage() {
   return (
     <main className="bg-paper text-ink">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <section className="bg-paper pt-[158px] sm:pt-[176px]">
+      <section className="bg-paper pt-[88px] sm:pt-[136px] xl:pt-[172px]">
         <div className="site-container grid min-h-[680px] gap-10 pb-14 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:pb-18">
           <div className="max-w-2xl">
             <span className="eyebrow mb-5 block">Get Started</span>
