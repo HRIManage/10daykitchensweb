@@ -8,10 +8,8 @@ import {
   Check,
   Clock3,
   CreditCard,
-  House,
   MapPin,
   PanelsTopLeft,
-  Phone,
   ShieldCheck,
   ShowerHead,
   Sparkles,
@@ -21,6 +19,7 @@ import {
 import { CONTAINER } from "@/components/layout";
 import { CustomerReviews } from "@/components/home";
 import FastBathBeforeAfterSlider from "@/components/FastBathBeforeAfterSlider";
+import PageCta from "@/components/PageCta";
 import { getServiceAreaCities, type City } from "@/lib/cities";
 import { site } from "@/lib/site";
 
@@ -556,24 +555,13 @@ export default function FastBathPage() {
         </div>
       </section>
 
-      <section className="border-t border-line bg-sand py-16 sm:py-20">
-        <div className={`${CONTAINER} grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center`}>
-          <div>
-            <div className="flex items-center gap-3 text-brand-dark">
-              <House className="size-5" aria-hidden="true" />
-              <span className="text-[12px] font-bold uppercase tracking-[0.18em]">Start your bathroom transformation</span>
-            </div>
-            <h2 className={`${HEADING} mt-5 max-w-3xl`}>Ready for a cleaner, brighter bathroom?</h2>
-            <p className="mt-5 max-w-2xl text-base leading-8 text-ink-soft">Tell us what you want to update. We will help you choose the right remodeling path.</p>
-          </div>
-          <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-            <PrimaryButton href="/bathroom-estimator">Free instant estimate</PrimaryButton>
-            <Link href={site.phoneHref} className="inline-flex min-h-13 items-center justify-center gap-3 px-5 text-sm font-bold text-ink hover:text-brand-dark">
-              <Phone className="size-4" aria-hidden="true" /> Call {site.phone}
-            </Link>
-          </div>
-        </div>
-      </section>
+      <PageCta
+        eyebrow="Start your bathroom transformation"
+        title={<>Ready for a cleaner, <em>brighter bathroom?</em></>}
+        body="Tell us what you want to update. We will help you choose the right remodeling path."
+        source="fast-bath"
+        fallback={{ prompt: "Not ready for a visit?", label: "Get an instant estimate", href: "/bathroom-estimator" }}
+      />
     </main>
   );
 }

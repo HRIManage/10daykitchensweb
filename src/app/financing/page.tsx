@@ -101,9 +101,9 @@ export default function FinancingPage() {
 
       <PageCta
         eyebrow="Ready to begin?"
-        title="Find the right financing path for your remodel."
+        title={<>Find the right financing path <em>for your remodel.</em></>}
         body="Schedule a free consultation and we will help you find the right path forward."
-        watermark="Finance"
+        source="financing"
       />
     </main>
   );

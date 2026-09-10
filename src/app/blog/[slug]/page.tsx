@@ -142,9 +142,9 @@ export default async function BlogPostPage({
 
       <PageCta
         eyebrow="Ready to Start?"
-        title="Talk through your project with us."
+        title={<>Talk through your project <em>with us.</em></>}
         body="Schedule a free consultation and we will help you figure out the right remodel path, timeline, and next step."
-        watermark="Advice"
+        source="blog-post"
       />
     </main>
   );

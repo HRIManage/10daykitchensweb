@@ -215,9 +215,8 @@ export default function AboutPage() {
 
       <PageCta
         eyebrow="Join the Family"
-        title="Start your project with a free consultation."
-        primaryLabel="Contact Us"
-        watermark="Family"
+        title={<>Start your project with a <em>free consultation.</em></>}
+        source="about"
       />
     </main>
   );

@@ -359,9 +359,9 @@ export default function KitchenRemodelPage() {
 
       <PageCta
         eyebrow="Ready to plan your kitchen remodel?"
-        title="Visit our Lacey showroom or book a consultation."
+        title={<>Visit our Lacey showroom or <em>book a consultation.</em></>}
         body="Tell us what you want to change, and we will help you choose the service path that fits your home, timeline, and investment."
-        watermark="Kitchen"
+        source="kitchen-remodel"
       />
     </main>
   );

@@ -161,10 +161,9 @@ export default function FaqPage() {
 
       <PageCta
         eyebrow="Still have questions?"
-        title="Let us walk you through every detail."
+        title={<>Let us walk you through <em>every detail.</em></>}
         body="Schedule a free consultation and we will help you understand scope, timeline, pricing, and next steps."
-        primaryLabel="Contact Us"
-        watermark="FAQ"
+        source="faq"
       />
     </main>
   );
