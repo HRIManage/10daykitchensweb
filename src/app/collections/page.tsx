@@ -184,7 +184,7 @@ export default function CollectionsPage() {
   return (
     <main>
       {/* ── Hero ── */}
-      <section className="bg-paper pt-[158px] sm:pt-[176px]">
+      <section className="bg-paper pt-[88px] sm:pt-[136px] xl:pt-[172px]">
         <div className="site-container grid min-h-[610px] gap-10 pb-14 lg:grid-cols-[0.88fr_1.12fr] lg:items-center lg:pb-18">
           <div className="max-w-2xl" ref={heroRef}>
             <span className="eyebrow h-item mb-4 block text-[0.82rem] font-bold" style={{ opacity: 0 }}>

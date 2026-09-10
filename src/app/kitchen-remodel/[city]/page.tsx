@@ -134,7 +134,7 @@ export default async function CityPage({
     <main className="bg-paper text-ink">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <section className="bg-paper pt-[158px] sm:pt-[176px]">
+      <section className="bg-paper pt-[88px] sm:pt-[136px] xl:pt-[172px]">
         <div className={`${CONTAINER} grid gap-10 pb-10 lg:grid-cols-[0.96fr_1.04fr] lg:items-center lg:pb-14`}>
           <div className="max-w-2xl">
             <p className="eyebrow mb-4 block text-[0.82rem] font-bold">

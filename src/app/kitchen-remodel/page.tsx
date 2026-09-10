@@ -163,7 +163,7 @@ export default function KitchenRemodelPage() {
   return (
     <main className="bg-paper text-ink">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <section className="bg-paper pt-[158px] sm:pt-[176px]">
+      <section className="bg-paper pt-[88px] sm:pt-[136px] xl:pt-[172px]">
         <div className={`${CONTAINER} grid gap-10 pb-14 lg:grid-cols-[0.88fr_1.12fr] lg:items-center xl:min-h-[610px] xl:pb-18`}>
           <div className="max-w-2xl">
             <Eyebrow>Custom Kitchen Remodel Lacey, WA</Eyebrow>

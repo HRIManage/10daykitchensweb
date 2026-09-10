@@ -32,7 +32,8 @@ export default function InteriorHero({
   const reducedMotion = useReducedMotion();
 
   return (
-    <section className="bg-paper pt-[158px] sm:pt-[176px]">
+    // pt clears the fixed header at each of its three heights (78 / 127 / 158) with a small gap.
+    <section className="bg-paper pt-[88px] sm:pt-[136px] xl:pt-[172px]">
       <div className={`${CONTAINER} grid min-h-[610px] gap-10 pb-14 lg:grid-cols-[0.88fr_1.12fr] lg:items-center lg:pb-18`}>
         <motion.div
           initial={reducedMotion ? false : { opacity: 0, y: 24 }}
