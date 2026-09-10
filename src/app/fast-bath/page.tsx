@@ -184,7 +184,7 @@ function PrimaryButton({ href, children }: { href: string; children: React.React
   return (
     <Link
       href={href}
-      className="group inline-flex min-h-13 items-center justify-center gap-3 whitespace-nowrap rounded-full bg-brand px-7 py-3 text-[12px] font-bold uppercase tracking-[0.14em] text-white transition duration-300 hover:-translate-y-0.5 hover:bg-brand-dark hover:shadow-[0_14px_34px_rgba(93,187,70,0.28)] active:translate-y-px"
+      className="group inline-flex min-h-13 items-center justify-center gap-3 rounded-full bg-brand px-7 py-3 text-center text-[12px] sm:whitespace-nowrap font-bold uppercase tracking-[0.14em] text-white transition duration-300 hover:-translate-y-0.5 hover:bg-brand-dark hover:shadow-[0_14px_34px_rgba(93,187,70,0.28)] active:translate-y-px"
     >
       {children}
       <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
