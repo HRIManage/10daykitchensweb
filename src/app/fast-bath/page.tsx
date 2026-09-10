@@ -186,7 +186,7 @@ export default function FastBathPage() {
     <main className="overflow-clip bg-paper text-ink">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <section className="pt-[148px] sm:pt-[162px]">
+      <section className="pt-[78px] sm:pt-[127px] xl:pt-[158px]">
         <div className="grid min-h-[650px] bg-white lg:grid-cols-[minmax(0,1fr)_410px]">
           <div className="relative flex min-h-[590px] items-end overflow-hidden px-6 py-14 sm:px-10 lg:min-h-[650px] lg:px-[max(5vw,64px)] lg:py-16">
             <Image
@@ -197,7 +197,7 @@ export default function FastBathPage() {
               sizes="(min-width: 1024px) calc(100vw - 410px), 100vw"
               className="object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#182116]/90 via-[#182116]/55 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#182116]/94 via-[#182116]/62 to-[#182116]/25 lg:bg-gradient-to-r lg:from-[#182116]/90 lg:via-[#182116]/55 lg:to-transparent" />
             <div className="relative max-w-[690px] text-white">
               <p className="mb-5 text-[12px] font-bold uppercase tracking-[0.2em] text-brand-light">Fast Bath in Lacey, WA</p>
               <h1 className="font-display text-[clamp(3.3rem,5.6vw,5.7rem)] font-medium leading-[0.92] tracking-[-0.035em]">
@@ -244,7 +244,7 @@ export default function FastBathPage() {
         </div>
       </section>
 
-      <nav aria-label="Fast Bath page sections" className="sticky top-[124px] z-20 border-y border-line bg-paper/95 backdrop-blur-md">
+      <nav aria-label="Fast Bath page sections" className="sticky top-[77px] z-20 xl:top-[109px] border-y border-line bg-paper/95 backdrop-blur-md">
         <div className={`${CONTAINER} flex min-h-14 items-center gap-7 overflow-x-auto text-[11px] font-bold uppercase tracking-[0.14em] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden`}>
           <a href="#services" className="whitespace-nowrap transition hover:text-brand-dark">Services</a>
           <a href="#process" className="whitespace-nowrap transition hover:text-brand-dark">How it works</a>

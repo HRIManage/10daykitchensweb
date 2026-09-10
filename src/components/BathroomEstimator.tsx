@@ -275,32 +275,35 @@ export default function BathroomEstimator() {
   }
 
   return (
-    <main ref={topRef} className="bg-[#f6f5f2] pt-[148px] text-ink sm:pt-[162px]">
+    <main ref={topRef} className="bg-[#f6f5f2] pt-[78px] text-ink sm:pt-[127px] xl:pt-[158px]">
       <div className="border-y border-line bg-[#f6f5f2] px-4 py-7 sm:px-6 lg:py-10">
         <div className="mx-auto max-w-[1240px] overflow-hidden rounded-xl border border-line bg-white shadow-[0_24px_70px_rgba(43,39,35,0.09)]">
           <Progress step={step} />
 
           {step === 1 && (
-            <section className="grid min-h-[650px] lg:grid-cols-[0.88fr_1.12fr]">
-              <div className="flex items-center px-7 py-12 sm:px-12 lg:px-16">
+            <section className="grid lg:min-h-[650px] lg:grid-cols-[0.88fr_1.12fr]">
+              <div className="flex items-center px-6 py-9 sm:px-12 sm:py-12 lg:px-16">
                 <div className="max-w-xl">
                   <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-dark">Free bathroom planning estimate</p>
-                  <h1 className="mt-5 font-display text-[clamp(3rem,5vw,4.7rem)] font-medium leading-[0.94] tracking-[-0.03em]">Bathroom remodel, made simple.</h1>
-                  <p className="mt-6 max-w-lg text-base leading-8 text-ink-soft">Choose the room size, project type, and upgrades you have in mind. We will build a personalized planning range in about two minutes.</p>
-                  <div className="mt-8 grid gap-4 text-sm sm:grid-cols-3 lg:grid-cols-1">
-                    {[
-                      [Clock3, "Fast", "A guided five-step experience"],
-                      [CircleDollarSign, "Clear", "See a planning range instantly"],
-                      [ShieldCheck, "No obligation", "Review your options first"],
-                    ].map(([Icon, title, body]) => {
-                      const ItemIcon = Icon as typeof Clock3;
-                      return <div key={String(title)} className="flex gap-4"><span className="flex size-10 flex-none items-center justify-center rounded-full bg-brand/10 text-brand-dark"><ItemIcon className="size-5" /></span><span><strong className="block">{String(title)}</strong><span className="text-ink-soft">{String(body)}</span></span></div>;
-                    })}
+                  <h1 className="mt-4 font-display text-[clamp(2.35rem,5vw,4.7rem)] font-medium leading-[0.96] tracking-[-0.03em] sm:mt-5 sm:leading-[0.94]">Bathroom remodel, made simple.</h1>
+                  <p className="mt-4 max-w-lg text-base leading-7 text-ink-soft sm:mt-6 sm:leading-8">Choose the room size, project type, and upgrades you have in mind. We will build a personalized planning range in about two minutes.</p>
+                  {/* CTA sits above the reassurance list on mobile so it stays above the fold. */}
+                  <div className="mt-6 flex flex-col gap-6 sm:mt-8 sm:gap-8">
+                    <div className="order-2 grid gap-3 text-sm sm:order-1 sm:grid-cols-3 sm:gap-4 lg:grid-cols-1">
+                      {[
+                        [Clock3, "Fast", "A guided five-step experience"],
+                        [CircleDollarSign, "Clear", "See a planning range instantly"],
+                        [ShieldCheck, "No obligation", "Review your options first"],
+                      ].map(([Icon, title, body]) => {
+                        const ItemIcon = Icon as typeof Clock3;
+                        return <div key={String(title)} className="flex items-center gap-3.5 sm:items-start sm:gap-4"><span className="flex size-9 flex-none items-center justify-center rounded-full bg-brand/10 text-brand-dark sm:size-10"><ItemIcon className="size-5" /></span><span><strong className="block">{String(title)}</strong><span className="text-ink-soft">{String(body)}</span></span></div>;
+                      })}
+                    </div>
+                    <div className="order-1 sm:order-2"><PrimaryButton onClick={() => goTo(2)}>Get started <ArrowRight className="size-4" /></PrimaryButton></div>
                   </div>
-                  <div className="mt-9"><PrimaryButton onClick={() => goTo(2)}>Get started <ArrowRight className="size-4" /></PrimaryButton></div>
                 </div>
               </div>
-              <div className="relative min-h-[420px] lg:min-h-full">
+              <div className="relative min-h-[320px] sm:min-h-[420px] lg:min-h-full">
                 <Image src="/images/hero-bathroom-custom.png" alt="Bright remodeled bathroom with a glass shower, freestanding tub, and double vanity" fill priority sizes="(min-width: 1024px) 55vw, 100vw" className="object-cover" />
                 <div className="absolute inset-x-5 bottom-5 rounded-lg bg-white/92 p-5 shadow-xl backdrop-blur sm:inset-x-auto sm:bottom-8 sm:left-8 sm:max-w-xs">
                   <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-brand-dark">Designed for your home</p>
