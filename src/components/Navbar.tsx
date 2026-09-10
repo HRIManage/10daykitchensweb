@@ -26,7 +26,7 @@ const navItems: NavItem[] = [
   {
     label: "Resources",
     children: [
-      { label: "Bathroom Estimate", href: "/bathroom-estimate", description: "Get a rough price in about two minutes" },
+      { label: "Bathroom Estimator", href: "/bathroom-estimator", description: "Get a rough price in about two minutes" },
       { label: "FAQs", href: "/faq", description: "Answers before you remodel" },
       { label: "Financing", href: "/financing", description: "Project payment options" },
       { label: "Blog / Advice", href: "/blog", description: "Planning tips and remodel guidance" },

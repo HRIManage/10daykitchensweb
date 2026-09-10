@@ -1,108 +1,63 @@
 "use client";
 
-import Image from "next/image";
-import { useCallback, useRef, useState } from "react";
-import { MoveHorizontal } from "lucide-react";
+import { useCallback, useRef } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 /**
- * Before/after reveal. The handle follows the pointer directly (no click-drag).
- * The reveal position is written to a CSS custom property on the container via a
- * ref, so pointer moves never trigger a React render — it stays smooth at 60fps.
- * A small piece of state is kept only for the accessible value + keyboard control.
+ * A native range input powers the comparison so drag, touch, and keyboard
+ * behavior stay reliable without rerendering React on every pointer move.
  */
 export default function FastBathBeforeAfterSlider() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const rafRef = useRef<number | null>(null);
-  const [ariaValue, setAriaValue] = useState(50);
+  const frameRef = useRef<HTMLDivElement>(null);
 
-  const apply = useCallback((pct: number) => {
-    const clamped = Math.min(100, Math.max(0, pct));
-    containerRef.current?.style.setProperty("--pos", `${clamped}%`);
-    return clamped;
+  const updateReveal = useCallback((value: string) => {
+    frameRef.current?.style.setProperty("--reveal", `${value}%`);
   }, []);
 
-  const onPointerMove = useCallback(
-    (event: React.PointerEvent<HTMLDivElement>) => {
-      const el = containerRef.current;
-      if (!el) return;
-      const bounds = el.getBoundingClientRect();
-      const pct = ((event.clientX - bounds.left) / bounds.width) * 100;
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      rafRef.current = requestAnimationFrame(() => apply(pct));
-    },
-    [apply],
-  );
-
-  const onKeyDown = (event: React.KeyboardEvent) => {
-    const step = event.shiftKey ? 10 : 4;
-    let next = ariaValue;
-    if (event.key === "ArrowLeft") next = Math.max(0, ariaValue - step);
-    else if (event.key === "ArrowRight") next = Math.min(100, ariaValue + step);
-    else if (event.key === "Home") next = 0;
-    else if (event.key === "End") next = 100;
-    else return;
-    event.preventDefault();
-    setAriaValue(apply(next));
-  };
-
   return (
-    <div
-      ref={containerRef}
-      onPointerMove={onPointerMove}
-      onPointerLeave={() => setAriaValue(apply(50))}
-      style={{ "--pos": "50%" } as React.CSSProperties}
-      className="group relative aspect-[4/5] w-full touch-pan-y select-none overflow-hidden border border-line bg-paper shadow-[0_28px_80px_rgba(43,39,35,0.14)]"
-    >
-      {/* After — full frame */}
-      <Image
-        src="/images/ba-after-bath.jpg"
-        alt="Bathroom after a Fast Bath tub-to-shower conversion"
-        fill
-        sizes="(min-width: 1024px) 46vw, 100vw"
-        className="object-cover"
-      />
-
-      {/* Before — clipped to the handle position */}
+    <figure>
       <div
-        className="absolute inset-0 overflow-hidden"
-        style={{ clipPath: "inset(0 calc(100% - var(--pos)) 0 0)" }}
+        ref={frameRef}
+        className="relative aspect-[4/5] touch-none overflow-hidden rounded-xl border border-line bg-ink [--reveal:50%] shadow-[0_24px_70px_rgba(43,39,35,0.12)]"
       >
-        <Image
-          src="/images/ba-before-bath.jpg"
-          alt="Bathroom before a Fast Bath tub-to-shower conversion"
-          fill
-          sizes="(min-width: 1024px) 46vw, 100vw"
-          className="object-cover"
+        <div
+          className="absolute inset-0 bg-[url('/images/fast-bath-before-after.png')] bg-[length:200%_auto] bg-right bg-center bg-no-repeat"
+          role="img"
+          aria-label="Finished Fast Bath tub to shower conversion"
+        />
+        <div
+          className="absolute inset-0 bg-[url('/images/fast-bath-before-after.png')] bg-[length:200%_auto] bg-left bg-center bg-no-repeat [clip-path:inset(0_calc(100%_-_var(--reveal))_0_0)]"
+          role="img"
+          aria-label="Bathroom before the Fast Bath tub to shower conversion"
+        />
+
+        <div
+          className="pointer-events-none absolute inset-y-0 z-10 w-0.5 -translate-x-1/2 bg-white shadow-[0_0_0_1px_rgba(43,39,35,0.18)]"
+          style={{ left: "var(--reveal)" }}
+        />
+        <div
+          className="pointer-events-none absolute top-1/2 z-20 flex size-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white text-ink shadow-[0_12px_30px_rgba(43,39,35,0.2)]"
+          style={{ left: "var(--reveal)" }}
+        >
+          <ChevronLeft className="size-4" aria-hidden="true" />
+          <ChevronRight className="size-4" aria-hidden="true" />
+        </div>
+
+        <input
+          type="range"
+          min="0"
+          max="100"
+          defaultValue="50"
+          aria-label="Show more of the before or after bathroom"
+          onInput={(event) => updateReveal(event.currentTarget.value)}
+          className="absolute inset-0 z-30 h-full w-full cursor-ew-resize opacity-0 focus:opacity-0"
         />
       </div>
-
-      <span className="pointer-events-none absolute left-4 top-4 bg-white/95 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-ink">
-        Before
-      </span>
-      <span className="pointer-events-none absolute right-4 top-4 bg-brand-dark px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-white">
-        After
-      </span>
-
-      {/* Divider */}
-      <div
-        className="pointer-events-none absolute inset-y-0 z-10 w-0.5 -translate-x-1/2 bg-white shadow-[0_0_0_1px_rgba(43,39,35,0.18)]"
-        style={{ left: "var(--pos)" }}
-      />
-
-      {/* Handle — the accessible control */}
-      <div
-        role="slider"
-        aria-label="Drag or use arrow keys to compare before and after"
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(ariaValue)}
-        tabIndex={0}
-        onKeyDown={onKeyDown}
-        style={{ left: "var(--pos)" }}
-        className="absolute top-1/2 z-20 flex size-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-white bg-brand-dark text-white shadow-[0_14px_34px_rgba(43,39,35,0.3)] transition-transform duration-200 group-hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-dark"
-      >
-        <MoveHorizontal className="size-5" aria-hidden />
-      </div>
-    </div>
+      <figcaption className="mt-4 grid grid-cols-[1fr_auto_1fr] items-center text-[11px] font-bold uppercase tracking-[0.16em] text-ink-soft">
+        <span>Before</span>
+        <span className="font-medium normal-case tracking-normal text-ink-muted">Drag or use arrow keys</span>
+        <span className="text-right text-brand-dark">After</span>
+      </figcaption>
+    </figure>
   );
 }
