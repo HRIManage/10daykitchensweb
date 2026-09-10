@@ -38,6 +38,11 @@ const nextConfig: NextConfig = {
         destination: "/collections",
         permanent: true,
       },
+      {
+        source: "/bathroom-estimate",
+        destination: "/bathroom-estimator",
+        permanent: true,
+      },
 
       // --- Legacy URLs from the previous site ---
       {
