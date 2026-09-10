@@ -3,725 +3,476 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
-  Bath,
   BadgeCheck,
-  Calculator,
+  Bath,
   Check,
   Clock3,
-  ClipboardList,
-  Home,
+  CreditCard,
+  House,
   MapPin,
-  PackageCheck,
   PanelsTopLeft,
   Phone,
+  ShieldCheck,
   ShowerHead,
   Sparkles,
   Wrench,
 } from "lucide-react";
-import { CONTAINER, SECTION } from "@/components/layout";
+import { CONTAINER } from "@/components/layout";
 import { CustomerReviews } from "@/components/home";
 import FastBathBeforeAfterSlider from "@/components/FastBathBeforeAfterSlider";
-import FinancingStrip from "@/components/landing/FinancingStrip";
-import LeadForm from "@/components/landing/LeadForm";
-import StickyCtaBar from "@/components/landing/StickyCtaBar";
 import { getServiceAreaCities, type City } from "@/lib/cities";
 import { site } from "@/lib/site";
 
+const SECTION = "py-16 sm:py-20 lg:py-28";
+const HEADING = "font-display text-[clamp(2.15rem,4vw,4rem)] font-medium leading-[1.02] tracking-[-0.025em]";
+
 export const metadata: Metadata = {
-  title: "Fast Bath: A New Bathroom in as Fast as 3 Days | Lacey, WA",
+  title: "Fast Bath Lacey WA | Bathroom Upgrades, Walk-In Showers & Tub Conversions",
   description:
-    "Fast Bath by 10 Day Kitchens — tub-to-shower conversions, shower replacements, and vanity updates installed in as fast as 3 days. Book a free in-home consultation in Lacey, Olympia, Tacoma, and the South Sound.",
-  alternates: {
-    canonical: "https://10daykitchens.com/fast-bath",
-  },
+    "Fast Bath by 10 Day Kitchens provides bathroom upgrades in Lacey, Olympia, Tacoma, Tumwater, DuPont, University Place, Lakewood, Thurston County, and Pierce County. Tub to shower conversions, shower replacements, wall panels, vanities, fixtures, and more.",
+  alternates: { canonical: "https://10daykitchens.com/fast-bath" },
   openGraph: {
-    title: "Fast Bath: A New Bathroom in as Fast as 3 Days",
+    title: "Fast Bath Lacey WA | Bathroom Upgrades by 10 Day Kitchens",
     description:
-      "Tub-to-shower conversions, shower replacements, and vanity updates installed in as fast as 3 days. Free in-home consultation.",
+      "Fast Bath bathroom upgrades in Lacey, Olympia, Tacoma, Thurston County, and Pierce County, including tub to shower conversions, wall panels, vanities, and fixtures.",
     url: "https://10daykitchens.com/fast-bath",
-    images: [{ url: "/images/fast-bath-hero-ba.jpg", alt: "Fast Bath before and after" }],
+    images: [{ url: "/images/fast-bath-before-after.png", alt: "Fast Bath bathroom before and after" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Fast Bath: A New Bathroom in as Fast as 3 Days",
-    description: "Tub-to-shower conversions and shower replacements installed in as fast as 3 days.",
-    images: ["/images/fast-bath-hero-ba.jpg"],
+    images: ["/images/fast-bath-before-after.png"],
   },
 };
 
-const heroTrust = [
-  "Family-owned since 2004",
-  "Licensed & bonded",
-  "Premium materials",
-  "Free in-home consultation",
+const trustItems = [
+  { icon: Clock3, title: "Fast turnaround", body: "Focused upgrades with less disruption." },
+  { icon: PanelsTopLeft, title: "Quality materials", body: "Waterproof systems and durable finishes." },
+  { icon: Wrench, title: "Professional install", body: "Local installers who respect your home." },
+  { icon: ShieldCheck, title: "Workmanship warranty", body: "Licensed, insured, and backed locally." },
 ];
 
-const heroStats = [
-  { value: "3 days", label: "Typical install" },
-  { value: "5 years", label: "Workmanship warranty" },
-  { value: "35+ yrs", label: "In the trade" },
-  { value: "$0", label: "For your quote" },
-];
-
-const sectionLinks = [
-  { label: "Before & after", href: "#before-after" },
-  { label: "What's included", href: "#services" },
-  { label: "How it works", href: "#process" },
-  { label: "Reviews", href: "#reviews" },
-  { label: "Full remodel?", href: "#compare" },
-  { label: "Financing", href: "#financing" },
-  { label: "FAQs", href: "#faqs" },
-  { label: "Book a visit", href: "#book" },
-];
-
-const serviceCards = [
-  { icon: ShowerHead, title: "Tub-to-shower conversion", body: "Replace an underused tub with a cleaner, easier walk-in shower." },
-  { icon: ShowerHead, title: "Shower replacement", body: "New walls, fixtures, glass, and accessories in the existing footprint." },
-  { icon: Bath, title: "Bathtub replacement", body: "Swap an old tub for a fresh, comfortable, easier-to-clean one." },
-  { icon: Sparkles, title: "Walk-in shower", body: "A more open shower with modern surfaces and fixtures." },
-  { icon: Wrench, title: "Vanity upgrade", body: "Vanities, countertops, sinks, faucets, mirrors, and lighting." },
-  { icon: Home, title: "Bathroom refresh", body: "Fixtures, toilet, hardware, accessories, and finishes." },
-  { icon: PanelsTopLeft, title: "Shower wall systems", body: "Waterproof panels for a clean look without a full tile project." },
-  { icon: BadgeCheck, title: "Fixtures & hardware", body: "Faucets, shower trim, towel bars, mirrors, and lighting." },
-];
-
-const steps = [
+const serviceGroups = [
   {
-    icon: ClipboardList,
-    title: "Free in-home consultation",
-    body: "We look at your bathroom, listen to your goals, and confirm whether Fast Bath or a full remodel fits. You leave with a firm quote.",
+    title: "Tub and shower updates",
+    body: "Replace the hardest-working part of your bathroom while keeping the existing footprint whenever possible.",
+    image: "/images/fast-bath-simple-service.png",
+    imageAlt: "Bright bathroom with a tub, wood vanity, and modern black fixtures",
+    items: ["Tub to shower conversion", "Shower replacement", "Shower wall systems"],
+    icon: ShowerHead,
   },
   {
-    icon: PackageCheck,
-    title: "We finalize selections and stage every material",
-    body: "Wall systems, fixtures, vanity, counters, and finishes are chosen and ordered before install day, so nothing slows the crew down.",
+    title: "Safer, easier bathing",
+    body: "Create a more open, comfortable setup with practical features selected around the way you use the room.",
+    image: "/images/white-oak-spa-bathroom-service.png",
+    imageAlt: "Spacious bathroom with a glass walk-in shower and white oak vanity",
+    items: ["Walk-in shower", "Bathtub replacement", "Fixtures and hardware"],
+    icon: Bath,
   },
   {
+    title: "A complete room refresh",
+    body: "Bring the rest of the bathroom up to date with coordinated surfaces, storage, lighting, and finishing details.",
+    image: "/images/hero-bathroom-custom.png",
+    imageAlt: "Finished bathroom with double vanity, glass shower, and freestanding tub",
+    items: ["Vanity upgrade", "Counters and sinks", "Mirrors, lighting, and accessories"],
     icon: Sparkles,
-    title: "Install in as fast as 3 days",
-    body: "Our local installers prepare the space, install your upgrades, protect your home, keep the site clean, and walk you through the finished room.",
+  },
+];
+
+const process = [
+  {
+    title: "Build your estimate",
+    body: "Choose your room size, project type, and preferred upgrades in about two minutes.",
+  },
+  {
+    title: "Free in-home consultation",
+    body: "We measure your bathroom, listen to your goals, and confirm whether Fast Bath or a full remodel fits best.",
+  },
+  {
+    title: "Design and selections",
+    body: "Choose wall systems, fixtures, vanity options, counters, accessories, and finishes with guided support.",
+  },
+  {
+    title: "Professional installation",
+    body: "Our team protects your home, installs the selected upgrades, keeps the site clean, and completes a final walkthrough.",
   },
 ];
 
 const chooseUs = [
-  "Fast bathroom upgrades for qualified same-layout projects",
+  "Fast bathroom options for qualified projects",
   "High-quality craftsmanship and premium products",
   "Experienced installers who respect your home",
   "Locally owned team based in Lacey",
-  "Licensed, insured, and backed by a 5-year workmanship warranty",
+  "Licensed, insured, and backed by a workmanship warranty",
   "Clear communication and clean job sites",
 ];
 
 const faqs = [
   {
-    question: "How is Fast Bath different from a full bathroom remodel?",
+    question: "How long does Fast Bath installation take?",
     answer:
-      "Fast Bath focuses on the shower, tub, vanity, and fixtures within your existing layout — no moving plumbing or walls. That is what makes the fast install window possible. A full bathroom remodel replaces everything and can change the footprint.",
-  },
-  {
-    question: "How much does a Fast Bath cost?",
-    answer:
-      "It depends on scope — a shower or tub update, a full refresh, or a primary suite are different projects. We give you a firm quote after an in-home visit, with no hidden costs. See our bathroom cost guide for how pricing works.",
-  },
-  {
-    question: "Is “as fast as 3 days” realistic?",
-    answer:
-      "For qualified projects, yes. The speed comes from finalizing every selection and staging all materials before install day, so the crew works a tight, planned schedule instead of waiting on decisions or deliveries.",
+      "Timing depends on the scope, materials, and site conditions, but Fast Bath is designed to be much faster and less disruptive than a full custom bathroom renovation.",
   },
   {
     question: "Can I keep my existing bathroom layout?",
     answer:
-      "Yes — Fast Bath is built around keeping the layout intact. If you need plumbing moved, electrical relocated, or structural changes, our full bathroom remodel service is the better fit.",
+      "Yes. Fast Bath is built around keeping the general layout intact whenever possible. If plumbing, electrical, or walls need to move, our full bathroom remodel service is usually the better fit.",
   },
   {
-    question: "Do you handle permits?",
+    question: "What is included in a Fast Bath upgrade?",
     answer:
-      "When a project needs one — usually for plumbing or electrical changes — we manage the application and inspections. Most same-layout shower and tub replacements do not require a permit.",
+      "Common upgrades include tub to shower conversions, shower and bathtub replacements, wall panels, vanities, counters, sinks, faucets, toilets, lighting, mirrors, accessories, and hardware.",
   },
   {
     question: "Do you offer financing?",
     answer:
-      "Yes. Monthly payment plans are available through GreenSky, with 0% promotional options for qualifying projects. We review the paths with you during your consultation.",
+      "Yes. Financing options are available so qualified homeowners can plan a bathroom upgrade around a monthly payment.",
   },
   {
-    question: "What areas do you serve?",
+    question: "Do you handle permits?",
     answer:
-      "Lacey, Olympia, Tumwater, Tacoma, Lakewood, and the wider South Sound, from our showroom in Lacey.",
+      "Requirements depend on the work involved. We review plumbing, electrical, structural, and local code needs with you during the consultation.",
   },
 ];
 
 function groupByCounty(cities: City[]) {
   const groups = new Map<string, City[]>();
-  for (const city of cities) {
-    const list = groups.get(city.county) ?? [];
-    list.push(city);
-    groups.set(city.county, list);
-  }
+  for (const city of cities) groups.set(city.county, [...(groups.get(city.county) ?? []), city]);
   return [...groups.entries()];
+}
+
+function PrimaryButton({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <Link
+      href={href}
+      className="group inline-flex min-h-13 items-center justify-center gap-3 whitespace-nowrap rounded-full bg-brand px-7 py-3 text-[12px] font-bold uppercase tracking-[0.14em] text-white transition duration-300 hover:-translate-y-0.5 hover:bg-brand-dark hover:shadow-[0_14px_34px_rgba(93,187,70,0.28)] active:translate-y-px"
+    >
+      {children}
+      <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+    </Link>
+  );
+}
+
+function SecondaryButton({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <Link
+      href={href}
+      className="inline-flex min-h-13 items-center justify-center whitespace-nowrap rounded-full border border-ink/25 bg-paper px-7 py-3 text-[12px] font-bold uppercase tracking-[0.14em] text-ink transition duration-300 hover:-translate-y-0.5 hover:border-brand hover:text-brand-dark active:translate-y-px"
+    >
+      {children}
+    </Link>
+  );
 }
 
 export default function FastBathPage() {
   const serviceCities = getServiceAreaCities();
   const counties = groupByCounty(serviceCities);
-
-  const jsonLd: object[] = [
-    {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      name: "Fast Bath",
-      description:
-        "Tub-to-shower conversions, shower replacements, wall panels, and vanity updates installed in as fast as 3 days for homes in Lacey, Olympia, Tacoma, and the South Sound.",
-      provider: {
-        "@type": "LocalBusiness",
-        name: site.name,
-        telephone: site.phone,
-        email: site.email,
-        address: site.address,
-      },
-      areaServed: serviceCities.map((city) => `${city.name}, WA`),
-      serviceType: [
-        "Tub to Shower Conversion",
-        "Shower Replacement",
-        "Walk-In Shower Installation",
-        "Bathroom Vanity Replacement",
-        "Shower Wall Panels",
-      ],
-      url: "https://10daykitchens.com/fast-bath",
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "Fast Bath",
+    provider: {
+      "@type": "LocalBusiness",
+      name: site.name,
+      telephone: site.phone,
+      email: site.email,
+      address: site.address,
     },
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: faqs.map((faq) => ({
-        "@type": "Question",
-        name: faq.question,
-        acceptedAnswer: { "@type": "Answer", text: faq.answer },
-      })),
-    },
-  ];
+    areaServed: serviceCities.map((city) => `${city.name}, WA`),
+    serviceType: ["Bathroom Upgrades", "Tub to Shower Conversion", "Shower Replacement", "Walk-In Shower Installation"],
+    url: "https://10daykitchens.com/fast-bath",
+  };
 
   return (
-    <main className="bg-paper text-ink">
+    <main className="overflow-clip bg-paper text-ink">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <StickyCtaBar />
+      <section className="pt-[148px] sm:pt-[162px]">
+        <div className="grid min-h-[650px] bg-white lg:grid-cols-[minmax(0,1fr)_410px]">
+          <div className="relative flex min-h-[590px] items-end overflow-hidden px-6 py-14 sm:px-10 lg:min-h-[650px] lg:px-[max(5vw,64px)] lg:py-16">
+            <Image
+              src="/images/hero-bathroom-custom.png"
+              alt="Bright completed bathroom remodel with a glass shower, freestanding tub, and double vanity"
+              fill
+              priority
+              sizes="(min-width: 1024px) calc(100vw - 410px), 100vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#182116]/90 via-[#182116]/55 to-transparent" />
+            <div className="relative max-w-[690px] text-white">
+              <p className="mb-5 text-[12px] font-bold uppercase tracking-[0.2em] text-brand-light">Fast Bath in Lacey, WA</p>
+              <h1 className="font-display text-[clamp(3.3rem,5.6vw,5.7rem)] font-medium leading-[0.92] tracking-[-0.035em]">
+                A better bathroom, made easy.
+              </h1>
+              <p className="mt-7 max-w-[560px] text-[1.05rem] leading-8 text-white/90">
+                Focused bathroom upgrades planned and installed by your local South Sound remodeling team.
+              </p>
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+                <PrimaryButton href="/bathroom-estimator">Free instant estimate</PrimaryButton>
+                <Link href={site.phoneHref} className="inline-flex min-h-13 items-center justify-center whitespace-nowrap rounded-full border border-white/70 bg-white/10 px-7 py-3 text-[12px] font-bold uppercase tracking-[0.14em] text-white backdrop-blur-sm transition hover:bg-white hover:text-ink">
+                  Call {site.phone}
+                </Link>
+              </div>
+            </div>
+          </div>
 
-      {/* Hero */}
-      <section className="bg-paper pt-[150px] pb-14 sm:pt-[172px]">
-        <div className={`${CONTAINER} grid gap-12 lg:grid-cols-[1fr_0.92fr] lg:items-start`}>
-          <div className="max-w-2xl">
-            <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-brand-dark">
-              Fast Bath &middot; Lacey, WA
-            </p>
-            <h1 className="mt-4 text-[clamp(2.5rem,4.7vw,4.7rem)] font-medium leading-[1.02] tracking-[-0.02em] text-ink">
-              A new bathroom in{" "}
-              <span className="whitespace-nowrap italic text-brand-dark">as few as 3 days.</span>
-            </h1>
-            <p className="mt-6 max-w-xl text-[1.05rem] leading-8 text-ink-soft">
-              Professional installation and premium materials with far less disruption than a full
-              remodel &mdash; tub-to-shower conversions, shower replacements, wall panels, and
-              vanities.
-            </p>
-            <ul className="mt-7 flex flex-wrap gap-2.5">
-              {heroTrust.map((item) => (
-                <li
-                  key={item}
-                  className="inline-flex items-center gap-1.5 border border-line bg-white px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.1em] text-ink"
-                >
-                  <Check className="size-3.5 text-brand-dark" aria-hidden />
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <div className="relative mt-9 hidden aspect-[1.28/1] w-full overflow-hidden border border-line bg-white shadow-[0_28px_80px_rgba(43,39,35,0.14)] lg:block">
-              <Image
-                src="/images/fast-bath-hero-ba.jpg"
-                alt="Real Fast Bath tub-to-shower conversion — dated tub and shower curtain replaced with a walk-in glass shower"
-                fill
-                priority
-                sizes="(min-width: 1024px) 52vw, 100vw"
-                className="object-cover"
-              />
-            </div>
-          </div>
-          <div className="lg:pt-2">
-            <LeadForm />
-            <p className="mt-4 text-center text-[13px] text-ink-soft">
-              Prefer a number first?{" "}
-              <Link
-                href="/bathroom-estimate"
-                className="font-semibold text-brand-dark underline underline-offset-2"
-              >
-                Get an instant estimate
+          <aside className="flex items-center bg-white px-7 py-12 sm:px-10 lg:px-9">
+            <div className="w-full">
+              <h2 className="font-sans text-[2rem] font-bold leading-[1.04] tracking-[-0.035em] text-ink">Start your free bathroom estimate</h2>
+              <p className="mt-4 text-sm leading-7 text-ink-soft">See a preliminary project range before scheduling your in-home consultation.</p>
+              <div className="mt-7 space-y-5">
+                {[
+                  [Clock3, "Takes about two minutes"],
+                  [Sparkles, "Visual project choices"],
+                  [CreditCard, "Instant planning range"],
+                  [ShieldCheck, "No obligation"],
+                ].map(([Icon, label]) => {
+                  const ItemIcon = Icon as typeof Clock3;
+                  return (
+                    <div key={String(label)} className="flex items-center gap-4 border-b border-line pb-5 last:border-0 last:pb-0">
+                      <span className="flex size-10 flex-none items-center justify-center rounded-full bg-brand/10 text-brand-dark"><ItemIcon className="size-5" aria-hidden="true" /></span>
+                      <span className="text-sm font-bold">{String(label)}</span>
+                    </div>
+                  );
+                })}
+              </div>
+              <Link href="/bathroom-estimator" className="group mt-8 inline-flex min-h-14 w-full items-center justify-center gap-3 whitespace-nowrap rounded-full bg-brand px-6 text-[12px] font-bold uppercase tracking-[0.14em] text-white transition hover:bg-brand-dark active:translate-y-px">
+                Get my estimate <ArrowRight className="size-4 transition group-hover:translate-x-1" aria-hidden="true" />
               </Link>
-            </p>
-            <div className="relative mt-6 aspect-[1.3/1] w-full overflow-hidden border border-line bg-white shadow-[0_20px_50px_rgba(43,39,35,0.12)] lg:hidden">
-              <Image
-                src="/images/fast-bath-hero-ba.jpg"
-                alt="Real Fast Bath tub-to-shower conversion, before and after"
-                fill
-                priority
-                sizes="100vw"
-                className="object-cover"
-              />
+              <p className="mt-4 text-center text-xs leading-5 text-ink-muted">A final quote follows an in-home measure and material review.</p>
             </div>
-          </div>
+          </aside>
         </div>
       </section>
 
-      {/* Estimator CTA + stat band */}
-      <section className="relative overflow-hidden bg-forest text-white">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -right-24 -top-24 size-[380px] rounded-full bg-brand/10 blur-3xl"
-        />
-        <div className={`${CONTAINER} relative py-14 sm:py-16`}>
-          <div className="grid items-center gap-10 lg:grid-cols-[1.15fr_0.85fr]">
-            <div>
-              <p className="inline-flex items-center gap-2 border border-brand-light/40 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-brand-light">
-                <Calculator className="size-3.5" aria-hidden />
-                Free instant estimate
-              </p>
-              <h2 className="mt-5 max-w-xl font-display text-[clamp(2rem,3.6vw,3.4rem)] font-medium leading-[1.05] tracking-[-0.02em]">
-                What will <em className="not-italic text-brand-light">your</em> bathroom cost?
-              </h2>
-              <p className="mt-4 max-w-lg text-[1.02rem] leading-8 text-white/72">
-                Answer six quick questions about your space and get a real price range in about two
-                minutes. No phone call required, no obligation.
-              </p>
-            </div>
-
-            <div className="border border-white/15 bg-white/[0.04] p-7 backdrop-blur-sm">
-              <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-white/55">
-                A recent Fast Bath estimate
-              </p>
-              <p className="mt-2 font-display text-[clamp(1.9rem,3.4vw,2.6rem)] font-semibold leading-none text-white">
-                $9,700 <span className="text-white/40">&ndash;</span> $12,400
-              </p>
-              <p className="mt-2 text-[13px] text-white/55">
-                Standard bath &middot; tub-to-shower &middot; premium finishes
-              </p>
-              <Link
-                href="/bathroom-estimate"
-                className="mt-6 flex min-h-[56px] w-full items-center justify-center gap-2 bg-brand-light px-6 text-[13px] font-bold uppercase tracking-[0.12em] text-forest transition hover:bg-white"
-              >
-                Get my instant estimate
-                <ArrowRight className="size-4" aria-hidden />
-              </Link>
-              <p className="mt-3 text-center text-[11px] text-white/45">
-                Takes about 2 minutes &middot; 100% free
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className={`${CONTAINER} relative grid grid-cols-2 divide-x divide-white/12 border-t border-white/12 md:grid-cols-4`}>
-          {heroStats.map((stat) => (
-            <div key={stat.label} className="px-4 py-8 text-center">
-              <p className="font-display text-[clamp(1.7rem,3vw,2.4rem)] font-semibold leading-none text-brand-light">
-                {stat.value}
-              </p>
-              <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.14em] text-white/60">
-                {stat.label}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Jump nav */}
-      <nav aria-label="Page sections" className="border-b border-line bg-white">
-        <div className={`${CONTAINER} flex gap-1 overflow-x-auto py-1`}>
-          {sectionLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="whitespace-nowrap px-4 py-3 text-[12px] font-bold uppercase tracking-[0.12em] text-ink-soft transition hover:text-brand-dark"
-            >
-              {link.label}
-            </a>
-          ))}
+      <nav aria-label="Fast Bath page sections" className="sticky top-[124px] z-20 border-y border-line bg-paper/95 backdrop-blur-md">
+        <div className={`${CONTAINER} flex min-h-14 items-center gap-7 overflow-x-auto text-[11px] font-bold uppercase tracking-[0.14em] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden`}>
+          <a href="#services" className="whitespace-nowrap transition hover:text-brand-dark">Services</a>
+          <a href="#process" className="whitespace-nowrap transition hover:text-brand-dark">How it works</a>
+          <a href="#results" className="whitespace-nowrap transition hover:text-brand-dark">Before and after</a>
+          <a href="#financing" className="whitespace-nowrap transition hover:text-brand-dark">Financing</a>
+          <a href="#faqs" className="whitespace-nowrap transition hover:text-brand-dark">FAQs</a>
+          <a href="#service-area" className="whitespace-nowrap transition hover:text-brand-dark">Service area</a>
+          <Link href="/bathroom-estimator" className="ml-auto hidden whitespace-nowrap text-brand-dark lg:block">Get started</Link>
         </div>
       </nav>
 
-      {/* Before / after — the proof, up front */}
-      <section id="before-after" className={`${SECTION} scroll-mt-24 bg-paper`}>
-        <div className={`${CONTAINER} grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center`}>
-          <div className="order-2 lg:order-1">
-            <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-brand-dark">
-              Before &amp; after
-            </p>
-            <h2 className="mt-3 font-display text-[clamp(1.9rem,3.3vw,3.2rem)] font-medium leading-[1.06] tracking-[-0.02em]">
-              Same footprint. A completely different room.
-            </h2>
-            <p className="mt-5 max-w-md text-base leading-8 text-ink-soft">
-              This one was a tired tub with a shower curtain and a dark vanity. Ten days later:
-              a walk-in glass shower, white cabinetry, and a hex-tile floor &mdash; no walls moved,
-              no plumbing relocated. Drag the handle to see it.
-            </p>
-            <Link
-              href="/portfolio"
-              className="mt-8 inline-flex min-h-[52px] items-center gap-2 bg-brand-dark px-7 text-[13px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-ink"
-            >
-              See more projects
-              <ArrowRight className="size-4" aria-hidden />
-            </Link>
-          </div>
-          <div className="order-1 lg:order-2">
-            <div className="mx-auto w-full max-w-[420px] lg:ml-auto lg:mr-0">
-              <FastBathBeforeAfterSlider />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Two ways to start */}
-      <section className="scroll-mt-24 bg-forest py-16 text-white sm:py-20">
-        <div className={CONTAINER}>
-          <div className="max-w-2xl">
-            <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-brand-light">
-              Ready to start?
-            </p>
-            <h2 className="mt-3 font-display text-[clamp(2rem,3.6vw,3.4rem)] font-medium leading-[1.05] tracking-[-0.02em]">
-              Two ways to get your Fast Bath moving.
-            </h2>
-          </div>
-          <div className="mt-10 grid gap-4 md:grid-cols-2">
-            <div className="flex flex-col border border-white/15 bg-white/[0.04] p-8">
-              <Clock3 className="size-7 text-brand-light" aria-hidden />
-              <h3 className="mt-5 font-display text-[1.5rem] font-medium">Book a free in-home visit</h3>
-              <p className="mt-2 flex-1 text-[0.98rem] leading-7 text-white/70">
-                45&ndash;60 minutes. We measure the space, walk through materials, and leave you
-                with a firm, written quote. No pressure, no cost.
-              </p>
-              <Link
-                href="#book"
-                className="mt-6 inline-flex min-h-[54px] items-center justify-center gap-2 bg-brand-light px-6 text-[13px] font-bold uppercase tracking-[0.12em] text-forest transition hover:bg-white"
-              >
-                Pick a time
-                <ArrowRight className="size-4" aria-hidden />
-              </Link>
-            </div>
-            <div className="flex flex-col border border-white/15 bg-white/[0.04] p-8">
-              <Calculator className="size-7 text-brand-light" aria-hidden />
-              <h3 className="mt-5 font-display text-[1.5rem] font-medium">Get an instant estimate</h3>
-              <p className="mt-2 flex-1 text-[0.98rem] leading-7 text-white/70">
-                Six quick questions, about two minutes, and you get a real price range on screen
-                &mdash; before you ever talk to anyone.
-              </p>
-              <Link
-                href="/bathroom-estimate"
-                className="mt-6 inline-flex min-h-[54px] items-center justify-center gap-2 border border-white px-6 text-[13px] font-bold uppercase tracking-[0.12em] text-white transition hover:bg-white hover:text-forest"
-              >
-                Start the estimate
-                <ArrowRight className="size-4" aria-hidden />
-              </Link>
-            </div>
-          </div>
-          <p className="mt-8 text-[0.95rem] text-white/60">
-            Or just call us &mdash;{" "}
-            <a href={site.phoneHref} className="font-semibold text-brand-light hover:text-white">
-              {site.phone}
-            </a>
-            , Monday to Friday.
-          </p>
-        </div>
-      </section>
-
-      {/* What Fast Bath covers */}
-      <section id="services" className={`${SECTION} scroll-mt-24 bg-sand`}>
-        <div className={CONTAINER}>
-          <div className="max-w-3xl">
-            <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-brand-dark">
-              What Fast Bath covers
-            </p>
-            <h2 className="mt-3 font-display text-[clamp(1.9rem,3.3vw,3.2rem)] font-medium leading-[1.06] tracking-[-0.02em]">
-              Focused upgrades with a finished-room feel.
-            </h2>
-          </div>
-          <div className="mt-10 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
-            {serviceCards.map((service) => (
-              <div key={service.title} className="flex flex-col bg-white p-6">
-                <service.icon className="mb-6 size-6 text-brand-dark" aria-hidden />
-                <h3 className="text-[1.15rem] font-semibold leading-tight text-ink">{service.title}</h3>
-                <p className="mt-2.5 flex-1 text-[0.9rem] leading-7 text-ink-soft">{service.body}</p>
-                <Link
-                  href="/bathroom-estimate"
-                  className="mt-5 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-brand-dark transition hover:gap-2.5 hover:text-ink"
-                >
-                  Price this
-                  <ArrowRight className="size-3.5" aria-hidden />
-                </Link>
+      <section aria-label="Why choose Fast Bath" className="border-b border-line bg-white">
+        <div className={`${CONTAINER} grid sm:grid-cols-2 lg:grid-cols-4`}>
+          {trustItems.map((item) => (
+            <div key={item.title} className="flex gap-4 border-b border-line py-7 sm:px-6 lg:border-b-0 lg:border-r lg:last:border-r-0">
+              <item.icon className="mt-1 size-5 flex-none text-brand" aria-hidden="true" />
+              <div>
+                <h2 className="text-[0.92rem] font-bold">{item.title}</h2>
+                <p className="mt-1 text-sm leading-6 text-ink-soft">{item.body}</p>
               </div>
-            ))}
-          </div>
-          <p className="mt-8 text-[0.95rem] text-ink-soft">
-            Not sure which one you need?{" "}
-            <Link
-              href="/bathroom-estimate"
-              className="font-semibold text-brand-dark underline underline-offset-4"
-            >
-              Answer six questions and we&rsquo;ll price it for you
-            </Link>
-            .
-          </p>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* 3-step process — dark for contrast */}
-      <section id="process" className="scroll-mt-24 bg-forest py-16 text-white sm:py-20 lg:py-24">
+      <section id="services" className={`${SECTION} scroll-mt-48`}>
         <div className={CONTAINER}>
-          <div className="max-w-3xl">
-            <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-brand-light">
-              How it works
-            </p>
-            <h2 className="mt-3 font-display text-[clamp(1.9rem,3.3vw,3.2rem)] font-medium leading-[1.06] tracking-[-0.02em]">
-              Three steps, no drift.
-            </h2>
-          </div>
-          <div className="mt-12 grid gap-8 md:grid-cols-3">
-            {steps.map((step, i) => (
-              <div key={step.title} className="border-t-2 border-brand-light/40 pt-6">
-                <div className="flex items-baseline gap-3">
-                  <span className="font-display text-[3.2rem] font-semibold leading-none text-brand-light">
-                    {i + 1}
-                  </span>
-                  <step.icon className="size-5 text-brand-light" aria-hidden />
+          <p className="mb-4 text-[12px] font-bold uppercase tracking-[0.22em] text-brand-dark">Bathroom remodeling options</p>
+          <h2 className={`${HEADING} max-w-3xl`}>Update what matters most.</h2>
+          <p className="mt-6 max-w-2xl text-base leading-8 text-ink-soft">
+            Keep the general layout and focus your budget on the shower, tub, vanity, and finishes you use every day.
+          </p>
+
+          <div className="mt-12 grid gap-5 lg:grid-cols-12">
+            {serviceGroups.map((service, index) => (
+              <article
+                key={service.title}
+                className={`group overflow-hidden border border-line bg-white ${index === 0 ? "lg:col-span-7" : index === 1 ? "lg:col-span-5" : "lg:col-span-12 lg:grid lg:grid-cols-[0.9fr_1.1fr]"}`}
+              >
+                <div className={`relative overflow-hidden ${index === 2 ? "min-h-[320px]" : "aspect-[16/10]"}`}>
+                  <Image
+                    src={service.image}
+                    alt={service.imageAlt}
+                    fill
+                    sizes={index === 2 ? "(min-width: 1024px) 45vw, 100vw" : "(min-width: 1024px) 55vw, 100vw"}
+                    className="object-cover transition-transform duration-700 group-hover:scale-[1.025]"
+                  />
                 </div>
-                <h3 className="mt-4 text-[1.2rem] font-semibold leading-snug text-white">{step.title}</h3>
-                <p className="mt-3 text-[0.95rem] leading-7 text-white/70">{step.body}</p>
-              </div>
+                <div className="p-7 sm:p-9">
+                  <service.icon className="mb-6 size-7 text-brand" aria-hidden="true" />
+                  <h3 className="font-display text-[2rem] font-medium leading-tight">{service.title}</h3>
+                  <p className="mt-4 max-w-xl text-[0.96rem] leading-7 text-ink-soft">{service.body}</p>
+                  <ul className="mt-7 grid gap-3 sm:grid-cols-2">
+                    {service.items.map((item) => (
+                      <li key={item} className="flex items-center gap-3 text-sm font-semibold">
+                        <Check className="size-4 flex-none text-brand" aria-hidden="true" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      <div id="reviews" className="scroll-mt-24">
-        <CustomerReviews />
-      </div>
-
-      {/* Fast Bath vs full remodel */}
-      <section id="compare" className={`${SECTION} scroll-mt-24 bg-white`}>
-        <div
-          className={`${CONTAINER} grid gap-10 border border-line bg-paper p-7 shadow-[0_24px_70px_rgba(43,39,35,0.08)] sm:p-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center`}
-        >
-          <div>
-            <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-brand-dark">
-              Need a full custom renovation?
-            </p>
-            <h2 className="mt-3 font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em] text-ink">
-              Choose a full Bathroom Remodel when the layout, tile, or plumbing needs to change.
-            </h2>
+      <section id="process" className={`${SECTION} scroll-mt-48 border-y border-line bg-white`}>
+        <div className={CONTAINER}>
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className={HEADING}>One team, one simple process.</h2>
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-ink-soft">From your first online estimate through installation, our local team keeps every decision clear.</p>
           </div>
-          <div>
-            <p className="text-base leading-8 text-ink-soft">
-              If your project involves complete demolition, custom tile showers, tile flooring,
-              waterproofing, moved plumbing, relocated electrical, layout changes, or a luxury
-              redesign, the full Bathroom Remodel path is the better fit.
+          <ol className="mt-12 grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+            {process.map((item, index) => (
+              <li key={item.title} className="bg-white p-7 sm:p-8">
+                <span className="flex size-11 items-center justify-center rounded-full bg-brand text-sm font-bold text-white" aria-hidden="true">{index + 1}</span>
+                <h3 className="mt-7 font-sans text-lg font-bold leading-tight">{item.title}</h3>
+                <p className="mt-3 text-sm leading-7 text-ink-soft">{item.body}</p>
+              </li>
+            ))}
+          </ol>
+          <div className="mt-9 text-center"><PrimaryButton href="/bathroom-estimator">Free instant estimate</PrimaryButton></div>
+        </div>
+      </section>
+
+      <section id="results" className={`${SECTION} scroll-mt-48`}>
+        <div className={CONTAINER}>
+          <div className="max-w-3xl">
+            <h2 className={HEADING}>See the change for yourself.</h2>
+            <p className="mt-6 max-w-2xl text-base leading-8 text-ink-soft">
+              Drag the handle to compare a focused bathroom upgrade. The control also works with touch and arrow keys.
             </p>
-            <ul className="mt-6 grid gap-3">
+          </div>
+          <div className="mt-10 grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+            <div className="mx-auto w-full max-w-[620px]"><FastBathBeforeAfterSlider /></div>
+            <div className="bg-white p-7 shadow-[0_20px_60px_rgba(43,39,35,0.08)] sm:p-10">
+              <h3 className="font-display text-[2rem] font-medium leading-tight">Big impact, focused scope.</h3>
+              <p className="mt-5 text-base leading-8 text-ink-soft">
+                Fast Bath is ideal when the room needs a brighter, cleaner, easier-to-use shower, tub, vanity, or finish update.
+              </p>
+              <div className="mt-8">
+                <SecondaryButton href="/portfolio">View more projects</SecondaryButton>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className={`${SECTION} border-y border-line bg-white`}>
+        <div className={`${CONTAINER} grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center`}>
+          <div className="relative aspect-[4/3] overflow-hidden">
+            <Image
+              src="/images/luxury-master-bath-montage.png"
+              alt="Bathroom remodel with shower, vanity, and coordinated premium finishes"
+              fill
+              sizes="(min-width: 1024px) 52vw, 100vw"
+              className="object-cover"
+            />
+          </div>
+          <div className="lg:pl-8">
+            <h2 className={HEADING}>Local work, handled with care.</h2>
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
               {chooseUs.map((item) => (
-                <li key={item} className="flex gap-3 border-t border-line pt-3 text-[0.96rem] leading-7 text-ink-soft">
-                  <Check className="mt-1 size-4 flex-none text-brand-dark" aria-hidden />
+                <div key={item} className="flex gap-3 border-t border-line pt-4 text-[0.95rem] leading-7 text-ink-soft">
+                  <BadgeCheck className="mt-1 size-5 flex-none text-brand" aria-hidden="true" />
                   <span>{item}</span>
-                </li>
+                </div>
               ))}
-            </ul>
-            <div className="mt-8">
-              <Link
-                href="/bathroom-remodel"
-                className="inline-flex min-h-[52px] items-center gap-2 border border-line bg-white px-7 text-[13px] font-bold uppercase tracking-[0.12em] text-ink transition hover:border-brand-dark hover:text-brand-dark"
-              >
-                View full bathroom remodel
-                <ArrowRight className="size-4" aria-hidden />
+            </div>
+            <div className="mt-9 border-l-4 border-brand bg-sand p-6">
+              <h3 className="font-display text-2xl font-medium">Need layout, tile, or plumbing changes?</h3>
+              <p className="mt-3 text-sm leading-7 text-ink-soft">A full custom Bathroom Remodel is the better path for structural changes and complete redesigns.</p>
+              <Link href="/bathroom-remodel" className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-brand-dark hover:underline">
+                View full bathroom remodel <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      <div id="financing" className="scroll-mt-24">
-        <FinancingStrip />
-      </div>
-
-      {/* Showroom / visit us */}
-      <section className={`${SECTION} bg-white`}>
-        <div className={`${CONTAINER} grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center`}>
-          <div>
-            <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-brand-dark">
-              Visit the showroom
-            </p>
-            <h2 className="mt-3 font-display text-[clamp(1.9rem,3.3vw,3.2rem)] font-medium leading-[1.06] tracking-[-0.02em]">
-              See and touch it before you decide.
-            </h2>
-            <p className="mt-5 max-w-md text-base leading-8 text-ink-soft">
-              Cabinet doors, quartz slabs, tile, and fixture finishes are all in one place in Lacey.
-              Most homeowners finish their selections in a single visit.
-            </p>
+      <section id="financing" className={`${SECTION} scroll-mt-48`}>
+        <div className={`${CONTAINER} grid gap-8 bg-sand p-7 sm:p-10 lg:grid-cols-[0.7fr_1.3fr] lg:items-center lg:p-14`}>
+          <div className="flex size-16 items-center justify-center bg-brand text-white">
+            <CreditCard className="size-8" aria-hidden="true" />
           </div>
-          <div className="grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2">
-            <div className="bg-paper p-6">
-              <MapPin className="mb-4 size-5 text-brand-dark" aria-hidden />
-              <p className="text-[12px] font-bold uppercase tracking-[0.12em] text-ink">Showroom</p>
-              <p className="mt-2 text-[0.95rem] leading-7 text-ink-soft">{site.address}</p>
-              <a
-                href={site.mapsHref}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-3 inline-block text-[12px] font-bold uppercase tracking-[0.12em] text-brand-dark underline underline-offset-4"
-              >
-                Get directions
-              </a>
-            </div>
-            <div className="bg-paper p-6">
-              <Clock3 className="mb-4 size-5 text-brand-dark" aria-hidden />
-              <p className="text-[12px] font-bold uppercase tracking-[0.12em] text-ink">Hours</p>
-              <div className="mt-2 space-y-1 text-[0.95rem] leading-7 text-ink-soft">
-                {site.showroomHours.map((entry) => (
-                  <p key={entry.day}>
-                    <span className="font-semibold text-ink">{entry.day}:</span> {entry.time}
-                  </p>
-                ))}
-              </div>
-            </div>
-            <div className="bg-paper p-6 sm:col-span-2">
-              <Phone className="mb-4 size-5 text-brand-dark" aria-hidden />
-              <p className="text-[12px] font-bold uppercase tracking-[0.12em] text-ink">
-                Prefer to talk it through?
-              </p>
-              <a
-                href={site.phoneHref}
-                className="mt-2 inline-block font-display text-[1.6rem] font-semibold text-brand-dark hover:text-ink"
-              >
-                {site.phone}
-              </a>
+          <div>
+            <h2 className={`${HEADING} max-w-3xl`}>A project plan that fits your home and budget.</h2>
+            <p className="mt-5 max-w-2xl text-base leading-8 text-ink-soft">
+              Financing options are available for qualified homeowners. We explain the scope, selections, and payment options clearly before work begins.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <PrimaryButton href="/bathroom-estimator">Free instant estimate</PrimaryButton>
+              <SecondaryButton href="/financing">Explore financing</SecondaryButton>
             </div>
           </div>
         </div>
       </section>
 
+      <CustomerReviews />
 
-      {/* FAQ */}
-      <section id="faqs" className={`${SECTION} scroll-mt-24 bg-paper`}>
-        <div className={`${CONTAINER} grid gap-12 lg:grid-cols-[0.7fr_1fr]`}>
+      <section id="faqs" className={`${SECTION} scroll-mt-48 border-y border-line bg-white`}>
+        <div className={`${CONTAINER} grid gap-12 lg:grid-cols-[0.7fr_1.3fr]`}>
           <div>
-            <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-brand-dark">Fast Bath FAQs</p>
-            <h2 className="mt-3 font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em]">
-              Answers before you book.
-            </h2>
+            <p className="mb-4 text-[12px] font-bold uppercase tracking-[0.22em] text-brand-dark">Fast Bath FAQs</p>
+            <h2 className={HEADING}>Answers before you start.</h2>
           </div>
-          <div className="divide-y divide-line border-y border-line">
+          <div className="border-t border-line">
             {faqs.map((faq) => (
-              <details key={faq.question} className="group py-5">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-5 text-[1.05rem] font-semibold text-ink [&::-webkit-details-marker]:hidden">
+              <details key={faq.question} className="group border-b border-line py-6">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-5 text-[1.05rem] font-bold text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand">
                   {faq.question}
-                  <span className="text-xl leading-none text-brand-dark transition-transform group-open:rotate-45">
-                    +
-                  </span>
+                  <span className="text-2xl font-normal text-brand transition-transform group-open:rotate-45" aria-hidden="true">+</span>
                 </summary>
-                <p className="mt-3 max-w-2xl text-[0.96rem] leading-7 text-ink-soft">{faq.answer}</p>
+                <p className="mt-4 max-w-3xl pr-10 text-[0.96rem] leading-8 text-ink-soft">{faq.answer}</p>
               </details>
             ))}
           </div>
         </div>
       </section>
 
-
-      {/* Service area */}
-      <section className={`${SECTION} bg-cream`}>
+      <section id="service-area" className={`${SECTION} scroll-mt-48`}>
         <div className={CONTAINER}>
-          <div className="mb-12">
-            <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-brand-dark">Where we work</p>
-            <h2 className="mt-3 max-w-3xl font-display text-[clamp(1.85rem,3.1vw,3rem)] font-medium leading-[1.08] tracking-[-0.015em]">
-              Fast bathroom upgrades across the{" "}
-              <em className="font-medium italic text-brand-dark">South Sound.</em>
-            </h2>
-            <p className="mt-6 max-w-2xl text-base leading-8 text-ink-soft">
-              Based in Lacey and serving homeowners throughout Thurston County, Pierce County, Lewis
-              County, and nearby South Sound communities.
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-10">
-            {counties.map(([county, countyCities]) => (
-              <div key={county}>
-                <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.22em] text-ink-muted">{county}</p>
-                <div className="flex flex-wrap gap-3">
-                  {countyCities.map((city) =>
-                    city.published ? (
-                      <Link
-                        key={city.slug}
-                        href={`/kitchen-remodel/${city.slug}`}
-                        className="group flex items-center gap-2 rounded-full border border-brand/35 bg-paper py-2.5 pl-3.5 pr-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-dark hover:bg-brand-dark"
-                      >
-                        <MapPin className="size-4 flex-none text-brand-dark transition-colors group-hover:text-white" aria-hidden />
-                        <span className="font-display text-[15px] font-semibold text-ink transition-colors group-hover:text-white">
+          <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr]">
+            <div>
+              <MapPin className="mb-6 size-8 text-brand" aria-hidden="true" />
+              <h2 className={HEADING}>Fast Bath across the South Sound.</h2>
+              <p className="mt-6 max-w-md text-base leading-8 text-ink-soft">
+                Based in Lacey and serving homeowners throughout Thurston, Pierce, Lewis, and nearby communities.
+              </p>
+            </div>
+            <div className="grid gap-8 sm:grid-cols-2">
+              {counties.map(([county, countyCities]) => (
+                <div key={county} className="border-t border-line pt-5">
+                  <h3 className="text-[12px] font-bold uppercase tracking-[0.16em] text-ink">{county}</h3>
+                  <div className="mt-4 flex flex-wrap gap-x-4 gap-y-3">
+                    {countyCities.map((city) =>
+                      city.published ? (
+                        <Link key={city.slug} href={`/kitchen-remodel/${city.slug}`} className="text-sm text-ink-soft transition hover:text-brand-dark hover:underline">
                           {city.name}
-                        </span>
-                      </Link>
-                    ) : (
-                      <span
-                        key={city.slug}
-                        className="flex items-center gap-2 rounded-full border border-line bg-paper/60 py-2.5 pl-3.5 pr-5"
-                      >
-                        <MapPin className="size-4 flex-none text-ink-soft/35" aria-hidden />
-                        <span className="font-display text-[15px] font-semibold text-ink-soft/55">{city.name}</span>
-                      </span>
-                    ),
-                  )}
+                        </Link>
+                      ) : (
+                        <span key={city.slug} className="text-sm text-ink-muted">{city.name}</span>
+                      )
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-
-          <p className="mt-10 max-w-2xl text-[14.5px] leading-relaxed text-ink-soft/70">
-            Don&apos;t see your city listed? We often serve homeowners just outside these areas. Call{" "}
-            <a href={site.phoneHref} className="font-semibold text-brand-dark hover:underline">
-              {site.phone}
-            </a>{" "}
-            and we&apos;ll let you know right away.
-          </p>
         </div>
       </section>
 
-      {/* Closing CTA — repeat the form */}
-      <section id="book" className="scroll-mt-24 bg-forest py-16 text-white sm:py-20 lg:py-24">
-        <div className={`${CONTAINER} grid gap-12 lg:grid-cols-[1fr_0.92fr] lg:items-center`}>
+      <section className="border-t border-line bg-sand py-16 sm:py-20">
+        <div className={`${CONTAINER} grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center`}>
           <div>
-            <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-brand-light">
-              Last step
-            </p>
-            <h2 className="mt-3 max-w-xl font-display text-[clamp(2.1rem,4vw,3.8rem)] font-medium leading-[1.02] tracking-[-0.02em]">
-              A new bathroom is closer than you think.
-            </h2>
-            <p className="mt-5 max-w-md text-[1.05rem] leading-8 text-white/72">
-              Book your free in-home consultation. We bring the plan, the materials, and a firm
-              quote &mdash; you decide from there.
-            </p>
-            <ul className="mt-7 flex flex-wrap gap-2.5">
-              {heroTrust.map((item) => (
-                <li
-                  key={item}
-                  className="inline-flex items-center gap-1.5 border border-white/20 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.1em] text-white/85"
-                >
-                  <Check className="size-3.5 text-brand-light" aria-hidden />
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <a
-              href={site.phoneHref}
-              className="mt-8 inline-flex items-center gap-2.5 font-display text-[1.7rem] font-semibold text-brand-light transition hover:text-white"
-            >
-              <Phone className="size-5" aria-hidden />
-              {site.phone}
-            </a>
+            <div className="flex items-center gap-3 text-brand-dark">
+              <House className="size-5" aria-hidden="true" />
+              <span className="text-[12px] font-bold uppercase tracking-[0.18em]">Start your bathroom transformation</span>
+            </div>
+            <h2 className={`${HEADING} mt-5 max-w-3xl`}>Ready for a cleaner, brighter bathroom?</h2>
+            <p className="mt-5 max-w-2xl text-base leading-8 text-ink-soft">Tell us what you want to update. We will help you choose the right remodeling path.</p>
           </div>
-          <div>
-            <LeadForm
-              variant="section"
-              heading="Book your free consultation"
-              sublabel="We'll confirm a time that works and bring everything to your door."
-            />
+          <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
+            <PrimaryButton href="/bathroom-estimator">Free instant estimate</PrimaryButton>
+            <Link href={site.phoneHref} className="inline-flex min-h-13 items-center justify-center gap-3 px-5 text-sm font-bold text-ink hover:text-brand-dark">
+              <Phone className="size-4" aria-hidden="true" /> Call {site.phone}
+            </Link>
           </div>
         </div>
       </section>
