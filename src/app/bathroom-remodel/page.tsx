@@ -17,11 +17,21 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://10daykitchens.com/bathroom-remodel",
   },
+  // A page-level openGraph or twitter object replaces the layout's entirely, so images are restated here.
   openGraph: {
     title: "Bathroom Remodel Lacey WA | 10 Day Kitchens",
     description:
       "Full bathroom remodels across Pierce & Thurston Counties — tile showers, vanities, flooring, and fixtures with one clear schedule and a 5-year warranty.",
     url: "https://10daykitchens.com/bathroom-remodel",
+    images: [{ url: "/images/Full Master Bathroom Suite.png", alt: "Bright remodeled bathroom with double vanity" }],
+  },
+  // Without this, shares on X fall back to the sitewide "Baths in 10 Days" card with a kitchen photo.
+  twitter: {
+    card: "summary_large_image",
+    title: "Bathroom Remodel Lacey WA | 10 Day Kitchens",
+    description:
+      "Full bathroom remodels across Pierce & Thurston Counties — tile showers, vanities, flooring, and fixtures with one clear schedule and a 5-year warranty.",
+    images: ["/images/Full Master Bathroom Suite.png"],
   },
 };
 
