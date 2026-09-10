@@ -124,7 +124,7 @@ export default function BathroomRemodelPage() {
                 Schedule Free Consultation
               </Link>
               <Link
-                href="/bathroom-estimate"
+                href="/bathroom-estimator"
                 className="inline-flex h-12 items-center border border-line bg-white px-6 text-[12px] font-bold uppercase tracking-[0.14em] text-ink transition hover:border-brand-dark hover:text-brand-dark"
               >
                 Get an instant estimate
